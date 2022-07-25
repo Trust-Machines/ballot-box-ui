@@ -3,15 +3,14 @@ import {grey} from '@mui/material/colors';
 import {useTheme} from '@mui/material';
 
 import Brand from './components/brand';
+import AppMenuToggle from './components/app-menu-toggle';
 import Wallet from './components/wallet';
 import ThemeSwitch from './components/theme-switch';
-
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
-
 
 const PageHeader = () => {
     const theme = useTheme();
-    const [isSm] = useMediaBreakPoint();
+    const [isSm, isMd] = useMediaBreakPoint();
 
     return <Box sx={{
         height: '70px',
@@ -20,18 +19,18 @@ const PageHeader = () => {
         borderBottom: `1px solid ${theme.palette.divider}`,
     }}>
         <Box sx={{
-            maxWidth: '980px',
+            maxWidth: `${theme.breakpoints.values.md}px`,
+            padding: '0 10px',
             margin: 'auto',
             height: '100%',
             display: 'flex',
             alignItems: 'center',
         }}>
-            <Brand/>
+            {!isSm ? <AppMenuToggle /> : <Brand/>}
             <Box sx={{flexGrow: 1}}/>
             <Wallet/>
             <ThemeSwitch/>
         </Box>
-
     </Box>;
 }
 
