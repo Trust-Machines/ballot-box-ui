@@ -12,7 +12,6 @@ function App() {
         <Router style={{
             minHeight: '100vh',
             display: 'flex',
-            flexDirection: 'column',
             color: theme.palette.mode === 'light' ? grey[900] : grey[300]
         }}>
             <Home path='/'/>
