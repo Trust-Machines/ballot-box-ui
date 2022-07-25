@@ -22,8 +22,9 @@ function App() {
         fetch('http://127.0.0.1:8081/me', {
             headers: {
                 'Content-Type': 'application/json',
-                'X-SIGNATURE': data.signature,
-                'X-PUBLIC-KEY': data.publicKey
+                'x-signature': data.signature,
+                'x-public-key': data.publicKey,
+                'x-network': 'mainnet'
             },
         })
             .then(r => r.json())
