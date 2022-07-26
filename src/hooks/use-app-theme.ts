@@ -7,6 +7,7 @@ const useAppTheme = (): [PaletteMode, () => void] => {
     const [theme, setTheme] = useAtom(themeAtom);
     useEffect(() => {
         document.body.style.background = theme === 'dark' ? '#3b3b3b' : '#ffffff';
+        console.log('henlo', theme)
     }, [theme]);
 
     const toggleAppTheme = () => {

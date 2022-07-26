@@ -12,10 +12,10 @@ export type Modal = { body: JSX.Element, fullScreen?: boolean } | null;
 
 const initialTheme = (): PaletteMode => {
     const s = localStorage.getItem('app_theme');
-    if (s && ['dark', 'ligth'].includes(s)) {
+    if (s && ['dark', 'light'].includes(s)) {
         return s as PaletteMode
     }
-    return 'light'
+    return 'dark'
 }
 
 export const themeAtom = atom<PaletteMode>(initialTheme());
