@@ -32,10 +32,10 @@ const AppMenu = () => {
         borderRight: `1px solid ${theme.palette.divider}`,
         background: theme.palette.mode === 'light' ? '#fff' : grey[900],
     }}>
-        <AppMenuItem title={t('Home')}>
+        <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
-        <AppMenuItem title={t('Create a new space')} sx={{mb: '30px'}}>
+        <AppMenuItem href="/create-space" title={t('Create a new space')} sx={{mb: '30px'}}>
             <AddIcon/>
         </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
