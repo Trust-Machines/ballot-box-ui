@@ -1,14 +1,16 @@
 import React from 'react';
-import {Box} from '@mui/material';
+import {Box, useTheme} from '@mui/material';
 
 const AppContent = (props: { children: React.ReactNode }) => {
     const {children} = props;
+    const theme = useTheme();
 
     return <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
+        width: '100%',
+        maxWidth: `${theme.breakpoints.values.md}px`,
+        margin: 'auto',
         flexGrow: 1,
-        flexShrink: 0
+        p: '20px 0'
     }}>{children}</Box>
 }
 

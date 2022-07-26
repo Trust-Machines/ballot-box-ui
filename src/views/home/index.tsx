@@ -1,16 +1,18 @@
 import React from 'react';
 import {RouteComponentProps} from '@reach/router';
+import {Helmet} from 'react-helmet';
 
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
-import AppContent from '../../layout/app-content';
+import AppWrapper from '../../layout/app-wrapper';
 
 const Home = (_: RouteComponentProps) => {
     return <>
+        <Helmet><title>BallotBox</title></Helmet>
         <AppMenu/>
-        <AppContent>
+        <AppWrapper>
             <AppHeader/>
-        </AppContent>
+        </AppWrapper>
     </>
 }
 

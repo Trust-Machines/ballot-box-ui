@@ -35,7 +35,7 @@ const AppMenu = () => {
         <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
-        <AppMenuItem href="/create-space" title={t('Create a new space')} sx={{mb: '30px'}}>
+        <AppMenuItem href="/create-space" title={t('Create a space')} sx={{mb: '30px'}}>
             <AddIcon/>
         </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
