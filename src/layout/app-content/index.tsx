@@ -1,0 +1,15 @@
+import React from 'react';
+import {Box} from '@mui/material';
+
+const AppContent = (props: { children: React.ReactNode }) => {
+    const {children} = props;
+
+    return <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+        flexShrink: 0
+    }}>{children}</Box>
+}
+
+export default AppContent;
