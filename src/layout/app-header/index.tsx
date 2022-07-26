@@ -5,7 +5,7 @@ import {useTheme} from '@mui/material';
 import Brand from './components/brand';
 import AppMenuToggle from './components/app-menu-toggle';
 import Wallet from './components/wallet';
-import ThemeSwitch from './components/theme-switch';
+import NetworkSwitch from './components/network-switch';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 
 const PageHeader = () => {
@@ -29,7 +29,7 @@ const PageHeader = () => {
             {!isSm ? <AppMenuToggle /> : <Brand/>}
             <Box sx={{flexGrow: 1}}/>
             <Wallet/>
-            <ThemeSwitch/>
+            <NetworkSwitch/>
         </Box>
     </Box>;
 }

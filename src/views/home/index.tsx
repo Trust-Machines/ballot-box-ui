@@ -3,7 +3,7 @@ import {RouteComponentProps} from '@reach/router';
 import {Box} from '@mui/material';
 
 import AppMenu from '../../layout/app-menu';
-import PageHeader from '../../layout/page-header';
+import PageHeader from '../../layout/app-header';
 
 const Home = (_: RouteComponentProps) => {
     return <>
