@@ -6,7 +6,7 @@ const NetworkLabel = (props: { network: NETWORK, onClick?: () => void }) => {
     return <Chip sx={{
         cursor: props.onClick ? 'pointer' : null,
         textTransform: 'capitalize',
-        borderRadius: '6px',
+        borderRadius: '26px',
         height: '24px'
     }} label={props.network} color={props.network === 'mainnet' ? 'primary' : 'default'} onClick={props.onClick}/>;
 }
