@@ -12,12 +12,14 @@ import AppMenuItem from './menu-item';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
 import useAppTheme from '../../hooks/use-app-theme';
+import useTranslation from '../../hooks/use-translation';
 
 const AppMenu = () => {
     const theme = useTheme();
     const [isSm] = useMediaBreakPoint();
     const [appMenuVisibility, toggleAppMenuVisibility] = useAppMenuVisibility();
     const [appTheme, toggleAppTheme] = useAppTheme();
+    const [t] = useTranslation();
 
     const menu = <Box sx={{
         display: 'flex',
@@ -30,13 +32,13 @@ const AppMenu = () => {
         borderRight: `1px solid ${theme.palette.divider}`,
         background: theme.palette.mode === 'light' ? '#fff' : grey[900],
     }}>
-        <AppMenuItem>
+        <AppMenuItem title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
-        <AppMenuItem sx={{mb: '30px'}}>
+        <AppMenuItem title={t('Create a new space')} sx={{mb: '30px'}}>
             <AddIcon/>
         </AppMenuItem>
-        <AppMenuItem sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
+        <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
             {appTheme === 'light' ? <DarkModeIcon fontSize="small"/> : <LightModeIcon fontSize="small"/>}
         </AppMenuItem>
     </Box>;

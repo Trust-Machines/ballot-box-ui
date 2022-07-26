@@ -4,14 +4,15 @@ import {Box} from '@mui/material';
 import {useTheme} from '@mui/material';
 import {SxProps} from '@mui/system';
 import {Theme} from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import {useNavigate} from '@reach/router';
 
-const AppMenuItem = (props: { children: React.ReactNode, sx?: SxProps<Theme>, onClick?: () => void, href?: string }) => {
+const AppMenuItem = (props: { children: React.ReactNode, title: string, href?: string, onClick?: () => void, sx?: SxProps<Theme>}) => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const {children, sx, onClick, href} = props;
+    const {children, title, href, onClick, sx} = props;
 
-    return <Box onClick={() => {
+    return <Tooltip placement="right" enterDelay={1000} title={title}><Box onClick={() => {
         if (onClick) {
             onClick();
             return;
@@ -37,7 +38,7 @@ const AppMenuItem = (props: { children: React.ReactNode, sx?: SxProps<Theme>, on
             }
         },
         ...sx
-    }}>{children}</Box>;
+    }}>{children}</Box></Tooltip>;
 }
 
 
