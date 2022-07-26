@@ -24,11 +24,10 @@ const useBnsName = (): string | null => {
             } else {
                 setBns(null);
             }
-        }).catch(()=>{
+        }).catch(() => {
             setBns(null);
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [address, network, stacksNetwork]);
+    }, [setBns, address, network, stacksNetwork]);
 
     return bns;
 }
