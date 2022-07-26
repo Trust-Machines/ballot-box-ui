@@ -2,7 +2,9 @@ import React from 'react';
 import {Router} from '@reach/router';
 import {grey} from '@mui/material/colors';
 import {useTheme} from '@mui/material';
+
 import Home from './views/home';
+import CreateSpace from './views/create-space';
 
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
             color: theme.palette.mode === 'light' ? grey[900] : grey[300]
         }}>
             <Home path='/'/>
+            <CreateSpace path='/create-space'/>
         </Router>
     );
 }
