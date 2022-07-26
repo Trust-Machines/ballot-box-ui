@@ -1,24 +1,44 @@
+import React from 'react';
+
 import {Box} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import {useTheme} from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import AddIcon from '@mui/icons-material/Add';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
+import AppMenuItem from './menu-item';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
+import useAppTheme from '../../hooks/use-app-theme';
 
 const AppMenu = () => {
     const theme = useTheme();
     const [isSm] = useMediaBreakPoint();
     const [appMenuVisibility, toggleAppMenuVisibility] = useAppMenuVisibility();
+    const [appTheme, toggleAppTheme] = useAppTheme();
 
     const menu = <Box sx={{
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         flexGrow: 0,
         flexShrink: 0,
         width: '60px',
+        pt: '10px',
         borderRight: `1px solid ${theme.palette.divider}`,
         background: theme.palette.mode === 'light' ? '#fff' : grey[900],
     }}>
-
+        <AppMenuItem>
+            <HomeIcon/>
+        </AppMenuItem>
+        <AppMenuItem sx={{mb: '30px'}}>
+            <AddIcon/>
+        </AppMenuItem>
+        <AppMenuItem sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
+            {appTheme === 'light' ? <DarkModeIcon fontSize="small"/> : <LightModeIcon fontSize="small"/>}
+        </AppMenuItem>
     </Box>;
 
     if (!isSm) {
