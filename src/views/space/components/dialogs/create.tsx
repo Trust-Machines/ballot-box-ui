@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import AuthRequired from '../../../../components/auth-required';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
 import CloseModal from '../../../../components/close-modal';
@@ -29,7 +30,7 @@ const CreateSpace = () => {
         setError('');
     }
 
-    const onSubmit = async () => {
+    const submit = async () => {
         if (name.trim().length < 3) {
             setError(t('Space name length must be at least 3 characters long'));
             inputRef.current!.focus();
@@ -61,7 +62,9 @@ const CreateSpace = () => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} disabled={inProgress}>{t('Cancel')}</Button>
-                <Button onClick={onSubmit} disabled={inProgress}>{t('Create')}</Button>
+                <AuthRequired>
+                    <Button onClick={submit} disabled={inProgress}>{t('Create')}</Button>
+                </AuthRequired>
             </DialogActions>
         </>
     );

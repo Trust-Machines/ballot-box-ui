@@ -9,7 +9,6 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import AppMenuItem from './menu-item';
-import AuthRequired from '../../components/auth-required';
 import CreateSpace from '../../views/space/components/dialogs/create';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
@@ -40,13 +39,11 @@ const AppMenu = () => {
         <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
-        <AuthRequired>
-            <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
-                showModal({body: <CreateSpace/>});
-            }}>
-                <AddIcon/>
-            </AppMenuItem>
-        </AuthRequired>
+        <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
+            showModal({body: <CreateSpace/>});
+        }}>
+            <AddIcon/>
+        </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
             {appTheme === 'light' ? <DarkModeIcon fontSize="small"/> : <LightModeIcon fontSize="small"/>}
         </AppMenuItem>
