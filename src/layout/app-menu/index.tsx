@@ -9,10 +9,13 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import AppMenuItem from './menu-item';
+import CreateSpace from '../../views/space/components/dialogs/create';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
 import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
+import useModal from '../../hooks/use-modal';
+
 
 const AppMenu = () => {
     const theme = useTheme();
@@ -20,6 +23,7 @@ const AppMenu = () => {
     const [appMenuVisibility, toggleAppMenuVisibility] = useAppMenuVisibility();
     const [appTheme, toggleAppTheme] = useAppTheme();
     const [t] = useTranslation();
+    const [, showModal] = useModal();
 
     const menu = <Box sx={{
         display: 'flex',
@@ -35,7 +39,9 @@ const AppMenu = () => {
         <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
-        <AppMenuItem href="/create-space" title={t('Create a space')} sx={{mb: '30px'}}>
+        <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
+            showModal({body: <CreateSpace/>});
+        }}>
             <AddIcon/>
         </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
