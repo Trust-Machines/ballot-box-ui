@@ -2,11 +2,11 @@ import useAuth from './use-auth';
 import useNetwork from './use-network';
 
 const useAddress = (): string | null => {
-    const {userData} = useAuth();
+    const {data} = useAuth();
     const [network] = useNetwork();
 
-    if (userData) {
-        return userData.profile.stxAddress[network];
+    if (data) {
+        return data.profile.stxAddress[network];
     }
 
     return null;

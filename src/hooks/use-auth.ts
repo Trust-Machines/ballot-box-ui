@@ -7,7 +7,7 @@ import {userSessionAtom, userDataAtom, userAuthAtom} from '../store';
 import {appConfig, baseAuthOptions, SIGNATURE_MESSAGE} from '../constants';
 
 
-const useUserSession = (): { auth: { signature: string, publicKey: string } | null, userSession: UserSession | null, userData: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
+const useAuth = (): { auth: { signature: string, publicKey: string } | null, session: UserSession | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
     const [userSession, setUserSession] = useAtom(userSessionAtom);
     const [userData] = useAtom(userDataAtom);
     const [userAuth, setUserAuth] = useAtom(userAuthAtom);
@@ -15,17 +15,16 @@ const useUserSession = (): { auth: { signature: string, publicKey: string } | nu
 
     const openAuth = () => {
         const authOptions = {
-            onAuthFinish,
+            onFinish: (payload: FinishedAuthData) => {
+                setUserSession(payload.userSession);
+                requestSignature();
+            },
             userSession: new UserSession({appConfig}),
             ...baseAuthOptions
         };
         setUserSession(null);
+        setUserAuth(null);
         showConnect(authOptions);
-    };
-
-    const onAuthFinish = async (payload: FinishedAuthData) => {
-        setUserSession(payload.userSession);
-
     };
 
     const signOut = () => {
@@ -36,7 +35,6 @@ const useUserSession = (): { auth: { signature: string, publicKey: string } | nu
         setUserSession(null);
         userSession.signUserOut();
     }
-
 
     const requestSignature = () => {
         const signOptions = {
@@ -49,12 +47,12 @@ const useUserSession = (): { auth: { signature: string, publicKey: string } | nu
             },
         };
 
-        openSignatureRequestPopup(signOptions).then()
+        openSignatureRequestPopup(signOptions).then();
     }
 
     return {
-        auth: null, userSession, userData, openAuth, signOut, requestSignature
+        auth: userAuth, session: userSession, data: userData, openAuth, signOut, requestSignature
     };
 }
 
-export default useUserSession;
+export default useAuth;
