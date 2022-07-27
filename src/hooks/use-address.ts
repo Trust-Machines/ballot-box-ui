@@ -1,8 +1,8 @@
-import useUserSession from './use-user-session';
+import useAuth from './use-auth';
 import useNetwork from './use-network';
 
 const useAddress = (): string | null => {
-    const [, userData] = useUserSession();
+    const {userData} = useAuth();
     const [network] = useNetwork();
 
     if (userData) {

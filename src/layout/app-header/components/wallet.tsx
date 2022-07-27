@@ -8,7 +8,7 @@ import {grey} from '@mui/material/colors';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-import useUserSession from '../../../hooks/use-user-session';
+import useAuth from '../../../hooks/use-auth';
 import useBnsName from '../../../hooks/use-bns-name';
 import useAddress from '../../../hooks/use-address';
 import useTranslation from '../../../hooks/use-translation';
@@ -21,7 +21,7 @@ import {truncateMiddle} from '../../../util';
 export const WalletMenu = (props: {onSignOut: () => void}) => {
     const address = useAddress();
     const [t] = useTranslation();
-    const [, , , signOut] = useUserSession();
+    const {signOut} = useAuth();
     const [isSm] = useMediaBreakPoint();
     const theme = useTheme();
 
@@ -61,7 +61,7 @@ export const WalletMenu = (props: {onSignOut: () => void}) => {
 const Wallet = () => {
     const [menu, setMenu] = useState(false);
     const theme = useTheme();
-    const [, , openAuth] = useUserSession();
+    const {openAuth} = useAuth();
     const address = useAddress();
     const bnsName = useBnsName();
     const [t] = useTranslation();
