@@ -3,7 +3,7 @@ import {useAtom} from 'jotai';
 
 import useAddress from './use-address';
 import useNetwork from './use-network';
-import {getBnsName} from '../api';
+import {getBnsName} from '../api/stacks';
 
 import {bnsNameAtom} from '../store';
 
