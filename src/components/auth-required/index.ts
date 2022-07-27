@@ -1,8 +1,8 @@
 import React from 'react';
-import useAuth2 from '../../hooks/use-auth';
+import useAuth from '../../hooks/use-auth';
 
 const AuthRequired = (props: { children: React.ReactElement }) => {
-    const {userData, openAuth, requestSignature} = useAuth2();
+    const {userData, openAuth, requestSignature} = useAuth();
 
     if (!userData) {
         return React.cloneElement(props.children, {
