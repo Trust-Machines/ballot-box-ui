@@ -19,4 +19,4 @@ export const NETWORKS: Record<NETWORK, StacksNetwork> = {
     'testnet': new StacksTestnet()
 }
 
-export const SIGNATURE_MESSAGE = 'HelloBallotBox'
+export const SIGNATURE_MESSAGE = 'BallotBoxAuth'
