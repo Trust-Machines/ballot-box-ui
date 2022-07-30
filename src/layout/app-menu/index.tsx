@@ -7,6 +7,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import {useNavigate} from '@reach/router';
 
 import AppMenuItem from './menu-item';
 import CreateSpace from '../../views/space/components/dialogs/create';
@@ -14,7 +15,7 @@ import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
 import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
-import useModal from '../../hooks/use-modal';
+import useModal from '../../hooks/use-modal'
 
 
 const AppMenu = () => {
@@ -24,6 +25,7 @@ const AppMenu = () => {
     const [appTheme, toggleAppTheme] = useAppTheme();
     const [t] = useTranslation();
     const [, showModal] = useModal();
+    const navigate = useNavigate();
 
     const menu = <Box sx={{
         display: 'flex',
@@ -40,7 +42,11 @@ const AppMenu = () => {
             <HomeIcon/>
         </AppMenuItem>
         <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
-            showModal({body: <CreateSpace/>});
+            showModal({
+                body: <CreateSpace onSuccess={(space) => {
+                    navigate(`/spaces/${space.id}`).then();
+                }}/>
+            });
         }}>
             <AddIcon/>
         </AppMenuItem>

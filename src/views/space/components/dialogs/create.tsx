@@ -8,18 +8,28 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import CloseModal from '../../../../components/close-modal';
 import AuthRequired from '../../../../components/auth-required';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
-import CloseModal from '../../../../components/close-modal';
+import useAuth from '../../../../hooks/use-auth';
+import useNetwork from '../../../../hooks/use-network';
+import useToast from '../../../../hooks/use-toast';
 
-const CreateSpace = () => {
+import {createSpace} from '../../../../api';
+import {Space} from '../../../../types';
+
+const CreateSpace = (props: { onSuccess: (space: Space) => void }) => {
     const inputRef = useRef<HTMLInputElement>();
     const [name, setName] = useState<string>('');
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [, showModal] = useModal();
+    const [, showMessage] = useToast();
     const [t] = useTranslation();
+    const {auth} = useAuth();
+    const [network] = useNetwork();
+    const {onSuccess} = props;
 
     const handleClose = () => {
         showModal(null);
@@ -39,6 +49,18 @@ const CreateSpace = () => {
 
         setInProgress(true);
         setError('');
+
+        createSpace(auth!, network, name).then((r) => {
+            showModal(null);
+            showMessage(t('You new space created'), 'success');
+            onSuccess(r);
+        }).catch(e => {
+            if (e.apiMessage) {
+                showMessage(t(e.apiMessage), 'error');
+            }
+        }).finally(() => {
+            setInProgress(false);
+        })
     }
 
     return (
