@@ -46,8 +46,8 @@ export const apiGet = <T>(auth: USER_AUTH, network: NETWORK, endpoint: string): 
     }));
 }
 
-export const getUserSpaces = (auth: USER_AUTH, network: NETWORK): Promise<Space[]> => {
-    return apiGet(auth, network, 'spaces');
+export const getMe = (auth: USER_AUTH, network: NETWORK): Promise<Space[]> => {
+    return apiGet(auth, network, 'me');
 }
 
 export const createSpace = (auth: USER_AUTH, network: NETWORK, name: string): Promise<Space> => {
