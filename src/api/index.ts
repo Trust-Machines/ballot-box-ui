@@ -46,7 +46,7 @@ export const apiGet = <T>(auth: USER_AUTH, network: NETWORK, endpoint: string): 
     }));
 }
 
-export const getMe = (auth: USER_AUTH, network: NETWORK): Promise<Space[]> => {
+export const getMe = (auth: USER_AUTH, network: NETWORK): Promise<{id: number}> => {
     return apiGet(auth, network, 'me');
 }
 

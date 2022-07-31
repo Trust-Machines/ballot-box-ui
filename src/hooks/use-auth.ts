@@ -3,16 +3,17 @@ import {UserSession, UserData, FinishedAuthData, showConnect} from '@stacks/conn
 import {openSignatureRequestPopup, SignatureData} from '@stacks/connect';
 
 import useNetwork from './use-network';
-import {userSessionAtom, userDataAtom, userAuthAtom} from '../store';
+import {userSessionAtom, userDataAtom, userAuthAtom, userIdAtom} from '../store';
 import {appConfig, baseAuthOptions, SIGNATURE_MESSAGE} from '../constants';
 import {getMe} from '../api';
 
 
-const useAuth = (): { auth: { signature: string, publicKey: string } | null, session: UserSession | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
+const useAuth = (): { auth: { signature: string, publicKey: string } | null, userId: number | null, session: UserSession | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
     const [userSession, setUserSession] = useAtom(userSessionAtom);
     const [userData] = useAtom(userDataAtom);
     const [userAuth, setUserAuth] = useAtom(userAuthAtom);
-    const [, stacksNetwork] = useNetwork();
+    const [userId, setUserId] = useAtom(userIdAtom);
+    const [network, stacksNetwork] = useNetwork();
 
     const openAuth = () => {
         const authOptions = {
@@ -44,7 +45,12 @@ const useAuth = (): { auth: { signature: string, publicKey: string } | null, ses
             message: SIGNATURE_MESSAGE,
             network: stacksNetwork,
             onFinish: (data: SignatureData) => {
-                setUserAuth({signature: data.signature, publicKey: data.publicKey});
+                const auth = {signature: data.signature, publicKey: data.publicKey};
+                getMe(auth, network).then(r => {
+                    localStorage.setItem('user_id', String(r.id));
+                    setUserId(r.id);
+                    setUserAuth(auth);
+                });
             },
         };
 
@@ -52,7 +58,7 @@ const useAuth = (): { auth: { signature: string, publicKey: string } | null, ses
     }
 
     return {
-        auth: userAuth, session: userSession, data: userData, openAuth, signOut, requestSignature
+        auth: userAuth, userId, session: userSession, data: userData, openAuth, signOut, requestSignature
     };
 }
 
