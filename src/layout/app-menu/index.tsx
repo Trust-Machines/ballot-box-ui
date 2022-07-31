@@ -4,6 +4,7 @@ import {Box} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import {useTheme} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import AddIcon from '@mui/icons-material/Add';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -13,6 +14,7 @@ import AppMenuItem from './menu-item';
 import CreateSpace from '../../views/space/components/dialogs/create';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
+import useAuth from '../../hooks/use-auth';
 import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
 import useModal from '../../hooks/use-modal'
@@ -27,7 +29,8 @@ const AppMenu = () => {
     const [appTheme, toggleAppTheme] = useAppTheme();
     const [t] = useTranslation();
     const [, showModal] = useModal();
-    const {userSpaces, addSpace} = useUserData();
+    const {userId, userSpaces, addSpace} = useUserData();
+    const {data: userData, requestSignature} = useAuth();
     const navigate = useNavigate();
 
     const menu = <Box sx={{
@@ -44,9 +47,14 @@ const AppMenu = () => {
         <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
+        {userData && !userId && (
+            <AppMenuItem href="/" title={t('Load Spaces')} onClick={requestSignature}>
+                <RefreshIcon/>
+            </AppMenuItem>
+        )}
         {userSpaces.map(s => {
             return <AppMenuItem title={s.name} href={`/spaces/${s.id}`}>
-                <SpaceIcon space={s} />
+                <SpaceIcon space={s}/>
             </AppMenuItem>
         })}
         <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
