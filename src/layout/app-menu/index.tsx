@@ -16,6 +16,8 @@ import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
 import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
 import useModal from '../../hooks/use-modal'
+import useUserData from '../../hooks/use-user-data';
+import SpaceIcon from '../../components/space-icon';
 
 
 const AppMenu = () => {
@@ -25,6 +27,7 @@ const AppMenu = () => {
     const [appTheme, toggleAppTheme] = useAppTheme();
     const [t] = useTranslation();
     const [, showModal] = useModal();
+    const {userSpaces, addSpace} = useUserData();
     const navigate = useNavigate();
 
     const menu = <Box sx={{
@@ -41,9 +44,15 @@ const AppMenu = () => {
         <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>
         </AppMenuItem>
+        {userSpaces.map(s => {
+            return <AppMenuItem title={s.name} href={`/spaces/${s.id}`}>
+                <SpaceIcon space={s} />
+            </AppMenuItem>
+        })}
         <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
             showModal({
                 body: <CreateSpace onSuccess={(space) => {
+                    addSpace(space);
                     navigate(`/spaces/${space.id}`).then();
                 }}/>
             });

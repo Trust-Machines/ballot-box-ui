@@ -11,12 +11,11 @@ class ApiError extends Error {
     }
 }
 
-const makeApiHeaders = (auth: USER_AUTH, network: NETWORK) => {
+const makeApiHeaders = (auth: USER_AUTH) => {
     return {
         'Content-type': 'application/json; charset=UTF-8',
         'x-signature': auth.signature,
-        'x-public-key': auth.publicKey,
-        'x-network': network
+        'x-public-key': auth.publicKey
     }
 }
 
@@ -35,19 +34,25 @@ export const apiPost = <T>(auth: USER_AUTH, network: NETWORK, endpoint: string, 
     return handleApiResponse(fetch(`${API_BASE}/${endpoint}`, {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: makeApiHeaders(auth, network)
+        headers: makeApiHeaders(auth)
     }));
 }
 
-export const apiGet = <T>(auth: USER_AUTH, network: NETWORK, endpoint: string): Promise<T> => {
+export const apiGet = <T>(auth: USER_AUTH, endpoint: string): Promise<T> => {
     return handleApiResponse(fetch(`${API_BASE}/${endpoint}`, {
         method: 'GET',
-        headers: makeApiHeaders(auth, network)
+        headers: makeApiHeaders(auth)
     }));
 }
 
-export const getMe = (auth: USER_AUTH, network: NETWORK): Promise<{id: number}> => {
-    return apiGet(auth, network, 'me');
+export const getMe = (auth: USER_AUTH): Promise<{ id: number }> => {
+    return apiGet(auth, 'me');
+}
+
+export const getUserSpaces = async (userId: number): Promise<Space[]> => {
+    return handleApiResponse(fetch(`${API_BASE}/spaces?userId=${userId}`, {
+        method: 'GET',
+    }));
 }
 
 export const createSpace = (auth: USER_AUTH, network: NETWORK, name: string): Promise<Space> => {

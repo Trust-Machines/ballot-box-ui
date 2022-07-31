@@ -16,17 +16,3 @@ export const userDataAtom = atom<UserData | null>((get) => {
 });
 
 export const userAuthAtom = atom<USER_AUTH | null>(null);
-
-const userIdInitial = () => {
-    if (localStorage.getItem('user_id')) {
-        try {
-            return Number(localStorage.getItem('user_id'));
-        } catch (e) {
-            return null;
-        }
-    }
-
-    return null;
-}
-
-export const userIdAtom = atom<number | null>(userIdInitial());
