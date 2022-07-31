@@ -5,6 +5,7 @@ import {openSignatureRequestPopup, SignatureData} from '@stacks/connect';
 import useNetwork from './use-network';
 import {userSessionAtom, userDataAtom, userAuthAtom} from '../store';
 import {appConfig, baseAuthOptions, SIGNATURE_MESSAGE} from '../constants';
+import {getMe} from '../api';
 
 
 const useAuth = (): { auth: { signature: string, publicKey: string } | null, session: UserSession | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
