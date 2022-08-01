@@ -54,7 +54,7 @@ const AppMenu = () => {
         )}
         {userSpaces.map(s => {
             return <AppMenuItem title={s.name} href={`/spaces/${s.id}`} key={s.id}>
-                <SpaceIcon space={s}/>
+                <SpaceIcon space={s} sx={{width: '40px'}}/>
             </AppMenuItem>
         })}
         <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {

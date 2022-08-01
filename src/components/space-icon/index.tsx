@@ -1,18 +1,27 @@
 import React, {useMemo} from 'react';
+import {Box} from '@mui/material';
+import {SxProps} from '@mui/system';
+import {Theme} from '@mui/material/styles';
+
 import {Space} from '../../types';
 
 const {createIcon} = require('@download/blockies');
 
-const SpaceIcon = (props: { space:Space }) => {
-    const {space} = props;
+const SpaceIcon = (props: { space: Space, sx?: SxProps<Theme> }) => {
+    const {space, sx} = props;
     const icon = useMemo(() => {
         return createIcon({
             seed: `${space.id}-${space.name}`,
-            size: 10,
+            size: 12,
         }).toDataURL()
     }, [space]);
 
-    return <img style={{borderRadius: '50%'}} src={icon} alt={space.name}/>;
+    return <Box component="img" sx={{
+        ...{
+            borderRadius: '50%'
+        },
+        ...sx
+    }} src={icon} alt={space.name}/>;
 }
 
 export default SpaceIcon;
