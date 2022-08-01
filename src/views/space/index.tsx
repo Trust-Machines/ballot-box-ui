@@ -20,9 +20,7 @@ const SpacePage = (_: RouteComponentProps) => {
         <AppWrapper>
             <AppHeader/>
             <AppContent>
-                {space && (
-                    <SpaceCard space={space}/>
-                )}
+                <SpaceCard />
             </AppContent>
         </AppWrapper>
     </>

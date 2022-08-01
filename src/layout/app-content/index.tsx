@@ -6,11 +6,11 @@ const AppContent = (props: { children: React.ReactNode }) => {
     const theme = useTheme();
 
     return <Box sx={{
-        width: '100%',
+        width: 'calc(100% - 10px)',
         maxWidth: `${theme.breakpoints.values.md}px`,
         margin: 'auto',
         flexGrow: 1,
-        p: '20px 0'
+        p: '20px 5px'
     }}>{children}</Box>
 }
 
