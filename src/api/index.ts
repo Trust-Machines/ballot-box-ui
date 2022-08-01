@@ -1,6 +1,5 @@
 import {NETWORK, USER_AUTH, Space} from '../types';
-
-const API_BASE = process.env.REACT_APP_API_BASE;
+import {API_BASE} from '../constants';
 
 class ApiError extends Error {
     apiMessage: string;
@@ -30,9 +29,9 @@ const handleApiResponse = (promise: Promise<Response>) => {
         });
 }
 
-export const apiPost = <T>(auth: USER_AUTH, network: NETWORK, endpoint: string, body: {}): Promise<T> => {
+export const apiCallWithAuth = <T>(auth: USER_AUTH, endpoint: string, method: 'GET' | 'POST' | 'PUT', body: {}): Promise<T> => {
     return handleApiResponse(fetch(`${API_BASE}/${endpoint}`, {
-        method: 'POST',
+        method,
         body: JSON.stringify(body),
         headers: makeApiHeaders(auth)
     }));
@@ -62,13 +61,19 @@ export const getSpace = async (spaceId: number): Promise<Space> => {
 }
 
 
-export const createSpace = (auth: USER_AUTH, network: NETWORK, name: string): Promise<Space> => {
-    return apiPost(auth, network, 'spaces', {
+export const createSpace = (auth: USER_AUTH, name: string): Promise<Space> => {
+    return apiCallWithAuth(auth, 'spaces', 'POST', {
         name,
         about: '',
         websiteLink: '',
         termsLink: '',
         twitterHandle: '',
         githubHandle: ''
+    });
+}
+
+export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: string) => {
+    return apiCallWithAuth(auth, `spaces/${spaceId}/picture`, 'PUT', {
+        picture
     });
 }

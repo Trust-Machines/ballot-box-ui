@@ -2,10 +2,13 @@ import Box from '@mui/material/Box';
 import {useTheme} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
+
+import SpacePicture from '../dialogs/picture';
 import SpaceIcon from '../../../../components/space-icon';
 import useSpace from '../../../../hooks/use-space';
 import useUserData from '../../../../hooks/use-user-data';
 import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
+import useModal from '../../../../hooks/use-modal';
 
 
 const SpaceCard = () => {
@@ -13,6 +16,7 @@ const SpaceCard = () => {
     const {space} = useSpace();
     const {userSpaces} = useUserData();
     const [isSm] = useMediaBreakPoint();
+    const [, showModal] = useModal();
 
     if (!space) {
         return null;
@@ -62,6 +66,8 @@ const SpaceCard = () => {
                             background: '#000',
                             opacity: .3
                         }
+                    }} onClick={() => {
+                        showModal({body: <SpacePicture space={space}/>});
                     }}>
                         <EditIcon sx={{color: grey['200']}}/>
                     </Box>

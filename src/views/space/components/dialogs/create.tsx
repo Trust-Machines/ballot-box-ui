@@ -50,7 +50,7 @@ const CreateSpace = (props: { onSuccess: (space: Space) => void }) => {
         setInProgress(true);
         setError('');
 
-        createSpace(auth!, network, name).then((r) => {
+        createSpace(auth!, name).then((r) => {
             showModal(null);
             showMessage(t('You new space created'), 'success');
             onSuccess(r);
