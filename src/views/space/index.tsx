@@ -2,13 +2,18 @@ import React from 'react';
 import {RouteComponentProps} from '@reach/router';
 import {Helmet} from 'react-helmet';
 
+
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
 
-const HomePage = (_: RouteComponentProps) => {
+import useSpace from '../../hooks/use-space';
+
+const SpacePage = (_: RouteComponentProps) => {
+    const {space} = useSpace();
+
     return <>
-        <Helmet><title>BallotBox</title></Helmet>
+        {space && <Helmet><title>{`${space.name} | BallotBox`}</title></Helmet>}
         <AppMenu/>
         <AppWrapper>
             <AppHeader/>
@@ -17,4 +22,4 @@ const HomePage = (_: RouteComponentProps) => {
 }
 
 
-export default HomePage;
+export default SpacePage;

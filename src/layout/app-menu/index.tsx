@@ -53,7 +53,7 @@ const AppMenu = () => {
             </AppMenuItem>
         )}
         {userSpaces.map(s => {
-            return <AppMenuItem title={s.name} href={`/spaces/${s.id}`}>
+            return <AppMenuItem title={s.name} href={`/spaces/${s.id}`} key={s.id}>
                 <SpaceIcon space={s}/>
             </AppMenuItem>
         })}
