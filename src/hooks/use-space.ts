@@ -13,7 +13,8 @@ const useSpace = (): { space: Space | null, updateSpace: (space: Space) => void 
     const location = useLocation();
 
     useEffect(() => {
-        const spaceId = Number(location.pathname.replace('/spaces/', ''));
+        const spaceId = location.pathname.startsWith('/spaces/') ? Number(location.pathname.split('/')[2]) : null;
+
         if (!spaceId) {
             return;
         }

@@ -18,6 +18,7 @@ function App() {
         }}>
             <Home path='/'/>
             <Space path='/spaces/:spaceId'/>
+            <Space path='/spaces/:spaceId/:section'/>
         </Router>
     );
 }
