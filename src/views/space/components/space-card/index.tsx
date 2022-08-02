@@ -2,30 +2,26 @@ import Box from '@mui/material/Box';
 import {Tooltip, useTheme} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
-import {Link, useParams} from '@reach/router'
+import {useParams} from '@reach/router'
 
+import Link from '../../../../components/link';
 import SetSpacePicture from '../dialogs/set-picture';
 import SpaceIcon from '../../../../components/space-icon';
 import useSpace from '../../../../hooks/use-space';
 import useUserData from '../../../../hooks/use-user-data';
-import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
 import {Space} from '../../../../types';
 
 
-const SpaceCard = () => {
+const SpaceCard = (props: { space: Space }) => {
+    const {space} = props;
     const theme = useTheme();
-    const {space, updateSpace} = useSpace();
+    const {updateSpace} = useSpace();
     const {userSpaces, updateSpace: updateSpace2} = useUserData();
-    const [, isMd] = useMediaBreakPoint();
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const params = useParams();
-
-    if (!space) {
-        return null;
-    }
 
     const spaceUpdated = (space: Space) => {
         updateSpace(space);
@@ -59,14 +55,11 @@ const SpaceCard = () => {
             right: '12px',
             top: '12px'
         }}>
-            <Box sx={{
-                color: linkColor,
-                ':hover': {color: linkHoverColor}
-            }} component={Link} to={`/spaces/${space.id}/edit`}>
+            <Link to={`/spaces/${space.id}/edit`}>
                 <Tooltip title={t('Edit space')} enterDelay={1000}>
                     <EditIcon/>
                 </Tooltip>
-            </Box>
+            </Link>
         </Box>}
         <Box sx={{
             display: 'flex',
@@ -132,15 +125,12 @@ const SpaceCard = () => {
                         return null;
                     }
 
-                    return <Box key={i.href} component={Link} to={i.href}
-                                sx={{
-                                    color: linkColor,
-                                    borderBottom: i.selected ? `2px solid ${linkColor}` : null,
-                                    textDecoration: 'none',
-                                    fontWeight: 600,
-                                    marginRight: c !== sections.length - 1 ? '12px' : null,
-                                    ':hover': {color: linkHoverColor}
-                                }}>{i.label}</Box>
+                    return <Link key={i.href} to={i.href}
+                                 sx={{
+                                     borderBottom: i.selected ? `2px solid ${linkColor}` : null,
+                                     fontWeight: 600,
+                                     marginRight: c !== sections.length - 1 ? '12px' : null,
+                                 }}>{i.label}</Link>
                 })}
             </Box>
         </Box>

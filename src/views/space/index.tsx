@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {RouteComponentProps, useParams} from '@reach/router';
 import {Helmet} from 'react-helmet';
 import {Box} from '@mui/material';
@@ -11,13 +11,19 @@ import AppWrapper from '../../layout/app-wrapper';
 
 import useSpace from '../../hooks/use-space';
 import AppContent from '../../layout/app-content';
-import useMediaBreakPoint from '../../hooks/use-media-break-point';
 
 
 const SpacePage = (_: RouteComponentProps) => {
-    const [, isMd] = useMediaBreakPoint();
-    const {space} = useSpace();
+    const {space, fetchSpace} = useSpace();
     const params = useParams();
+
+    useEffect(() => {
+        fetchSpace(params.spaceId).then();
+    }, [params.spaceId]);
+
+    if (!space) {
+        return null;
+    }
 
     return <>
         {space && <Helmet><title>{`${space.name} | BallotBox`}</title></Helmet>}
@@ -26,7 +32,7 @@ const SpacePage = (_: RouteComponentProps) => {
             <AppHeader/>
             <AppContent>
                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                    <SpaceCard/>
+                    <SpaceCard space={space}/>
                     <Box sx={{flexGrow: 1}}>
                         {params.section === 'edit' && <SpaceEdit/>}
                     </Box>
