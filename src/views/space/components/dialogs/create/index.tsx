@@ -8,16 +8,16 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import CloseModal from '../../../../components/close-modal';
-import AuthRequired from '../../../../components/auth-required';
-import useModal from '../../../../hooks/use-modal';
-import useTranslation from '../../../../hooks/use-translation';
-import useAuth from '../../../../hooks/use-auth';
-import useNetwork from '../../../../hooks/use-network';
-import useToast from '../../../../hooks/use-toast';
+import CloseModal from '../../../../../components/close-modal';
+import AuthRequired from '../../../../../components/auth-required';
+import useModal from '../../../../../hooks/use-modal';
+import useTranslation from '../../../../../hooks/use-translation';
+import useAuth from '../../../../../hooks/use-auth';
+import useNetwork from '../../../../../hooks/use-network';
+import useToast from '../../../../../hooks/use-toast';
 
-import {createSpace} from '../../../../api';
-import {Space} from '../../../../types';
+import {createSpace} from '../../../../../api';
+import {Space} from '../../../../../types';
 
 const CreateSpace = (props: { onSuccess: (space: Space) => void }) => {
     const inputRef = useRef<HTMLInputElement>();
