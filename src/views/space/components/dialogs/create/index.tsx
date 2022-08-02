@@ -71,13 +71,17 @@ const CreateSpace = (props: { onSuccess: (space: Space) => void }) => {
                     <TextField autoFocus inputRef={inputRef} label={t('Space name')} value={name} fullWidth
                                onChange={handleInputChange} error={error !== ''}
                                helperText={error || ' '}
+                               inputProps={{
+                                   maxlength: 30
+                               }}
                                InputProps={{
                                    autoComplete: 'off',
                                    endAdornment: inProgress ?
                                        <InputAdornment position="end">
                                            <CircularProgress color="primary"/>
                                        </InputAdornment> : null,
-                                   readOnly: inProgress
+                                   readOnly: inProgress,
+
                                }}
                     />
                 </Box>

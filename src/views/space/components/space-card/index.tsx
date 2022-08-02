@@ -18,7 +18,7 @@ const SpaceCard = () => {
     const theme = useTheme();
     const {space, updateSpace} = useSpace();
     const {userSpaces, updateSpace: updateSpace2} = useUserData();
-    const [isSm] = useMediaBreakPoint();
+    const [, isMd] = useMediaBreakPoint();
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const params = useParams();
@@ -32,6 +32,8 @@ const SpaceCard = () => {
         updateSpace2(space);
     }
 
+    const linkColor = theme.palette.mode === 'light' ? grey[800] : grey[200];
+    const linkHoverColor = grey[500];
     const editable = userSpaces.find(x => x.id === space.id) !== undefined;
     const sections = [
         {label: t('Proposals'), href: `/spaces/${space.id}`, selected: !params.section},
@@ -48,8 +50,24 @@ const SpaceCard = () => {
         border: `1px solid ${theme.palette.divider}`,
         padding: '16px',
         borderRadius: '12px',
-        maxWidth: isSm ? '200px' : null
+        flexGrow: 0,
+        flexShrink: 0,
+        position: 'relative',
     }}>
+        {editable && <Box sx={{
+            position: 'absolute',
+            right: '12px',
+            top: '12px'
+        }}>
+            <Box sx={{
+                color: linkColor,
+                ':hover': {color: linkHoverColor}
+            }} component={Link} to={`/spaces/${space.id}/edit`}>
+                <Tooltip title={t('Edit space')} enterDelay={1000}>
+                    <EditIcon/>
+                </Tooltip>
+            </Box>
+        </Box>}
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -108,25 +126,20 @@ const SpaceCard = () => {
             }}>{space.name}</Box>
             <Box sx={{
                 display: 'flex',
-                width: isSm ? '100%' : null,
-                flexDirection: isSm ? 'column' : 'row'
             }}>
                 {sections.map((i, c) => {
                     if (i.requiresOwner && !editable) {
                         return null;
                     }
-                    const color = theme.palette.mode === 'light' ? grey[800] : grey[200];
-                    const isLastItem = c === sections.length - 1;
+
                     return <Box key={i.href} component={Link} to={i.href}
                                 sx={{
-                                    color: color,
-                                    borderLeft: i.selected && isSm ? `2px solid ${color}` : null,
-                                    borderBottom: i.selected && !isSm ? `2px solid ${color}` : null,
+                                    color: linkColor,
+                                    borderBottom: i.selected ? `2px solid ${linkColor}` : null,
                                     textDecoration: 'none',
                                     fontWeight: 600,
-                                    padding: isSm ? '6px 12px' : null,
-                                    marginBottom: isSm && !isLastItem ? '6px' : null,
-                                    marginRight: !isSm && !isLastItem ? '12px' : null,
+                                    marginRight: c !== sections.length - 1 ? '12px' : null,
+                                    ':hover': {color: linkHoverColor}
                                 }}>{i.label}</Box>
                 })}
             </Box>
