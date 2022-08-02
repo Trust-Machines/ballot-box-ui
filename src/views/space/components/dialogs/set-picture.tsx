@@ -1,26 +1,27 @@
 import React, {useRef, useState} from 'react';
-import Cropper from 'react-cropper';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import FormHelperText from '@mui/material/FormHelperText';
 
 import AuthRequired from '../../../../components/auth-required';
 import CloseModal from '../../../../components/close-modal';
 import useModal from '../../../../hooks/use-modal';
+import useToast from '../../../../hooks/use-toast';
 import useAuth from '../../../../hooks/use-auth';
+import useTranslation from '../../../../hooks/use-translation';
 import {updateSpacePicture} from '../../../../api';
 import {Space} from '../../../../types';
-import 'cropperjs/dist/cropper.css';
 
-const SpacePicture = (props: { space: Space }) => {
+const SetSpacePicture = (props: { space: Space }) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const cropperRef = useRef<HTMLImageElement>(null);
-    const [inProgress, setInProgress] = useState<boolean>(false);
+    const [, showMessage] = useToast();
     const [, showModal] = useModal();
+    const [t] = useTranslation();
+    const [inProgress, setInProgress] = useState<boolean>(false);
     const [imgSrc, setImgSrc] = useState('');
-    const [croppedImg, setCroppedImg] = useState('');
     const {space} = props;
     const {auth} = useAuth();
 
@@ -30,11 +31,22 @@ const SpacePicture = (props: { space: Space }) => {
 
     const submit = async () => {
         setInProgress(true);
-        updateSpacePicture(auth!, space!.id, croppedImg).then(r => {
-            console.log(r)
+        const data = imgSrc.split(',')[1];
+        updateSpacePicture(auth!, space!.id, data).then(r => {
+            showModal(null);
+            showMessage(t('Space picture updated'), 'success');
+        }).catch(e => {
+            if (e.apiMessage) {
+                showMessage(t(e.apiMessage), 'error');
+            }
         }).finally(() => {
             setInProgress(false);
-        })
+        });
+    }
+
+    const selectFile = () => {
+        setImgSrc('');
+        inputRef.current!.click();
     }
 
     const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,48 +63,28 @@ const SpacePicture = (props: { space: Space }) => {
         }
     }
 
-    const onCrop = () => {
-        const imageElement: any = cropperRef?.current;
-        const cropper: any = imageElement?.cropper;
-        const data = cropper.getCroppedCanvas().toDataURL().replace('data:image/png;base64,', '');
-        setCroppedImg(data);
-    };
-
     return (
         <>
-            <DialogTitle><CloseModal onClick={handleClose}/></DialogTitle>
+            <DialogTitle>{t('Set Space Picture')}<CloseModal onClick={handleClose}/></DialogTitle>
             <DialogContent>
                 <Box sx={{p: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {imgSrc === '' && (
-                        <Button variant="contained" onClick={() => {
-                            inputRef.current!.click();
-                        }}>Select file</Button>
+                        <>
+                            <Button variant="contained" onClick={selectFile}
+                                    sx={{mb: '12px'}}>{t('Select file')}</Button>
+                            <FormHelperText>{t('Recommended 200 x 200 pixels. Maximum file size of 1mb.')}</FormHelperText>
+                        </>
                     )}
                     {imgSrc !== '' && (
                         <>
-
-                            <Cropper
-                                ref={cropperRef}
-                                src={imgSrc}
-                                style={{height: 300, width: '100%'}}
-                                background={false}
-                                aspectRatio={1}
-                                responsive
-                                center
-                                zoomable={false}
-                                scalable={false}
-                                cropBoxResizable={false}
-                                guides={false}
-                                crop={onCrop}
-                            />
-
+                            <Box component="img" sx={{width: '200px', height: '200px', borderRadius: '50%', mb: '20px'}}
+                                 src={imgSrc}/>
                             <Box>
                                 <AuthRequired>
-                                    <Button variant="contained" sx={{mr: '10px'}} onClick={submit}>Upload</Button>
+                                    <Button disabled={inProgress} variant="contained" sx={{mr: '10px'}}
+                                            onClick={submit}>{t('Upload')}</Button>
                                 </AuthRequired>
-                                <Button onClick={() => {
-                                    setImgSrc('');
-                                }}>Back</Button>
+                                <Button disabled={inProgress} onClick={selectFile}>{t('Select another file')}</Button>
                             </Box>
                         </>
                     )}
@@ -103,4 +95,4 @@ const SpacePicture = (props: { space: Space }) => {
     );
 }
 
-export default SpacePicture;
+export default SetSpacePicture;

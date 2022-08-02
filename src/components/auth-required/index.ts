@@ -1,7 +1,7 @@
 import React from 'react';
 import useAuth from '../../hooks/use-auth';
 
-const AuthRequired = (props: { children: React.ReactElement }) => {
+const AuthRequired = (props: { children: React.ReactElement}) => {
     const {auth, data, openAuth, requestSignature} = useAuth();
 
     if (!data) {

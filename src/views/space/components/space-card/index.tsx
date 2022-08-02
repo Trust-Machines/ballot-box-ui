@@ -1,14 +1,15 @@
 import Box from '@mui/material/Box';
-import {useTheme} from '@mui/material';
+import {Tooltip, useTheme} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 
-import SpacePicture from '../dialogs/picture';
+import SetSpacePicture from '../dialogs/set-picture';
 import SpaceIcon from '../../../../components/space-icon';
 import useSpace from '../../../../hooks/use-space';
 import useUserData from '../../../../hooks/use-user-data';
 import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
 import useModal from '../../../../hooks/use-modal';
+import useTranslation from '../../../../hooks/use-translation';
 
 
 const SpaceCard = () => {
@@ -17,6 +18,7 @@ const SpaceCard = () => {
     const {userSpaces} = useUserData();
     const [isSm] = useMediaBreakPoint();
     const [, showModal] = useModal();
+    const [t] = useTranslation();
 
     if (!space) {
         return null;
@@ -50,27 +52,35 @@ const SpaceCard = () => {
                     zIndex: 1
                 }}/>
                 {editable && (
-                    <Box sx={{
-                        position: 'absolute',
-                        right: 0,
-                        bottom: 0,
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 2,
-                        cursor: 'pointer',
-                        borderRadius: '50%',
-                        ':hover': {
-                            background: '#000',
-                            opacity: .3
-                        }
-                    }} onClick={() => {
-                        showModal({body: <SpacePicture space={space}/>});
-                    }}>
-                        <EditIcon sx={{color: grey['200']}}/>
-                    </Box>
+                    <Tooltip placement="right" enterDelay={1000} title={t('Set space picture')}>
+                        <Box sx={{
+                            position: 'absolute',
+                            right: 0,
+                            bottom: 0,
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 2,
+                            cursor: 'pointer',
+                            borderRadius: '50%',
+                            'svg': {
+                                display: 'none'
+                            },
+                            ':hover': {
+                                background: '#000',
+                                opacity: .9,
+                                'svg': {
+                                    display: 'block'
+                                },
+                            }
+                        }} onClick={() => {
+                            showModal({body: <SetSpacePicture space={space}/>});
+                        }}>
+                            <EditIcon sx={{color: grey['200']}}/>
+                        </Box>
+                    </Tooltip>
                 )}
             </Box>
 
