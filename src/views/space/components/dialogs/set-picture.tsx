@@ -15,15 +15,16 @@ import useTranslation from '../../../../hooks/use-translation';
 import {updateSpacePicture} from '../../../../api';
 import {Space} from '../../../../types';
 
-const SetSpacePicture = (props: { space: Space }) => {
+const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => void }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [, showMessage] = useToast();
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [imgSrc, setImgSrc] = useState('');
-    const {space} = props;
+    const {space, onSuccess} = props;
     const {auth} = useAuth();
+
 
     const handleClose = () => {
         showModal(null);
@@ -35,6 +36,7 @@ const SetSpacePicture = (props: { space: Space }) => {
         updateSpacePicture(auth!, space!.id, data).then(r => {
             showModal(null);
             showMessage(t('Space picture updated'), 'success');
+            onSuccess(r);
         }).catch(e => {
             if (e.apiMessage) {
                 showMessage(t(e.apiMessage), 'error');

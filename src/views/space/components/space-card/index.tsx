@@ -10,18 +10,25 @@ import useUserData from '../../../../hooks/use-user-data';
 import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
+import {Space} from '../../../../types';
 
 
 const SpaceCard = () => {
     const theme = useTheme();
-    const {space} = useSpace();
-    const {userSpaces} = useUserData();
+    const {space, updateSpace} = useSpace();
+    const {userSpaces, updateSpace: updateSpace2} = useUserData();
     const [isSm] = useMediaBreakPoint();
     const [, showModal] = useModal();
     const [t] = useTranslation();
 
+
     if (!space) {
         return null;
+    }
+
+    const spaceUpdated = (space: Space) => {
+        updateSpace(space);
+        updateSpace2(space);
     }
 
     const editable = userSpaces.find(x => x.id === space.id) !== undefined;
@@ -76,7 +83,7 @@ const SpaceCard = () => {
                                 },
                             }
                         }} onClick={() => {
-                            showModal({body: <SetSpacePicture space={space}/>});
+                            showModal({body: <SetSpacePicture space={space} onSuccess={spaceUpdated}/>});
                         }}>
                             <EditIcon sx={{color: grey['200']}}/>
                         </Box>

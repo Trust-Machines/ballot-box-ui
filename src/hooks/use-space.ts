@@ -8,7 +8,7 @@ import {Space} from '../types';
 import {getSpace} from '../api';
 
 
-const useSpace = (): { space: Space | null } => {
+const useSpace = (): { space: Space | null, updateSpace: (space: Space) => void } => {
     const [space, setSpace] = useAtom(spaceAtom);
     const location = useLocation();
 
@@ -25,7 +25,11 @@ const useSpace = (): { space: Space | null } => {
 
     }, [location, setSpace]);
 
-    return {space};
+    const updateSpace = (space: Space) => {
+        setSpace(space);
+    }
+
+    return {space, updateSpace};
 }
 
 export default useSpace;

@@ -72,7 +72,7 @@ export const createSpace = (auth: USER_AUTH, name: string): Promise<Space> => {
     });
 }
 
-export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: string) => {
+export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: string): Promise<Space> => {
     return apiCallWithAuth(auth, `spaces/${spaceId}/picture`, 'PUT', {
         picture
     });
