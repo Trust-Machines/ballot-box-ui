@@ -1,4 +1,4 @@
-import {NETWORK, USER_AUTH, Space} from '../types';
+import {NETWORK, USER_AUTH, Space, SpaceBase} from '../types';
 import {API_BASE} from '../constants';
 
 class ApiError extends Error {
@@ -70,6 +70,10 @@ export const createSpace = (auth: USER_AUTH, name: string): Promise<Space> => {
         twitterHandle: '',
         githubHandle: ''
     });
+}
+
+export const updateSpace = (auth: USER_AUTH, spaceId: number, props: SpaceBase): Promise<Space> => {
+    return apiCallWithAuth(auth, `spaces/${spaceId}`, 'PUT', props);
 }
 
 export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: string): Promise<Space> => {

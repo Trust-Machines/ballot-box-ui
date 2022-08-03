@@ -15,6 +15,8 @@ import ThemedBox from '../../components/themed-box';
 
 
 const CreateSpace = (_: RouteComponentProps) => {
+    return null;
+    /*
     const [t] = useTranslation();
 
     const validator = (fields: any) => {
@@ -165,6 +167,8 @@ const CreateSpace = (_: RouteComponentProps) => {
             </AppContent>
         </AppWrapper>
     </>
+
+     */
 }
 
 

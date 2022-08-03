@@ -10,7 +10,7 @@ const AppContent = (props: { children: React.ReactNode }) => {
         maxWidth: `${theme.breakpoints.values.md}px`,
         margin: 'auto',
         flexGrow: 1,
-        p: '20px 5px'
+        p: '20px 5px 100px 5px'
     }}>{children}</Box>
 }
 

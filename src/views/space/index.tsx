@@ -44,8 +44,8 @@ const SpacePage = (_: RouteComponentProps) => {
             <AppContent>
                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                     <SpaceCard space={space}/>
-                    <Box sx={{flexGrow: 1}}>
-                        {params.section === 'edit' && <SpaceEdit/>}
+                    <Box sx={{flexGrow: 1, mt: '20px'}}>
+                        {params.section === 'edit' && <SpaceEdit space={space}/>}
                     </Box>
                 </Box>
             </AppContent>
