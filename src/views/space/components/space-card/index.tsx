@@ -70,111 +70,130 @@ const SpaceCard = (props: { space: Space }) => {
         ) : null
     ].filter(x => x !== null);
 
-    return <Box sx={{
-        border: `1px solid ${theme.palette.divider}`,
-        padding: '16px',
-        borderRadius: '12px',
-        flexGrow: 0,
-        flexShrink: 0,
-        position: 'relative',
-    }}>
-        {editable && <Box sx={{
-            position: 'absolute',
-            right: '12px',
-            top: '12px'
-        }}>
-            <Link to={`/spaces/${space.id}/edit`}>
-                <Tooltip title={t('Edit space')} enterDelay={1000}>
-                    <EditIcon/>
-                </Tooltip>
-            </Link>
-        </Box>}
+    return <>
         <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            border: `1px solid ${theme.palette.divider}`,
+            padding: '16px',
+            borderRadius: '12px',
+            flexGrow: 0,
+            flexShrink: 0,
+            position: 'relative',
         }}>
-            <Box sx={{
-                position: 'relative',
-                width: '80px',
-                height: '80px',
-                marginBottom: '12px'
+            {editable && <Box sx={{
+                position: 'absolute',
+                right: '12px',
+                top: '12px'
             }}>
-                <SpaceIcon space={space} sx={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    width: '100%',
-                    height: '100%',
-                    zIndex: 1,
-                    backgroundColor: styles.menuBgColor,
-                    border: `1px solid ${theme.palette.divider}`,
-                    fontSize: '30px'
-                }}/>
-                {editable && (
-                    <Tooltip placement="right" enterDelay={1000} title={t('Set space picture')}>
-                        <Box sx={{
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            zIndex: 2,
-                            cursor: 'pointer',
-                            borderRadius: '50%',
-                            border: '1px solid transparent',
-                            'svg': {
-                                display: 'none'
-                            },
-                            ':hover': {
-                                background: '#000',
-                                opacity: .9,
-                                'svg': {
-                                    display: 'block'
-                                },
-                            }
-                        }} onClick={() => {
-                            showModal({body: <SetSpacePicture space={space} onSuccess={spaceUpdated}/>});
-                        }}>
-                            <EditIcon sx={{color: grey['200']}}/>
-                        </Box>
+                <Link to={`/spaces/${space.id}/edit`}>
+                    <Tooltip title={t('Edit space')} enterDelay={1000}>
+                        <EditIcon/>
                     </Tooltip>
-                )}
-            </Box>
-            <Box sx={{
-                fontSize: '22px',
-                fontWeight: '700',
-            }}>{space.name}</Box>
+                </Link>
+            </Box>}
             <Box sx={{
                 display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
-                height: '40px'
             }}>
-                {links.map((x, i) => <Box sx={{
-                    mr: i !== links.length - 1 ? '16px' : null
-                }}>{x}</Box>)}
-            </Box>
-            <Box sx={{
-                display: 'flex',
-            }}>
-                {sections.map((i, c) => {
-                    if (i.requiresOwner && !editable) {
-                        return null;
-                    }
+                <Box sx={{
+                    position: 'relative',
+                    width: '80px',
+                    height: '80px',
+                    marginBottom: '12px'
+                }}>
+                    <SpaceIcon space={space} sx={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 1,
+                        backgroundColor: styles.menuBgColor,
+                        border: `1px solid ${theme.palette.divider}`,
+                        fontSize: '30px'
+                    }}/>
+                    {editable && (
+                        <Tooltip placement="right" enterDelay={1000} title={t('Set space picture')}>
+                            <Box sx={{
+                                position: 'absolute',
+                                left: 0,
+                                top: 0,
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                zIndex: 2,
+                                cursor: 'pointer',
+                                borderRadius: '50%',
+                                border: '1px solid transparent',
+                                'svg': {
+                                    display: 'none'
+                                },
+                                ':hover': {
+                                    background: '#000',
+                                    opacity: .9,
+                                    'svg': {
+                                        display: 'block'
+                                    },
+                                }
+                            }} onClick={() => {
+                                showModal({body: <SetSpacePicture space={space} onSuccess={spaceUpdated}/>});
+                            }}>
+                                <EditIcon sx={{color: grey['200']}}/>
+                            </Box>
+                        </Tooltip>
+                    )}
+                </Box>
+                <Box sx={{
+                    fontSize: '22px',
+                    fontWeight: '700',
+                }}>{space.name}</Box>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    height: '40px'
+                }}>
+                    {links.map((x, i) => <Box sx={{
+                        mr: i !== links.length - 1 ? '16px' : null
+                    }}>{x}</Box>)}
+                </Box>
+                <Box sx={{
+                    display: 'flex',
+                }}>
+                    {sections.map((i, c) => {
+                        if (i.requiresOwner && !editable) {
+                            return null;
+                        }
 
-                    return <Link key={i.href} to={i.href}
-                                 sx={{
-                                     borderBottom: `2px solid ${i.selected ? styles.linkColor : 'transparent'}`,
-                                     fontWeight: 600,
-                                     marginRight: c !== sections.length - 1 ? '12px' : null,
-                                 }}>{i.label}</Link>
-                })}
+                        return <Link key={i.href} to={i.href}
+                                     sx={{
+                                         borderBottom: `2px solid ${i.selected ? styles.linkColor : 'transparent'}`,
+                                         fontWeight: 600,
+                                         marginRight: c !== sections.length - 1 ? '12px' : null,
+                                         ':hover': {
+                                             borderColor: styles.linkHoverColor
+                                         }
+                                     }}>{i.label}</Link>
+                    })}
+                </Box>
             </Box>
         </Box>
-    </Box>
+        {space.about && (
+            <Box sx={{
+                border: `1px solid ${theme.palette.divider}`,
+                padding: '16px',
+                borderRadius: '12px',
+                flexGrow: 0,
+                flexShrink: 0,
+                textAlign: 'center',
+                wordWrap: 'break-word',
+                mt: '20px'
+            }}>
+                {space.about}
+            </Box>
+        )}
+    </>
 }
 
 export default SpaceCard;
