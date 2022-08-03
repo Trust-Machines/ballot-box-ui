@@ -18,6 +18,10 @@ const SpacePage = (_: RouteComponentProps) => {
     const params = useParams();
 
     useEffect(() => {
+        if (space?.id === Number(params.spaceId)) {
+            return;
+        }
+
         fetchSpace(params.spaceId).then();
     }, [params.spaceId]);
 
