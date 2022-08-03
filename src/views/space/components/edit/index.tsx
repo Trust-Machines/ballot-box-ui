@@ -4,6 +4,7 @@ import {useAtom} from 'jotai';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Box} from '@mui/material';
+import {useNavigate} from '@reach/router';
 
 import {spaceAtom, userSpacesAtom} from '../../../../store';
 
@@ -12,8 +13,10 @@ import ThemedBox from '../../../../components/themed-box';
 import useAuth from '../../../../hooks/use-auth';
 import useTranslation from '../../../../hooks/use-translation';
 import useToast from '../../../../hooks/use-toast';
-import {updateSpace} from '../../../../api';
+import {deleteSpace, updateSpace} from '../../../../api';
 import {Space} from '../../../../types';
+import ConfirmDialog from '../../../../components/confirm-dialog';
+import useModal from '../../../../hooks/use-modal';
 
 
 const SpaceEdit = (props: { space: Space }) => {
@@ -21,7 +24,9 @@ const SpaceEdit = (props: { space: Space }) => {
     const [t] = useTranslation();
     const {auth} = useAuth();
     const [, showMessage] = useToast();
+    const [, showModal] = useModal();
     const [, setSpace] = useAtom(spaceAtom);
+    const navigate = useNavigate();
     const [name, setName] = useState(space.name);
     const [about, setAbout] = useState(space.about || '');
     const [websiteLink, setWebsiteLink] = useState(space.websiteLink || '');
@@ -31,6 +36,7 @@ const SpaceEdit = (props: { space: Space }) => {
     const [error, setError] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [inProgress, setInProgress] = useState<boolean>(false);
+    const [canDelete, setCanDelete] = useState<boolean>(false);
 
     const validator = (fields: any) => {
         const schema = Joi.object({
@@ -108,6 +114,28 @@ const SpaceEdit = (props: { space: Space }) => {
         });
     }
 
+    const confirmDelete = () => {
+        showModal({
+            body: <ConfirmDialog onConfirm={() => {
+                setCanDelete(true);
+            }}/>
+        })
+    }
+
+    const doDelete = () => {
+        setInProgress(true);
+        deleteSpace(auth!, space.id).then(() => {
+            showMessage(t('Space deleted'), 'info');
+            navigate('/').then();
+        }).catch(e => {
+            if (e.apiMessage) {
+                showMessage(t(e.apiMessage), 'error');
+            }
+        }).finally(() => {
+            setInProgress(false);
+        });
+    }
+
     return <Box>
         <Box sx={{fontSize: '26px', fontWeight: '600', mb: '20px'}}>{t('Edit space')}</Box>
         <ThemedBox>
@@ -176,6 +204,18 @@ const SpaceEdit = (props: { space: Space }) => {
                     <Button disabled={inProgress} variant="contained" onClick={submit}>{t('Update')}</Button>
                 </AuthRequired>
             </Box>
+        </ThemedBox>
+        <Box sx={{fontSize: '26px', fontWeight: '600', m: '20px 0'}}>{t('Danger zone')}</Box>
+        <ThemedBox>
+            {canDelete && (
+                <AuthRequired>
+                    <Button variant="contained" onClick={doDelete} color="error">{t('Delete space')}</Button>
+                </AuthRequired>
+            )}
+
+            {!canDelete && (
+                <Button variant="contained" onClick={confirmDelete} color="error">{t('Delete space')}</Button>
+            )}
         </ThemedBox>
     </Box>
 }

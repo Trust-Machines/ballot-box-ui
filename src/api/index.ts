@@ -29,7 +29,7 @@ const handleApiResponse = (promise: Promise<Response>) => {
         });
 }
 
-export const apiCallWithAuth = <T>(auth: USER_AUTH, endpoint: string, method: 'GET' | 'POST' | 'PUT', body: {}): Promise<T> => {
+export const apiCallWithAuth = <T>(auth: USER_AUTH, endpoint: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', body: {}): Promise<T> => {
     return handleApiResponse(fetch(`${API_BASE}/${endpoint}`, {
         method,
         body: JSON.stringify(body),
@@ -75,6 +75,11 @@ export const createSpace = (auth: USER_AUTH, name: string): Promise<Space> => {
 export const updateSpace = (auth: USER_AUTH, spaceId: number, props: SpaceBase): Promise<Space> => {
     return apiCallWithAuth(auth, `spaces/${spaceId}`, 'PUT', props);
 }
+
+export const deleteSpace = (auth: USER_AUTH, spaceId: number) => {
+    return apiCallWithAuth(auth, `spaces/${spaceId}`, 'DELETE', {});
+}
+
 
 export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: string): Promise<Space> => {
     return apiCallWithAuth(auth, `spaces/${spaceId}/picture`, 'PUT', {
