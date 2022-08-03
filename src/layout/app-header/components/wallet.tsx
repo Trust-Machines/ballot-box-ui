@@ -22,7 +22,6 @@ export const WalletMenu = (props: {onSignOut: () => void}) => {
     const address = useAddress();
     const [t] = useTranslation();
     const {signOut} = useAuth();
-    const [isSm] = useMediaBreakPoint();
     const theme = useTheme();
 
     return (
@@ -31,6 +30,7 @@ export const WalletMenu = (props: {onSignOut: () => void}) => {
             width: 'calc(100% - 20px)',
             left: '0',
             top: '50px',
+            zIndex: '90'
         }}>
             <Box sx={{
                 m: '10px 0 20px 0',
