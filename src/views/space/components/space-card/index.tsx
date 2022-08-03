@@ -1,13 +1,16 @@
+import React from 'react';
+import {useAtom} from 'jotai';
 import Box from '@mui/material/Box';
 import {Tooltip, useTheme} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import {useParams} from '@reach/router'
 
+import {spaceAtom} from '../../../../store';
+
 import Link from '../../../../components/link';
 import SetSpacePicture from '../dialogs/set-picture';
 import SpaceIcon from '../../../../components/space-icon';
-import useSpace from '../../../../hooks/use-space';
 import useUserData from '../../../../hooks/use-user-data';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
@@ -17,14 +20,14 @@ import {Space} from '../../../../types';
 const SpaceCard = (props: { space: Space }) => {
     const {space} = props;
     const theme = useTheme();
-    const {updateSpace} = useSpace();
+    const [, setSpace] = useAtom(spaceAtom);
     const {userSpaces, updateSpace: updateSpace2} = useUserData();
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const params = useParams();
 
     const spaceUpdated = (space: Space) => {
-        updateSpace(space);
+        setSpace(space);
         updateSpace2(space);
     }
 

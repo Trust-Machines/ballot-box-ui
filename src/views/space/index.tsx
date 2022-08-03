@@ -1,7 +1,9 @@
 import React, {useEffect} from 'react';
+import {useAtom} from 'jotai';
 import {RouteComponentProps, useParams} from '@reach/router';
 import {Helmet} from 'react-helmet';
 import {Box} from '@mui/material';
+
 
 import SpaceCard from './components/space-card';
 import SpaceEdit from './components/edit';
@@ -9,12 +11,14 @@ import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
 
-import useSpace from '../../hooks/use-space';
+import {spaceAtom} from '../../store';
+
 import AppContent from '../../layout/app-content';
+import {getSpace} from '../../api';
 
 
 const SpacePage = (_: RouteComponentProps) => {
-    const {space, fetchSpace} = useSpace();
+    const [space, setSpace] = useAtom(spaceAtom);
     const params = useParams();
 
     useEffect(() => {
@@ -22,7 +26,10 @@ const SpacePage = (_: RouteComponentProps) => {
             return;
         }
 
-        fetchSpace(params.spaceId).then();
+        getSpace(Number(params.spaceId)).then(r => {
+            setSpace(r);
+            return r;
+        });
     }, [params.spaceId]);
 
     if (!space) {
