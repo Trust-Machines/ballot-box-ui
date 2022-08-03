@@ -17,6 +17,9 @@ const useUserId = (): number | null => {
 
     useEffect(() => {
         if (auth) {
+            if (userId) {
+                return;
+            }
             getMe(auth).then(r => {
                 localStorage.setItem('user_id', String(r.id));
                 setUserId(r.id);
