@@ -5,12 +5,12 @@ import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
 import useStyles from '../../hooks/use-styles';
 
-const Link = (props: { children: React.ReactElement | React.ReactNode, to: string, sx?: SxProps<Theme> }) => {
-    const {sx, children, to} = props;
+const Link = (props: { children: React.ReactElement | React.ReactNode, to: string, external?: boolean, sx?: SxProps<Theme> }) => {
+    const {sx, children, to, external} = props;
     const navigate = useNavigate();
     const {linkColor, linkHoverColor} = useStyles();
 
-    return <Box sx={{
+    const styles = {
         ...{
             color: linkColor,
             textDecoration: 'none',
@@ -18,7 +18,15 @@ const Link = (props: { children: React.ReactElement | React.ReactNode, to: strin
             ':hover': {color: linkHoverColor}
         },
         ...sx
-    }} onClick={() => {
+    };
+
+    if(external){
+        return <Box component="a" sx={styles} href={to} target="_blank" rel="noreferrer">
+            {children}
+        </Box>
+    }
+
+    return <Box sx={styles} onClick={() => {
         navigate(to).then()
     }}>
         {children}

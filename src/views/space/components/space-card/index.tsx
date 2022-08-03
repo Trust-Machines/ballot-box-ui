@@ -5,7 +5,10 @@ import {Tooltip, useTheme} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import {useParams} from '@reach/router'
-
+import TwitterIcon from '@mui/icons-material/Twitter';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkIcon from '@mui/icons-material/Link';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import {spaceAtom, userSpacesAtom} from '../../../../store';
 
 import Link from '../../../../components/link';
@@ -43,6 +46,14 @@ const SpaceCard = (props: { space: Space }) => {
         },
         {label: t('About'), href: `/spaces/${space.id}/about`, selected: params.section === 'about'},
     ];
+
+    const links = [
+        space.twitterHandle ?
+            <Link to={`https://twitter.com/${space.twitterHandle}`} external><TwitterIcon fontSize="small"/></Link> : null,
+        space.githubHandle ? <Link to={`https://github.com/${space.githubHandle}`} external><GitHubIcon fontSize="small"/></Link> : null,
+        space.websiteLink ? <Link to={space.websiteLink} external><LinkIcon fontSize="small"/></Link> : null,
+        space.termsLink ? <Link to={space.termsLink} external><ArticleOutlinedIcon fontSize="small"/></Link> : null
+    ].filter(x => x !== null);
 
     return <Box sx={{
         border: `1px solid ${theme.palette.divider}`,
@@ -121,8 +132,16 @@ const SpaceCard = (props: { space: Space }) => {
             <Box sx={{
                 fontSize: '22px',
                 fontWeight: '700',
-                mb: '20px',
             }}>{space.name}</Box>
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                height: '32px'
+            }}>
+                {links.map((x, i) => <Box sx={{
+                    mr: i !== links.length - 1 ? '10px' : null
+                }}>{x}</Box>)}
+            </Box>
             <Box sx={{
                 display: 'flex',
             }}>
