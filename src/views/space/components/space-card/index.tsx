@@ -14,6 +14,7 @@ import SpaceIcon from '../../../../components/space-icon';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
 import {Space} from '../../../../types';
+import useStyles from '../../../../hooks/use-styles';
 
 
 const SpaceCard = (props: { space: Space }) => {
@@ -24,14 +25,13 @@ const SpaceCard = (props: { space: Space }) => {
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const params = useParams();
+    const styles = useStyles()
 
     const spaceUpdated = (space: Space) => {
         setSpace(space);
         setUserSpaces([...userSpaces.map(s => s.id === space.id ? space : s)]);
     }
 
-    const linkColor = theme.palette.mode === 'light' ? grey[800] : grey[200];
-    const linkHoverColor = grey[500];
     const editable = userSpaces.find(x => x.id === space.id) !== undefined;
     const sections = [
         {label: t('Proposals'), href: `/spaces/${space.id}`, selected: !params.section},
@@ -129,7 +129,7 @@ const SpaceCard = (props: { space: Space }) => {
 
                     return <Link key={i.href} to={i.href}
                                  sx={{
-                                     borderBottom: i.selected ? `2px solid ${linkColor}` : null,
+                                     borderBottom: i.selected ? `2px solid ${styles.linkColor}` : null,
                                      fontWeight: 600,
                                      marginRight: c !== sections.length - 1 ? '12px' : null,
                                  }}>{i.label}</Link>
