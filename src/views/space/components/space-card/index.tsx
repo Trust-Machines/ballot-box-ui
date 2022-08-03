@@ -80,14 +80,17 @@ const SpaceCard = (props: { space: Space }) => {
                     top: 0,
                     width: '100%',
                     height: '100%',
-                    zIndex: 1
+                    zIndex: 1,
+                    backgroundColor: styles.menuBgColor,
+                    border: `1px solid ${theme.palette.divider}`,
+                    fontSize: '30px'
                 }}/>
                 {editable && (
                     <Tooltip placement="right" enterDelay={1000} title={t('Set space picture')}>
                         <Box sx={{
                             position: 'absolute',
-                            right: 0,
-                            bottom: 0,
+                            left: 0,
+                            top: 0,
                             width: '100%',
                             height: '100%',
                             display: 'flex',
@@ -96,6 +99,7 @@ const SpaceCard = (props: { space: Space }) => {
                             zIndex: 2,
                             cursor: 'pointer',
                             borderRadius: '50%',
+                            border: '1px solid transparent',
                             'svg': {
                                 display: 'none'
                             },
