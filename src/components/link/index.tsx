@@ -1,16 +1,14 @@
 import React from 'react';
 import {SxProps} from '@mui/system';
 import {Theme} from '@mui/material/styles';
-import {Box, useTheme} from '@mui/material';
+import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
-import {grey} from '@mui/material/colors';
+import useStyles from '../../hooks/use-styles';
 
 const Link = (props: { children: React.ReactElement | React.ReactNode, to: string, sx?: SxProps<Theme> }) => {
     const {sx, children, to} = props;
     const navigate = useNavigate();
-    const theme = useTheme();
-    const linkColor = theme.palette.mode === 'light' ? grey[800] : grey[200];
-    const linkHoverColor = grey[500];
+    const {linkColor, linkHoverColor} = useStyles();
 
     return <Box sx={{
         ...{

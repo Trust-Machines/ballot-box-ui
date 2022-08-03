@@ -1,20 +1,19 @@
 import React from 'react';
 import {Router} from '@reach/router';
-import {grey} from '@mui/material/colors';
-import {useTheme} from '@mui/material';
 
 import Home from './views/home';
 import Space from './views/space';
+import useStyles from './hooks/use-styles';
 
 
 function App() {
-    const theme = useTheme();
+    const styles = useStyles();
 
     return (
         <Router style={{
             minHeight: '100vh',
             display: 'flex',
-            color: theme.palette.mode === 'light' ? grey[900] : grey[300]
+            color: styles.appBgColor
         }}>
             <Home path='/'/>
             <Space path='/spaces/:spaceId'/>
