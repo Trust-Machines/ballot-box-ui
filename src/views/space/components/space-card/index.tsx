@@ -48,11 +48,26 @@ const SpaceCard = (props: { space: Space }) => {
     ];
 
     const links = [
-        space.twitterHandle ?
-            <Link to={`https://twitter.com/${space.twitterHandle}`} external><TwitterIcon fontSize="small"/></Link> : null,
-        space.githubHandle ? <Link to={`https://github.com/${space.githubHandle}`} external><GitHubIcon fontSize="small"/></Link> : null,
-        space.websiteLink ? <Link to={space.websiteLink} external><LinkIcon fontSize="small"/></Link> : null,
-        space.termsLink ? <Link to={space.termsLink} external><ArticleOutlinedIcon fontSize="small"/></Link> : null
+        space.twitterHandle ? (
+            <Link to={`https://twitter.com/${space.twitterHandle}`} external>
+                <Tooltip title={`@${space.twitterHandle}`}><TwitterIcon fontSize="small"/></Tooltip>
+            </Link>
+        ) : null,
+        space.githubHandle ? (
+            <Link to={`https://github.com/${space.githubHandle}`} external>
+                <Tooltip title={`@${space.githubHandle}`}><GitHubIcon fontSize="small"/></Tooltip>
+            </Link>
+        ) : null,
+        space.websiteLink ? (
+            <Link to={space.websiteLink} external>
+                <Tooltip title={space.websiteLink}><LinkIcon fontSize="small"/></Tooltip>
+            </Link>
+        ) : null,
+        space.termsLink ? (
+            <Link to={space.termsLink} external>
+                <Tooltip title={space.termsLink}><ArticleOutlinedIcon fontSize="small"/></Tooltip>
+            </Link>
+        ) : null
     ].filter(x => x !== null);
 
     return <Box sx={{
@@ -136,10 +151,10 @@ const SpaceCard = (props: { space: Space }) => {
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
-                height: '32px'
+                height: '40px'
             }}>
                 {links.map((x, i) => <Box sx={{
-                    mr: i !== links.length - 1 ? '10px' : null
+                    mr: i !== links.length - 1 ? '16px' : null
                 }}>{x}</Box>)}
             </Box>
             <Box sx={{
