@@ -120,7 +120,7 @@ const Wallet = () => {
                         {address && (
                             <>
                                 <span className="first-line">{truncateMiddle(address, 5)}</span>
-                                {bnsName && <span className="second-line">{bnsName}</span>}
+                                {bnsName && <span className="second-line">{bnsName.name}</span>}
                             </>
                         )}
                     </Box>

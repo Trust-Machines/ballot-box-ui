@@ -7,7 +7,7 @@ import {getBnsName} from '../api/stacks';
 
 import {bnsNameAtom} from '../store';
 
-const useBnsName = (): string | null => {
+const useBnsName = (): { address: string, name: string } | null => {
     const [bns, setBns] = useAtom(bnsNameAtom);
     const address = useAddress();
     const [network, stacksNetwork] = useNetwork()
@@ -18,9 +18,13 @@ const useBnsName = (): string | null => {
             return;
         }
 
+        if (bns?.address === address) {
+            return;
+        }
+
         getBnsName(stacksNetwork, address).then((r) => {
             if (r) {
-                setBns(r);
+                setBns({address, name: r});
             } else {
                 setBns(null);
             }
