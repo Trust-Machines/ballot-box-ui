@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, {useEffect} from 'react';
+import {useAtom} from 'jotai';
 import {Box} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import {useTheme} from '@mui/material';
@@ -10,16 +10,19 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {useNavigate} from '@reach/router';
 
-import AppMenuItem from './menu-item';
+import AppMenuItem from './menu-item'
+import {userSpacesAtom} from '../../store';
 import CreateSpace from '../../views/space/components/dialogs/create';
+import SpaceIcon from '../../components/space-icon';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
 import useAuth from '../../hooks/use-auth';
 import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
 import useModal from '../../hooks/use-modal'
-import useUserData from '../../hooks/use-user-data';
-import SpaceIcon from '../../components/space-icon';
+import useUserId from '../../hooks/use-user-id';
+import {getUserSpaces} from '../../api';
+import {Space} from '../../types';
 
 
 const AppMenu = () => {
@@ -29,9 +32,37 @@ const AppMenu = () => {
     const [appTheme, toggleAppTheme] = useAppTheme();
     const [t] = useTranslation();
     const [, showModal] = useModal();
-    const {userId, userSpaces, addSpace} = useUserData();
+    const userId = useUserId();
+    const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const {data: userData, requestSignature} = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!userId) {
+            return;
+        }
+
+        if (!userData) {
+            if (userSpaces.length) {
+                setUserSpaces([]);
+            }
+            return;
+        }
+
+        if (userSpaces.length) {
+            return;
+        }
+
+        getUserSpaces(userId).then(r => {
+            setUserSpaces(r);
+        })
+
+    }, [userId, userData]);
+
+    const spaceCreated = (space: Space) => {
+        setUserSpaces([...userSpaces, space]);
+        navigate(`/spaces/${space.id}`).then();
+    }
 
     const menu = <Box sx={{
         display: 'flex',
@@ -59,10 +90,7 @@ const AppMenu = () => {
         })}
         <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
             showModal({
-                body: <CreateSpace onSuccess={(space) => {
-                    addSpace(space);
-                    navigate(`/spaces/${space.id}`).then();
-                }}/>
+                body: <CreateSpace onSuccess={spaceCreated}/>
             });
         }}>
             <AddIcon/>

@@ -6,12 +6,11 @@ import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import {useParams} from '@reach/router'
 
-import {spaceAtom} from '../../../../store';
+import {spaceAtom, userSpacesAtom} from '../../../../store';
 
 import Link from '../../../../components/link';
 import SetSpacePicture from '../dialogs/set-picture';
 import SpaceIcon from '../../../../components/space-icon';
-import useUserData from '../../../../hooks/use-user-data';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
 import {Space} from '../../../../types';
@@ -21,14 +20,14 @@ const SpaceCard = (props: { space: Space }) => {
     const {space} = props;
     const theme = useTheme();
     const [, setSpace] = useAtom(spaceAtom);
-    const {userSpaces, updateSpace: updateSpace2} = useUserData();
+    const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const params = useParams();
 
     const spaceUpdated = (space: Space) => {
         setSpace(space);
-        updateSpace2(space);
+        setUserSpaces([...userSpaces.map(s => s.id === space.id ? space : s)]);
     }
 
     const linkColor = theme.palette.mode === 'light' ? grey[800] : grey[200];
