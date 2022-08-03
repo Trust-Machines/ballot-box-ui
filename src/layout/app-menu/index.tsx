@@ -11,7 +11,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {useNavigate} from '@reach/router';
 
 import AppMenuItem from './menu-item'
-import {userSpacesAtom} from '../../store';
+import {spaceAtom, userSpacesAtom} from '../../store';
 import CreateSpace from '../../views/space/components/dialogs/create';
 import SpaceIcon from '../../components/space-icon';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
@@ -34,6 +34,7 @@ const AppMenu = () => {
     const [t] = useTranslation();
     const [, showModal] = useModal();
     const userId = useUserId();
+    const [space] = useAtom(spaceAtom);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const {data: userData, requestSignature} = useAuth();
     const navigate = useNavigate();
@@ -86,7 +87,10 @@ const AppMenu = () => {
             </AppMenuItem>
         )}
         {userSpaces.map(s => {
-            return <AppMenuItem title={s.name} href={`/spaces/${s.id}`} key={s.id}>
+            const selected = space?.id === s.id;
+            return <AppMenuItem title={s.name} href={`/spaces/${s.id}`} key={s.id} sx={{
+                borderColor: selected ? (theme.palette.mode === 'light' ? grey[900] : grey[50]) : null
+            }}>
                 <SpaceIcon space={s} sx={{width: '40px'}}/>
             </AppMenuItem>
         })}
