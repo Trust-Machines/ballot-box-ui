@@ -21,6 +21,7 @@ import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
 import useModal from '../../hooks/use-modal'
 import useUserId from '../../hooks/use-user-id';
+import useStyles from '../../hooks/use-styles';
 import {getUserSpaces} from '../../api';
 import {Space} from '../../types';
 
@@ -36,6 +37,7 @@ const AppMenu = () => {
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const {data: userData, requestSignature} = useAuth();
     const navigate = useNavigate();
+    const styles = useStyles();
 
     useEffect(() => {
         if (!userId) {
@@ -73,7 +75,7 @@ const AppMenu = () => {
         width: '60px',
         pt: '10px',
         borderRight: `1px solid ${theme.palette.divider}`,
-        background: theme.palette.mode === 'light' ? '#fff' : grey[900],
+        background: styles.menuBgColor,
     }}>
         <AppMenuItem href="/" title={t('Home')}>
             <HomeIcon/>

@@ -6,6 +6,7 @@ const useStyles = () => {
 
     return {
         appBgColor: theme.palette.mode === 'light' ? grey[900] : grey[300],
+        menuBgColor: theme.palette.mode === 'light' ? grey[50] : grey[900],
         linkColor: theme.palette.mode === 'light' ? grey[800] : grey[200],
         linkHoverColor: grey[500]
     }

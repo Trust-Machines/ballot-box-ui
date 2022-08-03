@@ -13,16 +13,18 @@ import useBnsName from '../../../hooks/use-bns-name';
 import useAddress from '../../../hooks/use-address';
 import useTranslation from '../../../hooks/use-translation';
 import useMediaBreakPoint from '../../../hooks/use-media-break-point';
-
+import useStyles from '../../../hooks/use-styles';
 import ThemedBox from '../../../components/themed-box';
 import CopyToClipboard from '../../../components/copy-clipboard';
 import {truncateMiddle} from '../../../util';
 
-export const WalletMenu = (props: {onSignOut: () => void}) => {
+
+export const WalletMenu = (props: { onSignOut: () => void }) => {
     const address = useAddress();
     const [t] = useTranslation();
     const {signOut} = useAuth();
     const theme = useTheme();
+    const styles = useStyles();
 
     return (
         <ThemedBox sx={{
@@ -30,7 +32,8 @@ export const WalletMenu = (props: {onSignOut: () => void}) => {
             width: 'calc(100% - 20px)',
             left: '0',
             top: '50px',
-            zIndex: '90'
+            zIndex: '90',
+            background: styles.menuBgColor,
         }}>
             <Box sx={{
                 m: '10px 0 20px 0',
@@ -45,11 +48,11 @@ export const WalletMenu = (props: {onSignOut: () => void}) => {
                     }
                 },
             }}>
-              <CopyToClipboard copy={address!}>
-                  <span><ContentCopyIcon fontSize='small' sx={{mr: '6px'}}/>{t('Copy Address')}</span>
-              </CopyToClipboard>
+                <CopyToClipboard copy={address!}>
+                    <span><ContentCopyIcon fontSize='small' sx={{mr: '6px'}}/>{t('Copy Address')}</span>
+                </CopyToClipboard>
             </Box>
-            <Button variant="contained" sx={{width: '100%'}} onClick={(e)=>{
+            <Button variant="contained" sx={{width: '100%'}} onClick={(e) => {
                 e.stopPropagation();
                 signOut();
                 props.onSignOut();
@@ -125,7 +128,7 @@ const Wallet = () => {
                         )}
                     </Box>
                 </Box>
-                {address && menu && <WalletMenu onSignOut={()=>{
+                {address && menu && <WalletMenu onSignOut={() => {
                     setMenu(false);
                 }}/>}
             </Box>

@@ -7,9 +7,11 @@ import {NETWORK} from '../../../types'
 import useNetwork from '../../../hooks/use-network';
 import ThemedBox from '../../../components/themed-box';
 import NetworkLabel from '../../../components/network-label';
+import useStyles from '../../../hooks/use-styles';
 
 export const NetworkMenu = (props: { onChange: (value: NETWORK) => void }) => {
     const [, , setNetwork] = useNetwork();
+    const styles = useStyles();
 
     const list: NETWORK[] = ['mainnet', 'testnet']
     return (
@@ -17,6 +19,8 @@ export const NetworkMenu = (props: { onChange: (value: NETWORK) => void }) => {
             position: 'absolute',
             right: '0',
             top: '50px',
+            zIndex: 90,
+            background: styles.menuBgColor,
         }}>
             {list.map((n, i) => {
                 return <Box key={n} sx={{mb: i === list.length - 1 ? null : '6px'}}>
