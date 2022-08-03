@@ -129,7 +129,7 @@ const SpaceCard = (props: { space: Space }) => {
 
                     return <Link key={i.href} to={i.href}
                                  sx={{
-                                     borderBottom: i.selected ? `2px solid ${styles.linkColor}` : null,
+                                     borderBottom: `2px solid ${i.selected ? styles.linkColor : 'transparent'}`,
                                      fontWeight: 600,
                                      marginRight: c !== sections.length - 1 ? '12px' : null,
                                  }}>{i.label}</Link>
