@@ -49,7 +49,7 @@ export const getMe = (auth: USER_AUTH): Promise<{ id: number }> => {
 }
 
 export const getUserSpaces = async (userId: number): Promise<Space[]> => {
-    return handleApiResponse(fetch(`${API_BASE}/spaces?userId=${userId}`, {
+    return handleApiResponse(fetch(`${API_BASE}/spaces/by-user?userId=${userId}`, {
         method: 'GET',
     }));
 }
