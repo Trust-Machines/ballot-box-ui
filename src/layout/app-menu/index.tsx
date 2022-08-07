@@ -94,11 +94,7 @@ const AppMenu = () => {
                 <SpaceIcon space={s} sx={{width: '40px'}}/>
             </AppMenuItem>
         })}
-        <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} onClick={() => {
-            showModal({
-                body: <CreateSpace onSuccess={spaceCreated}/>
-            });
-        }}>
+        <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} href="/create-space">
             <AddIcon/>
         </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>

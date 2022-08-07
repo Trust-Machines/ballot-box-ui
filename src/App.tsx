@@ -3,6 +3,7 @@ import {Router} from '@reach/router';
 
 import Home from './views/home';
 import Space from './views/space';
+import CreateSpace from './views/space/create';
 import useStyles from './hooks/use-styles';
 
 
@@ -16,6 +17,7 @@ function App() {
             color: styles.appBgColor
         }}>
             <Home path='/'/>
+            <CreateSpace path='/create-space'/>
             <Space path='/spaces/:spaceId'/>
             <Space path='/spaces/:spaceId/:section'/>
         </Router>

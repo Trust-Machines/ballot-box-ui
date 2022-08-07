@@ -44,6 +44,12 @@ export const apiGet = <T>(auth: USER_AUTH, endpoint: string): Promise<T> => {
     }));
 }
 
+export const getStrategies = async (): Promise<Space> => {
+    return handleApiResponse(fetch(`${API_BASE}/strategies`, {
+        method: 'GET',
+    }));
+}
+
 export const getMe = (auth: USER_AUTH): Promise<{ id: number }> => {
     return apiGet(auth, 'me');
 }
@@ -68,7 +74,14 @@ export const createSpace = (auth: USER_AUTH, name: string): Promise<Space> => {
         websiteLink: '',
         termsLink: '',
         twitterHandle: '',
-        githubHandle: ''
+        githubHandle: '',
+        network: 'mainnet',
+        strategy: 'sip-010-get-balance',
+        strategyOptions: {
+            symbol: 'LBTC',
+            address: 'SP1Z92MPDQEWZXW36VX71Q25HKF5K2EPCJ304F275.lbtc-token-v1c',
+            decimals: 8
+        }
     });
 }
 
