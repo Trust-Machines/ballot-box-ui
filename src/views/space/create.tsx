@@ -97,7 +97,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     const navigate = useNavigate();
 
     let strategyOptionList = Object.keys(strategies).map(s => ({
-        label: s,
+        label: strategies[s].description,
         value: s
     }));
 
