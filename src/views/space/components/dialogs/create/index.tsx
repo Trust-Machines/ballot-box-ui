@@ -50,6 +50,7 @@ const CreateSpace = (props: { onSuccess: (space: Space) => void }) => {
         setInProgress(true);
         setError('');
 
+        /*
         createSpace(auth!, name).then((r) => {
             showModal(null);
             showMessage(t('You new space created'), 'success');
@@ -61,6 +62,8 @@ const CreateSpace = (props: { onSuccess: (space: Space) => void }) => {
         }).finally(() => {
             setInProgress(false);
         })
+
+         */
     }
 
     return (

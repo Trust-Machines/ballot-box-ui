@@ -8,22 +8,18 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import AddIcon from '@mui/icons-material/Add';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import {useNavigate} from '@reach/router';
 
 import AppMenuItem from './menu-item'
 import {spaceAtom, userSpacesAtom} from '../../store';
-import CreateSpace from '../../views/space/components/dialogs/create';
 import SpaceIcon from '../../components/space-icon';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useAppMenuVisibility from '../../hooks/use-app-menu-visibility';
 import useAuth from '../../hooks/use-auth';
 import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
-import useModal from '../../hooks/use-modal'
 import useUserId from '../../hooks/use-user-id';
 import useStyles from '../../hooks/use-styles';
 import {getUserSpaces} from '../../api';
-import {Space} from '../../types';
 
 
 const AppMenu = () => {
@@ -32,12 +28,10 @@ const AppMenu = () => {
     const [appMenuVisibility, toggleAppMenuVisibility] = useAppMenuVisibility();
     const [appTheme, toggleAppTheme] = useAppTheme();
     const [t] = useTranslation();
-    const [, showModal] = useModal();
     const userId = useUserId();
     const [space] = useAtom(spaceAtom);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const {data: userData, requestSignature} = useAuth();
-    const navigate = useNavigate();
     const styles = useStyles();
 
     useEffect(() => {
@@ -61,11 +55,6 @@ const AppMenu = () => {
         })
 
     }, [userId, userData]);
-
-    const spaceCreated = (space: Space) => {
-        setUserSpaces([...userSpaces, space]);
-        navigate(`/spaces/${space.id}`).then();
-    }
 
     const menu = <Box sx={{
         display: 'flex',
