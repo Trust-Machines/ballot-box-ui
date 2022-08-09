@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useAtom} from 'jotai';
 import {RouteComponentProps, useNavigate} from '@reach/router';
 import {Helmet} from 'react-helmet';
@@ -84,18 +84,16 @@ const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange:
 
 const CreateSpace = (_: RouteComponentProps) => {
     const [t] = useTranslation();
-    const inputRef = useRef<HTMLInputElement>();
     const {auth} = useAuth();
+    const [, showMessage] = useToast();
+    const navigate = useNavigate();
     const [name, setName] = useState<string>('');
     const [network, setNetwork] = useState<string>('mainnet');
     const [strategy, setStrategy] = useState<string>('empty');
     const [strategyOptions, setStrategyOptions] = useState<any>({});
     const [isStrategyListOpen, setIsStrategyListOpen] = useState(false);
     const [inProgress, setInProgress] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
-    const [, showMessage] = useToast();
-    const navigate = useNavigate();
 
     let strategyOptionList = Object.keys(strategies).map(s => ({
         label: strategies[s].description,
@@ -111,31 +109,44 @@ const CreateSpace = (_: RouteComponentProps) => {
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
-        setError('');
     }
 
     const handleNetworkChange = (event: SelectChangeEvent) => {
         setNetwork(event.target.value as string);
-        setError('');
     };
 
     const handleStrategyChange = (event: SelectChangeEvent) => {
         setStrategy(event.target.value as string);
         setStrategyOptions({});
-        setError('');
     }
 
     const handleStrategyOpen = () => {
         setIsStrategyListOpen(true);
-        setError('');
     }
 
     const handleStrategyClose = () => {
         setIsStrategyListOpen(false);
-        setError('');
     }
 
+    const isStrategyOptionsValid = () => {
+        if (strategy !== 'empty') {
+            if (Object.keys(strategies[strategy].schema).length > 0) {
+                return Object.values(strategyOptions).find(x => x === '') === undefined;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    const canSubmit = name && isStrategyOptionsValid();
+
     const submit = async () => {
+        if (!canSubmit) {
+            showMessage(t('Please fill all fields in the form'), 'error');
+            return;
+        }
+
         setInProgress(true);
         createSpace(auth!, name, network, strategy, strategyOptions).then(space => {
             setUserSpaces([...userSpaces, space]);
@@ -149,18 +160,7 @@ const CreateSpace = (_: RouteComponentProps) => {
             setInProgress(false);
         })
     }
-    const isStrategyOptionsValid = () => {
-        if (strategy !== 'empty') {
-            if (Object.keys(strategies[strategy].schema).length > 0) {
-                return Object.values(strategyOptions).find(x => x === '') === undefined;
-            }
-            return true;
-        }
 
-        return false;
-    }
-
-    const canSubmit = name && isStrategyOptionsValid();
     const showStrategyOptions = strategy !== 'empty' && Object.keys(strategies[strategy].schema).length > 0;
 
     return <>
@@ -171,17 +171,18 @@ const CreateSpace = (_: RouteComponentProps) => {
             <AppContent>
                 <Box sx={{maxWidth: '600px'}}>
                     <H2>{t('Create space')}</H2>
-                    <TextField autoFocus inputRef={inputRef} label={t('Space name')} value={name} fullWidth
-                               onChange={handleInputChange} error={error !== ''}
-                               helperText={error || ' '}
-                               inputProps={{
-                                   maxLength: 30
-                               }}
-                               InputProps={{
-                                   autoComplete: 'off',
-                                   readOnly: inProgress,
-                               }}
-                    />
+                    <Box sx={{mb: '20px'}}>
+                        <TextField autoFocus label={t('Space name')} value={name} fullWidth
+                                   onChange={handleInputChange}
+                                   inputProps={{
+                                       maxLength: 30
+                                   }}
+                                   InputProps={{
+                                       autoComplete: 'off',
+                                       readOnly: inProgress,
+                                   }}
+                        />
+                    </Box>
                     <FormControl sx={{mb: '20px'}} fullWidth>
                         <InputLabel id="network-select-label">{t('Network')}</InputLabel>
                         <Select
@@ -190,6 +191,7 @@ const CreateSpace = (_: RouteComponentProps) => {
                             value={network}
                             label={t('Network')}
                             onChange={handleNetworkChange}
+                            readOnly={inProgress}
                         >
                             <MenuItem value="mainnet">Mainnet</MenuItem>
                             <MenuItem value="testnet">Testnet</MenuItem>
@@ -205,6 +207,7 @@ const CreateSpace = (_: RouteComponentProps) => {
                             onOpen={handleStrategyOpen}
                             onClose={handleStrategyClose}
                             onChange={handleStrategyChange}
+                            readOnly={inProgress}
                         >
                             {strategyOptionList.map(o => <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>)}
                         </Select>
@@ -215,8 +218,8 @@ const CreateSpace = (_: RouteComponentProps) => {
                             setStrategyOptions(values);
                         }}/>
                     </>)}
-                    <AuthRequired>
-                        <Button variant="contained" onClick={submit} disabled={inProgress || !canSubmit}>
+                    <AuthRequired inactive={!canSubmit}>
+                        <Button variant="contained" onClick={submit} disabled={inProgress}>
                             {t('Submit')}
                         </Button>
                     </AuthRequired>
