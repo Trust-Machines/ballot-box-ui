@@ -8,7 +8,8 @@ const AppWrapper = (props: { children: React.ReactNode }) => {
         display: 'flex',
         flexDirection: 'column',
         flexGrow: 1,
-        flexShrink: 0
+        flexShrink: 0,
+        width: 'calc(100% - 61px)', // 61px: app menu
     }}>{children}</Box>
 }
 
