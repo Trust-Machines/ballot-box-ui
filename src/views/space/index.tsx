@@ -6,8 +6,8 @@ import {Box, useTheme} from '@mui/material';
 
 
 import SpaceCard from './components/space-card';
-import SpaceEdit from './components/edit';
-import SpaceInfo from './components/info';
+import SpaceEdit from './sections/edit';
+import SpaceInfo from './sections/info';
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';

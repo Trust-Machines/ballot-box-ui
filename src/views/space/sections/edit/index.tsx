@@ -9,7 +9,7 @@ import {useNavigate} from '@reach/router';
 import AuthRequired from '../../../../components/auth-required';
 import ThemedBox from '../../../../components/themed-box';
 import {H2} from '../../../../components/text';
-import DeleteSpace from '../dialogs/delete';
+import DeleteSpace from '../../components/dialogs/delete';
 import {spaceAtom, userSpacesAtom} from '../../../../store';
 import useAuth from '../../../../hooks/use-auth';
 import useTranslation from '../../../../hooks/use-translation';
