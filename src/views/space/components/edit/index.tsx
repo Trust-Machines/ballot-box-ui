@@ -3,20 +3,19 @@ import Joi from 'joi';
 import {useAtom} from 'jotai';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {Box} from '@mui/material';
+import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
-
-import {spaceAtom, userSpacesAtom} from '../../../../store';
 
 import AuthRequired from '../../../../components/auth-required';
 import ThemedBox from '../../../../components/themed-box';
+import DeleteSpace from '../dialogs/delete';
+import {spaceAtom, userSpacesAtom} from '../../../../store';
 import useAuth from '../../../../hooks/use-auth';
 import useTranslation from '../../../../hooks/use-translation';
 import useToast from '../../../../hooks/use-toast';
-import {deleteSpace, updateSpace} from '../../../../api';
-import {Space} from '../../../../types';
-import ConfirmDialog from '../../../../components/confirm-dialog';
 import useModal from '../../../../hooks/use-modal';
+import {updateSpace} from '../../../../api';
+import {Space} from '../../../../types';
 
 
 const SpaceEdit = (props: { space: Space }) => {
@@ -26,6 +25,7 @@ const SpaceEdit = (props: { space: Space }) => {
     const [, showMessage] = useToast();
     const [, showModal] = useModal();
     const [, setSpace] = useAtom(spaceAtom);
+    const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const navigate = useNavigate();
     const [name, setName] = useState(space.name);
     const [about, setAbout] = useState(space.about || '');
@@ -36,7 +36,6 @@ const SpaceEdit = (props: { space: Space }) => {
     const [error, setError] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [inProgress, setInProgress] = useState<boolean>(false);
-    const [canDelete, setCanDelete] = useState<boolean>(false);
 
     const validator = (fields: any) => {
         const schema = Joi.object({
@@ -114,26 +113,17 @@ const SpaceEdit = (props: { space: Space }) => {
         });
     }
 
-    const confirmDelete = () => {
+    const deleteClicked = () => {
         showModal({
-            body: <ConfirmDialog onConfirm={() => {
-                setCanDelete(true);
-            }}/>
+            body: <DeleteSpace space={space} onSuccess={spaceDeleted}/>
         })
     }
 
-    const doDelete = () => {
-        setInProgress(true);
-        deleteSpace(auth!, space.id).then(() => {
-            showMessage(t('Space deleted'), 'info');
-            navigate('/').then();
-        }).catch(e => {
-            if (e.apiMessage) {
-                showMessage(t(e.apiMessage), 'error');
-            }
-        }).finally(() => {
-            setInProgress(false);
-        });
+    const spaceDeleted = () => {
+        setUserSpaces(userSpaces.filter(x => x.id !== space.id));
+        setSpace(null);
+        showMessage(t('Space deleted'), 'info');
+        navigate('/').then();
     }
 
     return <Box>
@@ -207,15 +197,17 @@ const SpaceEdit = (props: { space: Space }) => {
         </ThemedBox>
         <Box sx={{fontSize: '26px', fontWeight: '600', m: '20px 0'}}>{t('Danger zone')}</Box>
         <ThemedBox>
-            {canDelete && (
-                <AuthRequired>
-                    <Button variant="contained" onClick={doDelete} color="error">{t('Delete space')}</Button>
-                </AuthRequired>
-            )}
-
-            {!canDelete && (
-                <Button variant="contained" onClick={confirmDelete} color="error">{t('Delete space')}</Button>
-            )}
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Box sx={{flexGrow: 1}}>
+                    <Box sx={{mb: '10px', fontWeight: '600'}}>{t('Delete this space')}</Box>
+                    <Box sx={{
+                        fontSize: '90%'
+                    }}>{t('Once you delete a space, there is no going back. Please be certain.')}</Box>
+                </Box>
+                <Box>
+                    <Button variant="contained" onClick={deleteClicked} color="error">{t('Delete space')}</Button>
+                </Box>
+            </Box>
         </ThemedBox>
     </Box>
 }
