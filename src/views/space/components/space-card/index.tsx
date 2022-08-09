@@ -154,7 +154,7 @@ const SpaceCard = (props: { space: Space }) => {
                     alignItems: 'center',
                     height: '40px'
                 }}>
-                    {links.map((x, i) => <Box sx={{
+                    {links.map((x, i) => <Box key={i} sx={{
                         mr: i !== links.length - 1 ? '16px' : null
                     }}>{x}</Box>)}
                 </Box>
@@ -179,20 +179,6 @@ const SpaceCard = (props: { space: Space }) => {
                 </Box>
             </Box>
         </Box>
-        {space.about && (
-            <Box sx={{
-                border: `1px solid ${theme.palette.divider}`,
-                padding: '16px',
-                borderRadius: '12px',
-                flexGrow: 0,
-                flexShrink: 0,
-                textAlign: 'center',
-                wordWrap: 'break-word',
-                mt: '20px'
-            }}>
-                {space.about}
-            </Box>
-        )}
     </>
 }
 

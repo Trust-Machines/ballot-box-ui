@@ -16,7 +16,7 @@ const StrategyOptions = (props: { space: Space }) => {
     }
 
     return <>{keys.map(o => {
-        return <Box sx={{mb: '10px', wordWrap: 'break-word'}}>
+        return <Box key={o} sx={{mb: '10px', wordWrap: 'break-word'}}>
            <Muted><strong>{schema[o].title}</strong>: {options[o]}</Muted>
         </Box>
     })}</>
