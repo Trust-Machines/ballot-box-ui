@@ -2,19 +2,18 @@ import React, {useEffect} from 'react';
 import {useAtom} from 'jotai';
 import {RouteComponentProps, useParams} from '@reach/router';
 import {Helmet} from 'react-helmet';
-import {Box, useTheme} from '@mui/material';
+import Box from '@mui/material/Box';
+import {useTheme} from '@mui/material';
 
-
-import SpaceCard from './components/space-card';
 import SpaceEdit from './sections/edit';
 import SpaceInfo from './sections/info';
+import Proposals from './sections/proposals';
+import SpaceCard from './components/space-card';
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
-
-import {spaceAtom} from '../../store';
-
 import AppContent from '../../layout/app-content';
+import {spaceAtom} from '../../store';
 import {getSpace} from '../../api';
 
 
@@ -58,10 +57,12 @@ const SpacePage = (_: RouteComponentProps) => {
                                         flexShrink: 0,
                                         textAlign: 'center',
                                         wordWrap: 'break-word',
+                                        mb: '20px'
                                     }}>
                                         {space.about}
                                     </Box>
                                 )}
+                                <Proposals space={space}/>
                             </>
                         )}
                         {params.section === 'edit' && <SpaceEdit space={space}/>}
