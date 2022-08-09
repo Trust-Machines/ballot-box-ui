@@ -14,7 +14,7 @@ function App() {
         <Router style={{
             minHeight: '100vh',
             display: 'flex',
-            color: styles.appBgColor
+            color: styles.textColor
         }}>
             <Home path='/'/>
             <CreateSpace path='/create-space'/>
