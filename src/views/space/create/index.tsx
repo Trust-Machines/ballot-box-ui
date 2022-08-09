@@ -17,6 +17,7 @@ import AppMenu from '../../../layout/app-menu';
 import AppWrapper from '../../../layout/app-wrapper';
 import AppHeader from '../../../layout/app-header';
 import AppContent from '../../../layout/app-content';
+import {H2} from '../../../components/text';
 import AuthRequired from '../../../components/auth-required';
 import useTranslation from '../../../hooks/use-translation';
 import useAuth from '../../../hooks/use-auth';
@@ -169,7 +170,7 @@ const CreateSpace = (_: RouteComponentProps) => {
             <AppHeader/>
             <AppContent>
                 <Box sx={{maxWidth: '600px'}}>
-                    <Box sx={{fontSize: '26px', fontWeight: '600', mb: '20px'}}>{t('Create space')}</Box>
+                    <H2>{t('Create space')}</H2>
                     <TextField autoFocus inputRef={inputRef} label={t('Space name')} value={name} fullWidth
                                onChange={handleInputChange} error={error !== ''}
                                helperText={error || ' '}

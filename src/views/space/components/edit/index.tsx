@@ -8,6 +8,7 @@ import {useNavigate} from '@reach/router';
 
 import AuthRequired from '../../../../components/auth-required';
 import ThemedBox from '../../../../components/themed-box';
+import {H2} from '../../../../components/text';
 import DeleteSpace from '../dialogs/delete';
 import {spaceAtom, userSpacesAtom} from '../../../../store';
 import useAuth from '../../../../hooks/use-auth';
@@ -127,8 +128,8 @@ const SpaceEdit = (props: { space: Space }) => {
     }
 
     return <Box>
-        <Box sx={{fontSize: '26px', fontWeight: '600', mb: '20px'}}>{t('Edit space')}</Box>
-        <ThemedBox>
+        <H2>{t('Edit space')}</H2>
+        <ThemedBox sx={{mb: '20px'}}>
             <TextField label={t('Space name')} inputProps={{maxLength: 30}}
                        fullWidth autoFocus autoComplete="off" value={name}
                        error={error === 'name'}
@@ -195,7 +196,7 @@ const SpaceEdit = (props: { space: Space }) => {
                 </AuthRequired>
             </Box>
         </ThemedBox>
-        <Box sx={{fontSize: '26px', fontWeight: '600', m: '20px 0'}}>{t('Danger zone')}</Box>
+        <H2>{t('Danger zone')}</H2>
         <ThemedBox>
             <Box sx={{display: 'flex', alignItems: 'center'}}>
                 <Box sx={{flexGrow: 1}}>
