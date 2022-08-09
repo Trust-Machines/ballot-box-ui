@@ -44,7 +44,7 @@ const SpaceCard = (props: { space: Space }) => {
             selected: params.section === 'new-proposal',
             requiresOwner: true
         },
-        {label: t('About'), href: `/spaces/${space.id}/about`, selected: params.section === 'about'},
+        {label: t('Info'), href: `/spaces/${space.id}/info`, selected: params.section === 'info'},
     ];
 
     const links = [

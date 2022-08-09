@@ -7,6 +7,7 @@ import {Box} from '@mui/material';
 
 import SpaceCard from './components/space-card';
 import SpaceEdit from './components/edit';
+import SpaceInfo from './components/info';
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
@@ -46,6 +47,7 @@ const SpacePage = (_: RouteComponentProps) => {
                     <SpaceCard space={space}/>
                     <Box sx={{flexGrow: 1, mt: '20px'}}>
                         {params.section === 'edit' && <SpaceEdit space={space}/>}
+                        {params.section === 'info' && <SpaceInfo space={space}/>}
                     </Box>
                 </Box>
             </AppContent>
