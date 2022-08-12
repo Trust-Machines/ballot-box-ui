@@ -1,4 +1,4 @@
-import {NETWORK, USER_AUTH, Space, SpaceBase} from '../types';
+import {NETWORK, USER_AUTH, Space, SpaceBase, ProposalBase, Proposal} from '../types';
 import {API_BASE} from '../constants';
 
 class ApiError extends Error {
@@ -88,11 +88,15 @@ export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: st
     });
 }
 
-export const getBlockHeight = (): Promise<{
-    mainnet: number | null,
-    testnet: number | null
-}> => {
-    return handleApiResponse(fetch(`${API_BASE}/info/block-height`, {
+export const getSpaceProposals = async (spaceId: number): Promise<Proposal[]> => {
+    return handleApiResponse(fetch(`${API_BASE}/proposals/by-space?spaceId=${spaceId}`, {
         method: 'GET',
     }));
+}
+
+export const createProposal = (auth: USER_AUTH, spaceId: string, proposal: ProposalBase): Promise<Space> => {
+    return apiCallWithAuth(auth, 'spaces', 'POST', {
+        spaceId,
+        ...proposal
+    });
 }

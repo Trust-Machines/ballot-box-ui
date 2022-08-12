@@ -27,3 +27,22 @@ export interface Space extends SpaceBase{
     strategy: string,
     strategyOptions: any
 }
+
+export type ProposalStatus = 'new' | 'on' | 'off';
+
+export interface ProposalBase {
+    title: string,
+    body: string | null,
+    discussionLink: string | null,
+    startDate: Date,
+    endDate: Date,
+    choices: string[]
+}
+
+export interface Proposal extends ProposalBase {
+    id: number,
+    userId: number,
+    spaceId: number,
+    status: ProposalStatus
+}
+
