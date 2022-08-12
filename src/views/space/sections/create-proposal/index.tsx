@@ -17,6 +17,9 @@ import useTranslation from '../../../../hooks/use-translation';
 import ThemedBox from '../../../../components/themed-box';
 import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
 import {Space} from '../../../../types';
+import {createProposal} from '../../../../api';
+import AuthRequired from '../../../../components/auth-required';
+import useAuth from '../../../../hooks/use-auth';
 
 
 const ProposalChoices = (props: { choices: string[], onChange: (choices: string[]) => void }) => {
@@ -77,9 +80,10 @@ const FormMenu = (props: {
     onBack: () => void,
     onPreview: () => void,
     onExitPreview: () => void,
-    onSubmit: () => void
+    onSubmit: () => void,
+    canSubmit: () => boolean
 }) => {
-    const {step, onNext, onBack, onPreview, onExitPreview, onSubmit} = props;
+    const {step, onNext, onBack, onPreview, onExitPreview, onSubmit, canSubmit} = props;
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
 
@@ -102,7 +106,9 @@ const FormMenu = (props: {
             case 1:
                 return <Button fullWidth variant="contained" onClick={onNext}>{t('Continue')}</Button>;
             case 2:
-                return <Button fullWidth variant="contained" onClick={onSubmit}>{t('Publish')}</Button>;
+                return <AuthRequired inactive={!canSubmit()}>
+                    <Button fullWidth variant="contained" onClick={onSubmit}>{t('Publish')}</Button>
+                </AuthRequired>;
         }
     }
 
@@ -126,6 +132,7 @@ const FormMenu = (props: {
 const CreateProposal = (props: { space: Space }) => {
     const {space} = props;
 
+    const {auth} = useAuth();
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
     const [step, setStep] = useState<1 | 2>(1);
@@ -143,28 +150,24 @@ const CreateProposal = (props: { space: Space }) => {
         setErrorMessage('');
     }
 
-    const step1Validator = (fields: any) => {
-        const schema = Joi.object({
-            title: Joi.string()
-                .min(3)
-                .max(100)
-                .required()
-                .trim(),
-            body: Joi.string()
-                .max(14000)
-                .allow('', null)
-                .required()
-                .trim(),
-            discussionLink: Joi.string().uri({scheme: 'https', allowRelative: false})
-                .allow('', null)
-                .max(150)
-                .required(),
-        }).messages({
-            'string.uriCustomScheme': t('Link must be a valid uri with a scheme matching the https pattern')
-        })
-
-        return schema.validate(fields);
-    }
+    const validationSchema1 = Joi.object({
+        title: Joi.string()
+            .min(3)
+            .max(100)
+            .required()
+            .trim(),
+        body: Joi.string()
+            .max(14000)
+            .allow('', null)
+            .required()
+            .trim(),
+        discussionLink: Joi.string().uri({scheme: 'https', allowRelative: false})
+            .allow('', null)
+            .max(150)
+            .required(),
+    }).messages({
+        'string.uriCustomScheme': t('Link must be a valid uri with a scheme matching the https pattern')
+    });
 
     const next = () => {
         const props = {
@@ -172,7 +175,7 @@ const CreateProposal = (props: { space: Space }) => {
             body,
             discussionLink
         }
-        const validation = step1Validator(props);
+        const validation = validationSchema1.validate(props);
 
         if (validation.error) {
             setError(validation.error.details[0].path[0].toString() || '');
@@ -195,29 +198,63 @@ const CreateProposal = (props: { space: Space }) => {
 
     }
 
-    const step2Validator = (fields: any) => {
-        const schema = Joi.object({
-            choices: Joi.array()
-                .min(2)
-                .max(5)
-                .required()
-                .items(Joi.string().min(1).max(15).trim().required()),
-        })
+    const validationSchema2 = Joi.object({
+        choices: Joi.array()
+            .min(2)
+            .max(5)
+            .required()
+            .items(Joi.string().min(1).max(15).trim().required()),
+        startDate: Joi
+            .date()
+            .iso()
+            .required(),
+        endDate: Joi.date()
+            .iso()
+            .greater(Joi.ref('startDate'))
+            .required(),
+    });
 
-        return schema.validate(fields);
+    const canSubmit = () => {
+        if (step !== 2) {
+            return false;
+        }
+
+        const props = {
+            choices,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString()
+        }
+
+        return !validationSchema2.validate(props).error;
     }
+
 
     const submit = () => {
         const props = {
-            choices
+            choices,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString()
         }
-        const validation = step2Validator(props);
+
+        const validation = validationSchema2.validate(props);
 
         if (validation.error) {
             setError(validation.error.details[0].path[0].toString() || '');
             setErrorMessage(validation.error.details[0].message);
             return;
         }
+
+        createProposal(auth!, space.id, {
+            title,
+            body,
+            discussionLink,
+            startDate: startDate.toDate(),
+            endDate: endDate.toDate(),
+            choices
+        }).then(r => {
+            console.log(r);
+        })
+
     }
 
     const step1 = <>
@@ -263,10 +300,14 @@ const CreateProposal = (props: { space: Space }) => {
                     <DateTimePicker
                         ampm={false}
                         minDateTime={moment()}
-                        renderInput={(props) => <TextField fullWidth {...props} error={false}/>}
+                        renderInput={(props) => {
+                            return <TextField fullWidth {...props} error={error === 'startDate'}
+                                              helperText={error === 'startDate' ? errorMessage : ' '}/>
+                        }}
                         label={t('Start')}
                         value={startDate}
                         onChange={(v) => {
+                            resetError();
                             if (v) {
                                 setStartDate(v);
                             }
@@ -277,10 +318,14 @@ const CreateProposal = (props: { space: Space }) => {
                     <DateTimePicker
                         ampm={false}
                         minDateTime={moment()}
-                        renderInput={(props) => <TextField fullWidth {...props} error={false}/>}
+                        renderInput={(props) => {
+                            return <TextField fullWidth {...props} error={error === 'endDate'}
+                                              helperText={error === 'endDate' ? errorMessage : ' '}/>
+                        }}
                         label={t('End')}
                         value={endDate}
                         onChange={(v) => {
+                            resetError();
                             if (v) {
                                 setEndDate(v);
                             }
@@ -298,7 +343,8 @@ const CreateProposal = (props: { space: Space }) => {
                 {step === 1 && step1}
                 {step === 2 && step2}
             </Box>
-            <FormMenu step={step} onNext={next} onBack={back} onSubmit={submit} onPreview={preview}
+            <FormMenu step={step} onNext={next} onBack={back} onSubmit={submit} canSubmit={canSubmit}
+                      onPreview={preview}
                       onExitPreview={exitPreview}/>
         </Box>
     </LocalizationProvider>;
