@@ -60,7 +60,6 @@ export const getSpace = async (spaceId: number): Promise<Space> => {
     }));
 }
 
-
 export const createSpace = (auth: USER_AUTH, name: string, network: string, strategy: string, strategyOptions: any): Promise<Space> => {
     return apiCallWithAuth(auth, 'spaces', 'POST', {
         name,
@@ -83,9 +82,17 @@ export const deleteSpace = (auth: USER_AUTH, spaceId: number) => {
     return apiCallWithAuth(auth, `spaces/${spaceId}`, 'DELETE', {});
 }
 
-
 export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: string): Promise<Space> => {
     return apiCallWithAuth(auth, `spaces/${spaceId}/picture`, 'PUT', {
         picture
     });
+}
+
+export const getBlockHeight = (): Promise<{
+    mainnet: number | null,
+    testnet: number | null
+}> => {
+    return handleApiResponse(fetch(`${API_BASE}/info/block-height`, {
+        method: 'GET',
+    }));
 }

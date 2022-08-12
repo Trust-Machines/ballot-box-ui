@@ -8,6 +8,7 @@ import {useTheme} from '@mui/material';
 import SpaceEdit from './sections/edit';
 import SpaceInfo from './sections/info';
 import Proposals from './sections/proposals';
+import ProposalCreate from './sections/create-proposal';
 import SpaceCard from './components/space-card';
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
@@ -65,6 +66,7 @@ const SpacePage = (_: RouteComponentProps) => {
                                 <Proposals space={space}/>
                             </>
                         )}
+                        {params.section === 'new-proposal' && <ProposalCreate space={space}/>}
                         {params.section === 'edit' && <SpaceEdit space={space}/>}
                         {params.section === 'info' && <SpaceInfo space={space}/>}
                     </Box>
