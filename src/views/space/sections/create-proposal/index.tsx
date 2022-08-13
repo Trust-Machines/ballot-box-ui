@@ -1,7 +1,8 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import Joi from 'joi';
 import {useAtom} from 'jotai';
-import moment, {Moment} from 'moment'
+import moment, {Moment} from 'moment';
+import {useNavigate} from '@reach/router';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,18 +13,17 @@ import AddIcon from '@mui/icons-material/Add';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
-import {useNavigate} from '@reach/router';
 
+import AuthRequired from '../../../../components/auth-required';
 import {H2, H3, Muted} from '../../../../components/text';
 import useTranslation from '../../../../hooks/use-translation';
 import ThemedBox from '../../../../components/themed-box';
 import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
+import useAuth from '../../../../hooks/use-auth';
+import useToast from '../../../../hooks/use-toast';
+import {proposalsAtom} from '../../../../store';
 import {Space} from '../../../../types';
 import {createProposal} from '../../../../api';
-import AuthRequired from '../../../../components/auth-required';
-import useAuth from '../../../../hooks/use-auth';
-import {proposalsAtom} from '../../../../store';
-import useToast from '../../../../hooks/use-toast';
 
 const ProposalChoices = (props: { choices: string[], onChange: (choices: string[]) => void }) => {
     const [t] = useTranslation();
@@ -77,64 +77,8 @@ const ProposalChoices = (props: { choices: string[], onChange: (choices: string[
     </>;
 }
 
-const FormMenu = (props: {
-    step: 1 | 2,
-    onNext: () => void,
-    onBack: () => void,
-    onPreview: () => void,
-    onExitPreview: () => void,
-    onSubmit: () => void,
-    canSubmit: () => boolean
-}) => {
-    const {step, onNext, onBack, onPreview, onExitPreview, onSubmit, canSubmit} = props;
-    const [, isMd] = useMediaBreakPoint();
-    const [t] = useTranslation();
-
-    const firstButton = () => {
-        const sx = {
-            mb: isMd ? '12px' : null,
-            mr: !isMd ? '12px' : null
-        };
-
-        switch (step) {
-            case 1:
-                return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={onPreview}>Preview</Button>;
-            case 2:
-                return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={onBack}>Back</Button>;
-        }
-    }
-
-    const secondButton = () => {
-        switch (step) {
-            case 1:
-                return <Button fullWidth variant="contained" onClick={onNext}>{t('Continue')}</Button>;
-            case 2:
-                return <AuthRequired inactive={!canSubmit()}>
-                    <Button fullWidth variant="contained" onClick={onSubmit}>{t('Publish')}</Button>
-                </AuthRequired>;
-        }
-    }
-
-    return <Box sx={{
-        flexGrow: 0,
-        flexShrink: 0,
-        width: isMd ? '200px' : null,
-        pl: isMd ? '20px' : null,
-        mt: !isMd ? '20px' : null
-    }}>
-        <ThemedBox sx={{
-            display: !isMd ? 'flex' : null,
-        }}>
-            {firstButton()}
-            {secondButton()}
-        </ThemedBox>
-    </Box>
-}
-
-
 const CreateProposal = (props: { space: Space }) => {
     const {space} = props;
-
     const {auth} = useAuth();
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
@@ -206,10 +150,6 @@ const CreateProposal = (props: { space: Space }) => {
     }
 
     const preview = () => {
-
-    }
-
-    const exitPreview = () => {
 
     }
 
@@ -355,7 +295,51 @@ const CreateProposal = (props: { space: Space }) => {
                 </Box>
             </Box>
         </ThemedBox>
-    </>
+    </>;
+
+    const formMenu = (() => {
+        const firstButton = () => {
+            const sx = {
+                mb: isMd ? '12px' : null,
+                mr: !isMd ? '12px' : null
+            };
+
+            switch (step) {
+                case 1:
+                    return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={preview}>Preview</Button>;
+                case 2:
+                    return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={back}>Back</Button>;
+            }
+        }
+
+        const secondButton = () => {
+            switch (step) {
+                case 1:
+                    return <Button fullWidth variant="contained" onClick={next}
+                                   disabled={inProgress}>{t('Continue')}</Button>;
+                case 2:
+                    return <AuthRequired inactive={!canSubmit()}>
+                        <Button fullWidth variant="contained" onClick={submit}
+                                disabled={inProgress}>{t('Publish')}</Button>
+                    </AuthRequired>;
+            }
+        }
+
+        return <Box sx={{
+            flexGrow: 0,
+            flexShrink: 0,
+            width: isMd ? '200px' : null,
+            pl: isMd ? '20px' : null,
+            mt: !isMd ? '20px' : null
+        }}>
+            <ThemedBox sx={{
+                display: !isMd ? 'flex' : null,
+            }}>
+                {firstButton()}
+                {secondButton()}
+            </ThemedBox>
+        </Box>
+    })();
 
     return <LocalizationProvider dateAdapter={AdapterMoment}>
         <H2>{t('New proposal')}</H2>
@@ -364,9 +348,7 @@ const CreateProposal = (props: { space: Space }) => {
                 {step === 1 && step1}
                 {step === 2 && step2}
             </Box>
-            <FormMenu step={step} onNext={next} onBack={back} onSubmit={submit} canSubmit={canSubmit}
-                      onPreview={preview}
-                      onExitPreview={exitPreview}/>
+            {formMenu}
         </Box>
     </LocalizationProvider>;
 }
