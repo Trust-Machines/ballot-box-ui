@@ -94,9 +94,11 @@ export const getSpaceProposals = async (spaceId: number): Promise<Proposal[]> =>
     }));
 }
 
-export const createProposal = (auth: USER_AUTH, spaceId: number, proposal: ProposalBase): Promise<Space> => {
+export const createProposal = (auth: USER_AUTH, spaceId: number, proposal: ProposalBase): Promise<Proposal> => {
     return apiCallWithAuth(auth, 'proposals', 'POST', {
         spaceId,
-        ...proposal
+        ...proposal,
+        startDate: proposal.startDate.toISOString(),
+        endDate: proposal.endDate.toISOString()
     });
 }

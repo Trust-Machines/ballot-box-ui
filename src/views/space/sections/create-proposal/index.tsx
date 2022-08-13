@@ -1,5 +1,6 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import Joi from 'joi';
+import {useAtom} from 'jotai';
 import moment, {Moment} from 'moment'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -11,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
+import {useNavigate} from '@reach/router';
 
 import {H2, H3, Muted} from '../../../../components/text';
 import useTranslation from '../../../../hooks/use-translation';
@@ -20,7 +22,8 @@ import {Space} from '../../../../types';
 import {createProposal} from '../../../../api';
 import AuthRequired from '../../../../components/auth-required';
 import useAuth from '../../../../hooks/use-auth';
-
+import {proposalsAtom} from '../../../../store';
+import useToast from '../../../../hooks/use-toast';
 
 const ProposalChoices = (props: { choices: string[], onChange: (choices: string[]) => void }) => {
     const [t] = useTranslation();
@@ -135,15 +138,27 @@ const CreateProposal = (props: { space: Space }) => {
     const {auth} = useAuth();
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
+    const [, showMessage] = useToast();
+    const navigate = useNavigate();
     const [step, setStep] = useState<1 | 2>(1);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [discussionLink, setDiscussionLink] = useState('');
     const [choices, setChoices] = useState<string[]>(['For', 'Against', 'Abstain']);
-    const [error, setError] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [startDate, setStartDate] = React.useState<Moment>(moment().add(2, 'hour').set('minutes', 0).set('seconds', 0).set('millisecond', 0));
     const [endDate, setEndDate] = React.useState<Moment>(moment().add(2, 'hour').set('minutes', 0).set('seconds', 0).set('millisecond', 0).add(1, 'day'));
+    const [error, setError] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [inProgress, setInProgress] = useState(false);
+    const [done, setDone] = useState(false);
+    const [proposals, setProposals] = useAtom(proposalsAtom);
+
+    useEffect(() => {
+        if (done) {
+            showMessage(t('Your new proposal created'), 'success');
+            navigate(`/spaces/${space.id}`).then();
+        }
+    }, [done]);
 
     const resetError = () => {
         setError('');
@@ -228,7 +243,6 @@ const CreateProposal = (props: { space: Space }) => {
         return !validationSchema2.validate(props).error;
     }
 
-
     const submit = () => {
         const props = {
             choices,
@@ -244,6 +258,7 @@ const CreateProposal = (props: { space: Space }) => {
             return;
         }
 
+        setInProgress(true);
         createProposal(auth!, space.id, {
             title,
             body,
@@ -252,9 +267,15 @@ const CreateProposal = (props: { space: Space }) => {
             endDate: endDate.toDate(),
             choices
         }).then(r => {
-            console.log(r);
-        })
-
+            setProposals([...proposals, r]);
+            setDone(true);
+        }).catch(e => {
+            if (e.apiMessage) {
+                showMessage(t(e.apiMessage), 'error');
+            }
+        }).finally(() => {
+            setInProgress(false);
+        });
     }
 
     const step1 = <>
