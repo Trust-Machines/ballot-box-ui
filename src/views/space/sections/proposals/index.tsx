@@ -35,7 +35,7 @@ const Proposals = (props: { space: Space }) => {
     }
 
     return <>
-        {proposals.map(p => <ProposalCard proposal={p}/>)}
+        {proposals.map(p => <ProposalCard key={p.id} proposal={p}/>)}
     </>
 
 }
