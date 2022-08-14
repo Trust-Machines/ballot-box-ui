@@ -20,13 +20,14 @@ const Link = (props: { children: React.ReactElement | React.ReactNode, to: strin
         ...sx
     };
 
-    if(external){
+    if (external) {
         return <Box component="a" sx={styles} href={to} target="_blank" rel="noreferrer">
             {children}
         </Box>
     }
 
-    return <Box sx={styles} onClick={() => {
+    return <Box component="a" href={to} sx={styles} onClick={(e: any) => {
+        e.preventDefault();
         navigate(to).then()
     }}>
         {children}

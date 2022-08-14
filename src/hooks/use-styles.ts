@@ -1,5 +1,6 @@
 import {useTheme} from '@mui/material';
-import {grey} from '@mui/material/colors';
+import {blue, green, grey, purple} from '@mui/material/colors';
+import {Proposal} from '../types';
 
 const useStyles = () => {
     const theme = useTheme();
@@ -9,7 +10,19 @@ const useStyles = () => {
         mutedTextColor: theme.palette.mode === 'light' ? grey[600] : grey[500],
         menuBgColor: theme.palette.mode === 'light' ? grey[50] : grey[900],
         linkColor: theme.palette.mode === 'light' ? grey[800] : grey[200],
-        linkHoverColor: grey[500]
+        linkHoverColor: grey[500],
+        proposalColor: (proposal: Proposal): string => {
+            switch (proposal.status) {
+                case 'new':
+                    return blue[300];
+                case 'on':
+                    return green[600];
+                case 'off':
+                    return purple[700];
+                default:
+                    return ''
+            }
+        }
     }
 }
 
