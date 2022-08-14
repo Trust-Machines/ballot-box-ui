@@ -43,6 +43,7 @@ export interface Proposal extends ProposalBase {
     id: number,
     userId: number,
     spaceId: number,
-    status: ProposalStatus
+    status: ProposalStatus,
+    voteCount: number
 }
 

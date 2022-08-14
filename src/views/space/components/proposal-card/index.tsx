@@ -45,7 +45,7 @@ const ProposalCard = (props: { proposal: Proposal }) => {
                 <>{' '}{t('Active, {{t}} left', {t: moment(proposal.startDate).fromNow(true)})}</>
             )}
             {proposal.status === 'off' && (
-                <>{' '}{t('Closed, {{v}} votes', {v: 2324})}</>
+                <>{' '}{t('Closed, {{v}} votes', {v: proposal.voteCount})}</>
             )}
         </Muted>
     </Box>
