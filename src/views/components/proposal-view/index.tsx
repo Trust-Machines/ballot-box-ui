@@ -1,29 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
-
 import {H2, Muted} from '../../../components/text';
 import SpaceIcon from '../../../components/space-icon';
 import Link from '../../../components/link';
 import useStyles from '../../../hooks/use-styles';
 import useTranslation from '../../../hooks/use-translation';
 import {ProposalWithSpace} from '../../../types';
-
+import ProposalBody from '../proposal-body';
 
 const ProposalView = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
     const styles = useStyles();
     const [t] = useTranslation();
-    const bodyRef = useRef<HTMLDivElement | null>(null);
-    const [bodyHeight, setBodyHeight] = useState<number | null>(null);
-    const longBody = bodyHeight && bodyHeight > 420;
-
-    useEffect(() => {
-        if (bodyHeight !== null) {
-            return;
-        }
-
-        setBodyHeight(bodyRef.current?.clientHeight || 0);
-    });
 
     return <>
         <H2 sx={{wordWrap: 'break-word'}}>{proposal.title}</H2>
@@ -57,25 +45,7 @@ const ProposalView = (props: { proposal: ProposalWithSpace }) => {
                 <Muted>{proposal.space.name}</Muted>
             </Link>
         </Box>
-        <Box sx={{
-            fontSize: '18px',
-            lineHeight: '28px',
-            position: 'relative',
-            height: longBody ? '420px' : null,
-            overflow: longBody ? 'hidden' : null
-        }} ref={bodyRef}>
-            {longBody && <Box sx={{
-                background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(60,60,60,0) 100%)',
-                position: 'absolute',
-                left: '0',
-                right: '0',
-                bottom: '0',
-                height: '120px'
-            }}>d
-
-            </Box>}
-            {proposal.body?.split('\n').map((x, i) => <Box component="p" key={i}>{x}</Box>)}
-        </Box>
+        <ProposalBody proposal={proposal}/>
     </>
 }
 

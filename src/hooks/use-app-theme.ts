@@ -7,9 +7,9 @@ import {themeAtom} from '../store';
 const useAppTheme = (): [PaletteMode, () => void] => {
     const [theme, setTheme] = useAtom(themeAtom);
     const styles = useStyles();
-    useEffect(() => {
 
-        document.body.style.background = theme === 'dark' ? '#3b3b3b' : '#ffffff';
+    useEffect(() => {
+        document.body.style.background = theme === 'dark' ? styles.appBgDark : styles.appBgLight;
     }, [theme]);
 
     const toggleAppTheme = () => {

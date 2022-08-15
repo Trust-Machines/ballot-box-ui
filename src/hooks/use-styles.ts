@@ -4,9 +4,13 @@ import {Proposal} from '../types';
 
 const useStyles = () => {
     const theme = useTheme();
+    const appBgLight = '#ffffff';
+    const appBgDark = '#3b3b3b';
 
     return {
-        appBg: theme.palette.mode === 'light' ? '#ffffff' : '#3b3b3b',
+        appBgLight,
+        appBgDark,
+        appBg: theme.palette.mode === 'light' ? appBgLight : appBgDark,
         textColor: theme.palette.mode === 'light' ? grey[900] : grey[300],
         mutedTextColor: theme.palette.mode === 'light' ? grey[600] : grey[500],
         menuBgColor: theme.palette.mode === 'light' ? grey[50] : grey[900],
