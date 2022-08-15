@@ -47,3 +47,6 @@ export interface Proposal extends ProposalBase {
     voteCount: number
 }
 
+export interface ProposalWithSpace extends Proposal {
+    space: Space
+}

@@ -1,4 +1,4 @@
 import {atom} from 'jotai';
-import {Proposal} from '../types';
+import {ProposalWithSpace} from '../types';
 
-export const proposalAtom = atom<Proposal | null>(null);
+export const proposalAtom = atom<ProposalWithSpace | null>(null);

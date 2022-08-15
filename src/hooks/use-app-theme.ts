@@ -1,11 +1,14 @@
 import {useEffect} from 'react';
 import {useAtom} from 'jotai';
 import {PaletteMode} from '@mui/material';
+import useStyles from './use-styles';
 import {themeAtom} from '../store';
 
 const useAppTheme = (): [PaletteMode, () => void] => {
     const [theme, setTheme] = useAtom(themeAtom);
+    const styles = useStyles();
     useEffect(() => {
+
         document.body.style.background = theme === 'dark' ? '#3b3b3b' : '#ffffff';
     }, [theme]);
 

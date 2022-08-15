@@ -1,4 +1,4 @@
-import {NETWORK, USER_AUTH, Space, SpaceBase, ProposalBase, Proposal} from '../types';
+import {NETWORK, USER_AUTH, Space, SpaceBase, ProposalBase, Proposal, ProposalWithSpace} from '../types';
 import {API_BASE} from '../constants';
 
 class ApiError extends Error {
@@ -103,7 +103,7 @@ export const createProposal = (auth: USER_AUTH, spaceId: number, proposal: Propo
     });
 }
 
-export const getProposal = async (proposalId: number): Promise<Proposal> => {
+export const getProposal = async (proposalId: number): Promise<ProposalWithSpace> => {
     return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}`, {
         method: 'GET',
     }));

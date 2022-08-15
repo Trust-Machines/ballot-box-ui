@@ -6,6 +6,7 @@ const useStyles = () => {
     const theme = useTheme();
 
     return {
+        appBg: theme.palette.mode === 'light' ? '#ffffff' : '#3b3b3b',
         textColor: theme.palette.mode === 'light' ? grey[900] : grey[300],
         mutedTextColor: theme.palette.mode === 'light' ? grey[600] : grey[500],
         menuBgColor: theme.palette.mode === 'light' ? grey[50] : grey[900],
