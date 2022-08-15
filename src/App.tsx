@@ -4,6 +4,7 @@ import {Router} from '@reach/router';
 import Home from './views/home';
 import Space from './views/space';
 import CreateSpace from './views/space/create';
+import Proposal from './views/proposal';
 import useStyles from './hooks/use-styles';
 
 
@@ -20,6 +21,7 @@ function App() {
             <CreateSpace path='/create-space'/>
             <Space path='/spaces/:spaceId'/>
             <Space path='/spaces/:spaceId/:section'/>
+            <Proposal path='/spaces/:spaceId/proposals/:proposalId'/>
         </Router>
     );
 }

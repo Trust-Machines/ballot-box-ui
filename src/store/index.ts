@@ -5,3 +5,4 @@ export {bnsNameAtom} from './bns-name';
 export {userIdAtom, userSpacesAtom} from './user-data';
 export {spaceAtom} from './space';
 export {proposalsAtom} from './proposals';
+export {proposalAtom} from './proposal';

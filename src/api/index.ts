@@ -102,3 +102,9 @@ export const createProposal = (auth: USER_AUTH, spaceId: number, proposal: Propo
         endDate: proposal.endDate.toISOString()
     });
 }
+
+export const getProposal = async (proposalId: number): Promise<Proposal> => {
+    return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}`, {
+        method: 'GET',
+    }));
+}
