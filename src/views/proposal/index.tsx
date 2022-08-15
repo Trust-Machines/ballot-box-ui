@@ -10,15 +10,19 @@ import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
 import AppContent from '../../layout/app-content';
 import Link from '../../components/link';
+import ProposalView from '../components/proposal-view';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
+import useTranslation from '../../hooks/use-translation';
 import {proposalAtom} from '../../store';
 import {getProposal} from '../../api';
-import ProposalView from '../components/proposal-view';
+import ProposalInfo from '../components/proposal-info';
+
 
 const SpacePage = (_: RouteComponentProps) => {
     const [proposal, setProposal] = useAtom(proposalAtom);
     const params = useParams();
     const [, isMd] = useMediaBreakPoint();
+    const [t] = useTranslation();
 
     useEffect(() => {
         getProposal(Number(params.proposalId)).then(r => {
@@ -49,7 +53,9 @@ const SpacePage = (_: RouteComponentProps) => {
                         <Box sx={{
                             flexGrow: 0,
                             flexShrink: 0,
-                            width: isMd ? '640px' : null,
+                            width: isMd ? '610px' : null,
+                            mr: isMd ? '10px' : null,
+                            mb: !isMd ? '40px' : null
                         }}>
                             <Box sx={{mb: '20px'}}>
                                 <Link to={`/spaces/${proposal.spaceId}`} sx={{
@@ -63,6 +69,7 @@ const SpacePage = (_: RouteComponentProps) => {
                             flexShrink: 0,
                             flexGrow: 1,
                         }}>
+                            <ProposalInfo proposal={proposal}/>
                         </Box>
                     </Box>;
                 })()}

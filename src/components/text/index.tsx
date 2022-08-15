@@ -28,6 +28,18 @@ export const H3 = (props: { children: React.ReactNode, sx?: SxProps<Theme> }) =>
     return <Box sx={sx}>{props.children}</Box>;
 }
 
+export const H4 = (props: { children: React.ReactNode, sx?: SxProps<Theme> }) => {
+    const sx = {
+        ...{
+            fontSize: '18px',
+            fontWeight: '600',
+            mb: '8px'
+        },
+        ...props.sx
+    };
+    return <Box sx={sx}>{props.children}</Box>;
+}
+
 
 export const Muted = (props: { children: React.ReactNode, sx?: SxProps<Theme> }) => {
     const styles = useStyles();

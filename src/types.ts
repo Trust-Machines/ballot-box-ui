@@ -1,4 +1,5 @@
 import {Strategy} from '@trustmachines/ballot-box-strategies/build/src/types';
+
 export type NETWORK = 'mainnet' | 'testnet';
 
 export interface USER_AUTH {
@@ -19,7 +20,7 @@ export interface SpaceBase {
     githubHandle: string | null,
 }
 
-export interface Space extends SpaceBase{
+export interface Space extends SpaceBase {
     id: number,
     userId: number,
     picture: string | null,
@@ -36,6 +37,7 @@ export interface ProposalBase {
     discussionLink: string | null,
     startDate: Date,
     endDate: Date,
+    startBlock?: number,
     choices: string[]
 }
 
