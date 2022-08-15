@@ -64,6 +64,11 @@ const SpacePage = (_: RouteComponentProps) => {
                                 }}><ArrowBackIcon fontSize="small" sx={{mr: '4px'}}/> Back</Link>
                             </Box>
                             <ProposalView proposal={proposal}/>
+
+                            {proposal.discussionLink && (
+                                <></>
+                            )}
+
                         </Box>
                         <Box sx={{
                             flexShrink: 0,
