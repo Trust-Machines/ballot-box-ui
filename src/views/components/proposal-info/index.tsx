@@ -23,9 +23,9 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
             <Box>{t('Strategy')}</Box>
             <Box>{proposal.space.strategy}</Box>
             <Box>{t('Start Date')}</Box>
-            <Box>{moment(proposal.startDate).format('MMM Do YY, h:mm a')}</Box>
+            <Box>{moment.unix(proposal.startTime).format('MMM Do YY, h:mm a')}</Box>
             <Box>{t('End Date')}</Box>
-            <Box>{moment(proposal.endDate).format('MMM Do YY, h:mm a')}</Box>
+            <Box>{moment.unix(proposal.endTime).format('MMM Do YY, h:mm a')}</Box>
             {proposal.startBlock && (
                 <>
                     <Box>{t('Start block')}</Box>

@@ -10,3 +10,5 @@ export const truncate = (s: string, cut: number) => {
         return s;
     }
 }
+
+export const toUnixTs = (now: number) =>  Math.floor(now / 1000);

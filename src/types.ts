@@ -35,8 +35,8 @@ export interface ProposalBase {
     title: string,
     body: string | null,
     discussionLink: string | null,
-    startDate: Date,
-    endDate: Date,
+    startTime: number,
+    endTime: number,
     startBlock?: number,
     choices: string[]
 }

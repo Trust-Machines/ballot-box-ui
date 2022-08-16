@@ -19,6 +19,7 @@ import useAuth from '../../../../hooks/use-auth';
 import useToast from '../../../../hooks/use-toast';
 import {Proposal, Space} from '../../../../types';
 import {createProposal} from '../../../../api';
+import {toUnixTs} from '../../../../util';
 
 type FormStep = 1 | 2;
 
@@ -151,8 +152,8 @@ const ProposalForm = (props: Props) => {
             title,
             body,
             discussionLink,
-            startDate: startDate.toDate(),
-            endDate: endDate.toDate(),
+            startTime: toUnixTs(startDate.toDate().getTime()),
+            endTime: toUnixTs(endDate.toDate().getTime()),
             choices
         }).then(r => {
             onSuccess(r);

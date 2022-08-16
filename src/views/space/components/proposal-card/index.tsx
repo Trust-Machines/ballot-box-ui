@@ -39,10 +39,10 @@ const ProposalCard = (props: { proposal: Proposal }) => {
                 mr: '8px'
             }}/>
             {proposal.status === 'new' && (
-                <>{' '}{t('Starts in {{t}}', {t: moment(proposal.startDate).fromNow(true)})}</>
+                <>{' '}{t('Starts in {{t}}', {t: moment.unix(proposal.startTime).fromNow(true)})}</>
             )}
             {proposal.status === 'on' && (
-                <>{' '}{t('Active, {{t}} left', {t: moment(proposal.startDate).fromNow(true)})}</>
+                <>{' '}{t('Active, {{t}} left', {t: moment.unix(proposal.endTime).fromNow(true)})}</>
             )}
             {proposal.status === 'off' && (
                 <>{' '}{t('Closed, {{v}} votes', {v: proposal.voteCount})}</>
