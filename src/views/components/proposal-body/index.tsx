@@ -61,6 +61,7 @@ const ProposalBody = (props: { proposal: ProposalWithSpace }) => {
             fontSize: '18px',
             lineHeight: '28px',
             position: 'relative',
+            mb: '40px',
             height: longBody && !showAllBody ? '420px' : null,
             overflow: longBody && !showAllBody ? 'hidden' : null,
         }} ref={bodyRef}>

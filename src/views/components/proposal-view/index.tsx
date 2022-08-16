@@ -7,14 +7,15 @@ import useStyles from '../../../hooks/use-styles';
 import useTranslation from '../../../hooks/use-translation';
 import {ProposalWithSpace} from '../../../types';
 import ProposalBody from '../proposal-body';
+import ProposalDiscussion from '../proposal-discussion';
 
 const ProposalView = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
     const styles = useStyles();
     const [t] = useTranslation();
 
-    return <>
-        <H2 sx={{wordWrap: 'break-word'}}>{proposal.title}</H2>
+    return <Box sx={{wordWrap: 'break-word'}}>
+        <H2>{proposal.title}</H2>
         <Box sx={{
             display: 'flex',
             alignItems: 'center',
@@ -40,13 +41,15 @@ const ProposalView = (props: { proposal: ProposalWithSpace }) => {
                     <>{t('Closed')}</>
                 )}
             </Box>
-            {proposal.space.picture && (<SpaceIcon space={proposal.space} sx={{width: '22px', height: '22px', mr: '4px'}}/>)}
+            {proposal.space.picture && (
+                <SpaceIcon space={proposal.space} sx={{width: '22px', height: '22px', mr: '4px'}}/>)}
             <Link to={`/spaces/${proposal.spaceId}`} sx={{fontWeight: 600}}>
                 <Muted>{proposal.space.name}</Muted>
             </Link>
         </Box>
         <ProposalBody proposal={proposal}/>
-    </>
+        <ProposalDiscussion proposal={proposal}/>
+    </Box>
 }
 
 export default ProposalView;

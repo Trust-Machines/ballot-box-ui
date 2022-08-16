@@ -21,4 +21,6 @@ export const NETWORKS: Record<NETWORK, StacksNetwork> = {
     'testnet': new StacksTestnet()
 }
 
-export const SIGNATURE_MESSAGE = 'BallotBoxAuth'
+export const SIGNATURE_MESSAGE = 'BallotBoxAuth';
+
+export const IFRAMELY_API_KEY = process.env.REACT_APP_IFRAMELY_API_KEY;
