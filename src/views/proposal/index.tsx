@@ -53,8 +53,8 @@ const SpacePage = (_: RouteComponentProps) => {
                         <Box sx={{
                             flexGrow: 0,
                             flexShrink: 0,
-                            width: isMd ? '610px' : null,
-                            mr: isMd ? '10px' : null,
+                            width: isMd ? '600px' : null,
+                            mr: isMd ? '20px' : null,
                             mb: !isMd ? '40px' : null
                         }}>
                             <Box sx={{mb: '20px'}}>
@@ -65,9 +65,6 @@ const SpacePage = (_: RouteComponentProps) => {
                             </Box>
                             <ProposalView proposal={proposal}/>
 
-                            {proposal.discussionLink && (
-                                <></>
-                            )}
 
                         </Box>
                         <Box sx={{

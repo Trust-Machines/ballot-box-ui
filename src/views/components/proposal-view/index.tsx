@@ -18,7 +18,8 @@ const ProposalView = (props: { proposal: ProposalWithSpace }) => {
         <Box sx={{
             display: 'flex',
             alignItems: 'center',
-            mb: '20px'
+            mb: '20px',
+            height: '30px'
         }}>
             <Box sx={{
                 display: 'inline-flex',
@@ -39,8 +40,7 @@ const ProposalView = (props: { proposal: ProposalWithSpace }) => {
                     <>{t('Closed')}</>
                 )}
             </Box>
-            {proposal.space.picture &&
-            <SpaceIcon space={proposal.space} sx={{width: '22px', height: '22px', mr: '4px'}}/>}
+            {proposal.space.picture && (<SpaceIcon space={proposal.space} sx={{width: '22px', height: '22px', mr: '4px'}}/>)}
             <Link to={`/spaces/${proposal.spaceId}`} sx={{fontWeight: 600}}>
                 <Muted>{proposal.space.name}</Muted>
             </Link>

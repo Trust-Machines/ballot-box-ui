@@ -62,10 +62,10 @@ const ProposalBody = (props: { proposal: ProposalWithSpace }) => {
             lineHeight: '28px',
             position: 'relative',
             height: longBody && !showAllBody ? '420px' : null,
-            overflow: longBody && !showAllBody ? 'hidden' : null
+            overflow: longBody && !showAllBody ? 'hidden' : null,
         }} ref={bodyRef}>
             {showMore}
-            {proposal.body?.split('\n').map((x, i) => <Box component="p" key={i}>{x}</Box>)}
+            {proposal.body?.split('\n').map((x, i) => <Box sx={{mt: 0}} component="p" key={i}>{x}</Box>)}
             {showLess}
         </Box>
     </>
