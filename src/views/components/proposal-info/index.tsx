@@ -28,7 +28,7 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
             <Box>{moment.unix(proposal.endTime).format('MMM Do YY, h:mm a')}</Box>
             {proposal.startBlock && (
                 <>
-                    <Box>{t('Start block')}</Box>
+                    <Box>{t('Snapshot')}</Box>
                     <Box>{proposal.startBlock}</Box>
                 </>
             )}
