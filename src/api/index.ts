@@ -1,4 +1,13 @@
-import {NETWORK, USER_AUTH, Space, SpaceBase, ProposalBase, Proposal, ProposalWithSpace} from '../types';
+import {
+    NETWORK,
+    USER_AUTH,
+    Space,
+    SpaceBase,
+    ProposalBase,
+    Proposal,
+    ProposalWithSpace,
+    VoteWithProposal
+} from '../types';
 import {API_BASE} from '../constants';
 
 class ApiError extends Error {
@@ -105,4 +114,11 @@ export const getProposal = async (proposalId: number): Promise<ProposalWithSpace
     return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}`, {
         method: 'GET',
     }));
+}
+
+export const vote = (auth: USER_AUTH, proposalId: number, choice: string): Promise<VoteWithProposal> => {
+    return apiCallWithAuth(auth, 'votes', 'POST', {
+        proposalId,
+        choice
+    });
 }

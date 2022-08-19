@@ -1,5 +1,5 @@
 import {atom} from 'jotai';
-import {PaletteMode} from '@mui/material';
+import {Breakpoint, PaletteMode} from '@mui/material';
 
 export type ToastType = null | 'error' | 'warning' | 'info' | 'success';
 
@@ -8,7 +8,7 @@ export interface Toast {
     type: ToastType
 }
 
-export type Modal = { body: JSX.Element, fullScreen?: boolean } | null;
+export type Modal = { body: JSX.Element, fullScreen?: boolean, maxWidth?:Breakpoint } | null;
 
 const initialTheme = (): PaletteMode => {
     const s = localStorage.getItem('app_theme');

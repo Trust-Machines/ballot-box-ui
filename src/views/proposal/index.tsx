@@ -16,6 +16,7 @@ import useTranslation from '../../hooks/use-translation';
 import {proposalAtom} from '../../store';
 import {getProposal} from '../../api';
 import ProposalInfo from '../components/proposal-info';
+import ProposalVote from '../components/proposal-vote';
 
 
 const SpacePage = (_: RouteComponentProps) => {
@@ -64,6 +65,7 @@ const SpacePage = (_: RouteComponentProps) => {
                                 }}><ArrowBackIcon fontSize="small" sx={{mr: '4px'}}/> Back</Link>
                             </Box>
                             <ProposalView proposal={proposal}/>
+                            {proposal.status === 'on' && <ProposalVote proposal={proposal}/>}
 
 
                         </Box>

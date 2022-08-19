@@ -1337,11 +1337,6 @@
   resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-4.5.9.tgz#7c819b412581591f9abc1c04ea07d67af1e501cd"
   integrity sha512-VkDnHBbPee/KMAUuBwe3rEKRDECo1MsA+I+ucZNU6FYdHrsv+SKpYgNr7nk/OhoaGrn9PrpXcmcd9eoD4J3Y6Q==
 
-"@fontsource/roboto@^4.5.7":
-  version "4.5.7"
-  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.7.tgz#292740a52fa2bac61b89f92e1c588037defe65cb"
-  integrity sha512-m57UMER23Mk6Drg9OjtHW1Y+0KPGyZfE5XJoPTOsLARLar6013kJj4X2HICt+iFLJqIgTahA/QAvSn9lwF1EEw==
-
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
@@ -2237,10 +2232,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@trustmachines/ballot-box-strategies@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.0.3.tgz#cffb1386324cc35580929d6b9f5b4df71efa8633"
-  integrity sha512-pyFGmGI9HVpwVUSHB+MhBmc+pC3GTRHXpntSvTguIzthRsngwqZj621D1VyBXlTcPBmnTu9LQS+CeFe2u1QQYQ==
+"@trustmachines/ballot-box-strategies@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.0.5.tgz#2bcf9fb360c935debd82256083986cf9b6720a9c"
+  integrity sha512-UkRVi7ajEWBoY1SkTPgTfL6xsGR2HTVqkb1TC3SmRaPYzLGmQI+XPhsfP+7Q5egm7B5TZPvoQKpRekp5xlvYaA==
   dependencies:
     "@stacks/network" "^4.3.4"
     "@stacks/transactions" "^4.3.4"

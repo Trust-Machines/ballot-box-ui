@@ -25,6 +25,7 @@ const ModalProvider: React.FC = ({children}) => {
                 fullWidth
                 fullScreen={modal.fullScreen || false}
                 disableEscapeKeyDown={false}
+                maxWidth={modal.maxWidth || 'sm'}
             >
                 {modal.body}
             </Dialog>

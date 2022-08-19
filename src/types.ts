@@ -30,6 +30,10 @@ export interface Space extends SpaceBase {
 }
 
 export type ProposalStatus = 'new' | 'on' | 'off';
+export type VoteStats = {
+    choice: string,
+    power: number
+}[];
 
 export interface ProposalBase {
     title: string,
@@ -37,7 +41,6 @@ export interface ProposalBase {
     discussionLink: string | null,
     startTime: number,
     endTime: number,
-    startBlock?: number,
     choices: string[]
 }
 
@@ -45,10 +48,31 @@ export interface Proposal extends ProposalBase {
     id: number,
     userId: number,
     spaceId: number,
+    startBlock?: number,
+    startBlockTip?: string,
     status: ProposalStatus,
-    voteCount: number
+    voteCount: number,
+    voteStats: VoteStats;
 }
 
 export interface ProposalWithSpace extends Proposal {
     space: Space
 }
+
+export interface VoteBase {
+    userAddress: string,
+    userName: string | null,
+    choice: string,
+    power: number
+}
+
+export interface Vote extends VoteBase {
+    id: number,
+    proposalId: number,
+    userId: number,
+}
+
+export interface VoteWithProposal extends Vote {
+    proposal: Proposal
+}
+
