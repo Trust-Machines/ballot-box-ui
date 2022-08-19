@@ -2,24 +2,23 @@ import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {runStrategy} from '@trustmachines/ballot-box-strategies';
 
 import AuthRequired from '../../../components/auth-required';
 import CloseModal from '../../../components/close-modal';
+import ThemedBox from '../../../components/themed-box';
+import {Muted} from '../../../components/text';
+
+import useAddress from '../../../hooks/use-address';
 import useModal from '../../../hooks/use-modal';
 import useToast from '../../../hooks/use-toast';
 import useAuth from '../../../hooks/use-auth';
 import useTranslation from '../../../hooks/use-translation';
 import {vote} from '../../../api';
-import {Proposal, ProposalWithSpace, Space} from '../../../types';
-import ThemedBox from '../../../components/themed-box';
-import useStyles from '../../../hooks/use-styles';
-import {Muted} from '../../../components/text';
+import {ProposalWithSpace} from '../../../types';
 import {NETWORKS} from '../../../constants';
-import useAddress from '../../../hooks/use-address';
 
 
 const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onSuccess: () => void }) => {
