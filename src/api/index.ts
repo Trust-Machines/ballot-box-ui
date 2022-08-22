@@ -6,7 +6,7 @@ import {
     ProposalBase,
     Proposal,
     ProposalWithSpace,
-    VoteWithProposal
+    VoteWithProposal, Vote
 } from '../types';
 import {API_BASE} from '../constants';
 
@@ -121,4 +121,11 @@ export const vote = (auth: USER_AUTH, proposalId: number, choice: string): Promi
         proposalId,
         choice
     });
+}
+
+
+export const getProposalVotes = async (proposalId: number): Promise<Vote[]> => {
+    return handleApiResponse(fetch(`${API_BASE}/votes/by-proposal?proposalId=${proposalId}`, {
+        method: 'GET',
+    }));
 }

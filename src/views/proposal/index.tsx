@@ -14,7 +14,7 @@ import ProposalView from '../components/proposal-view';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useTranslation from '../../hooks/use-translation';
 import {proposalAtom} from '../../store';
-import {getProposal} from '../../api';
+import {getProposal, getProposalVotes} from '../../api';
 import ProposalInfo from '../components/proposal-info';
 import ProposalVote from '../components/proposal-vote';
 import ProposalStats from '../components/proposal-stats';
@@ -32,7 +32,11 @@ const SpacePage = (_: RouteComponentProps) => {
     useEffect(() => {
         getProposal(Number(params.proposalId)).then(r => {
             setProposal(r);
-        });
+        })
+            .then(() => getProposalVotes(Number(params.proposalId)))
+            .then(r => {
+                console.log(r)
+            });
 
         return () => {
             setProposal(null);
