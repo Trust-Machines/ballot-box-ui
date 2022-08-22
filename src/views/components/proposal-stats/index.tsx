@@ -18,11 +18,12 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
     };
+
     return <ThemedBox sx={{fontSize: '90%', fontWeight: '600'}}>
         <H3>{t('Results')}</H3>
 
         {voteStats.map((s, i) => {
-            const per = percentOf(s.power, total);
+            const per = total === 0 ? 0 : percentOf(s.power, total);
             return <Box key={s.choice} sx={{
                 mb: i === voteStats.length - 1 ? null : '20px'
             }}>
@@ -31,7 +32,7 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                         width: '114px',
                         flexGrow: 1,
                         ...commonSx
-                    }}>Lorem ipsum dolor sit amet amamet dsd</Box>
+                    }}>{s.choice}</Box>
                     <Box sx={{
                         width: '70px',
                         textAlign: 'right',
