@@ -18,6 +18,8 @@ import {getProposal} from '../../api';
 import ProposalInfo from '../components/proposal-info';
 import ProposalVote from '../components/proposal-vote';
 import ProposalStats from '../components/proposal-stats';
+import {VoteWithProposal} from '../../types';
+import useToast from '../../hooks/use-toast';
 
 
 const SpacePage = (_: RouteComponentProps) => {
@@ -25,6 +27,7 @@ const SpacePage = (_: RouteComponentProps) => {
     const params = useParams();
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
+    const [, showMessage] = useToast();
 
     useEffect(() => {
         getProposal(Number(params.proposalId)).then(r => {
@@ -35,6 +38,14 @@ const SpacePage = (_: RouteComponentProps) => {
             setProposal(null);
         }
     }, [params.proposalId]);
+
+    const onVote = (vote: VoteWithProposal) => {
+        setProposal({
+            ...proposal!,
+            voteStats: vote.proposal.voteStats
+        });
+        showMessage(t('Your vote has been casted'), 'success');
+    }
 
     return <>
         {proposal && <Helmet><title>{`${proposal.title} | BallotBox`}</title></Helmet>}
@@ -66,7 +77,7 @@ const SpacePage = (_: RouteComponentProps) => {
                                 }}><ArrowBackIcon fontSize="small" sx={{mr: '4px'}}/> Back</Link>
                             </Box>
                             <ProposalView proposal={proposal}/>
-                            {proposal.status === 'on' && <ProposalVote proposal={proposal}/>}
+                            {proposal.status === 'on' && <ProposalVote proposal={proposal} onVote={onVote}/>}
                         </Box>
                         <Box sx={{
                             flexShrink: 0,

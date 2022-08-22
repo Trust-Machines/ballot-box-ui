@@ -6,15 +6,19 @@ import ThemedBox from '../../../components/themed-box';
 import useTranslation from '../../../hooks/use-translation';
 import useStyles from '../../../hooks/use-styles';
 import useModal from '../../../hooks/use-modal';
-import {ProposalWithSpace} from '../../../types';
+import {ProposalWithSpace, VoteWithProposal} from '../../../types';
 
 
-const ProposalVote = (props: { proposal: ProposalWithSpace }) => {
+const ProposalVote = (props: { proposal: ProposalWithSpace, onVote: (proposal: VoteWithProposal) => void }) => {
     const {proposal} = props;
     const [t] = useTranslation();
     const theme = useTheme();
     const {linkHoverColor} = useStyles();
     const [, showModal] = useModal();
+
+    const onVote = (vote: VoteWithProposal) => {
+        props.onVote(vote);
+    }
 
     return <Box sx={{mb: '40px'}}>
         <ThemedBox>
@@ -34,8 +38,7 @@ const ProposalVote = (props: { proposal: ProposalWithSpace }) => {
             }} onClick={() => {
                 showModal({
                     maxWidth: 'xs',
-                    body: <ProposalVoteDialog proposal={proposal} choice={p} onSuccess={() => {
-                    }}/>
+                    body: <ProposalVoteDialog proposal={proposal} choice={p} onVote={onVote}/>
                 });
             }}>{p.toUpperCase()}</Box>)}
         </ThemedBox>

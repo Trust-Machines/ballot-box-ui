@@ -17,15 +17,15 @@ import useToast from '../../../hooks/use-toast';
 import useAuth from '../../../hooks/use-auth';
 import useTranslation from '../../../hooks/use-translation';
 import {vote} from '../../../api';
-import {ProposalWithSpace} from '../../../types';
+import {ProposalWithSpace, VoteWithProposal} from '../../../types';
 import {NETWORKS} from '../../../constants';
 
 
-const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onSuccess: () => void }) => {
+const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const [inProgress, setInProgress] = useState<boolean>(false);
-    const {proposal, choice, onSuccess} = props;
+    const {proposal, choice, onVote} = props;
     const {auth} = useAuth();
     const [, showMessage] = useToast();
     const address = useAddress();
@@ -51,9 +51,9 @@ const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string
 
     const handleConfirm = async () => {
         setInProgress(true);
-        vote(auth!, proposal.id, choice).then(() => {
+        vote(auth!, proposal.id, choice).then((r) => {
             showModal(null);
-            onSuccess();
+            onVote(r);
         }).catch(e => {
             if (e.apiMessage) {
                 showMessage(t(e.apiMessage), 'error');
