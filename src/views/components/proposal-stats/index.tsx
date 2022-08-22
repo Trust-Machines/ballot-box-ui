@@ -38,7 +38,7 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                         textAlign: 'right',
                         ...commonSx
                     }}>{`${formatVotePower(s.power)} ${symbol}`}</Box>
-                    <Box sx={{width: '50px', textAlign: 'right',}}>{`${per}%`}</Box>
+                    <Box sx={{width: '50px', textAlign: 'right',}}>{`${per.toFixed(2)}%`}</Box>
                 </Box>
                 <LinearProgress value={per} variant="determinate" sx={{borderRadius: '5px', height: '10px'}}/>
             </Box>;
