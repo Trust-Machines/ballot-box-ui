@@ -55,6 +55,11 @@ const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange:
         const inputProps: InputBaseProps['inputProps'] = {};
         const value = values[entryName];
 
+        // make ts happy
+        if (entry.type === 'hardcoded') {
+            return null;
+        }
+
         switch (entry.type) {
             case 'string':
                 inputProps['maxLength'] = entry.maxLength;
@@ -161,7 +166,8 @@ const CreateSpace = (_: RouteComponentProps) => {
         })
     }
 
-    const showStrategyOptions = strategy !== 'empty' && Object.keys(strategies[strategy].schema).length > 0;
+    const showStrategyOptions = strategy !== 'empty' &&
+        Object.keys(strategies[strategy].schema).filter(a => strategies[strategy].schema[a].type !== 'hardcoded').length > 0;
 
     return <>
         <Helmet><title>BallotBox | Create a space</title></Helmet>

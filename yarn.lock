@@ -2232,10 +2232,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@trustmachines/ballot-box-strategies@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.0.5.tgz#2bcf9fb360c935debd82256083986cf9b6720a9c"
-  integrity sha512-UkRVi7ajEWBoY1SkTPgTfL6xsGR2HTVqkb1TC3SmRaPYzLGmQI+XPhsfP+7Q5egm7B5TZPvoQKpRekp5xlvYaA==
+"@trustmachines/ballot-box-strategies@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.0.9.tgz#5017661d7f622611ddbd481f015ceafa3287e56c"
+  integrity sha512-mUZ+qEY/FDQrElIEn+pdjUauGMpy8FB1tDpq7L5hsunkS8DyNlByrmpiishCTsh1dYhZc7ZGqwg8vaKLQ0dBVA==
   dependencies:
     "@stacks/network" "^4.3.4"
     "@stacks/transactions" "^4.3.4"
