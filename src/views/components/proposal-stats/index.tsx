@@ -5,12 +5,10 @@ import {H3} from '../../../components/text';
 import useTranslation from '../../../hooks/use-translation';
 import {formatVotePower} from '../../../helper';
 import {percentOf} from '../../../util';
-import useMediaBreakPoint from '../../../hooks/use-media-break-point';
 
 const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
     const [t] = useTranslation();
-    const [, isMd] = useMediaBreakPoint();
     const total = proposal.voteStats.reduce((p, c) => p + c.power, 0);
     const {symbol} = proposal.space.strategyOptions;
     const {voteStats} = proposal;
@@ -31,13 +29,15 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                 <Box sx={{mb: '6px', display: 'flex', alignItems: 'center'}}>
                     <Box sx={{
                         width: '114px',
+                        flexGrow: 1,
                         ...commonSx
-                    }}>{s.choice}</Box>
+                    }}>Lorem ipsum dolor sit amet amamet dsd</Box>
                     <Box sx={{
                         width: '70px',
+                        textAlign: 'right',
                         ...commonSx
                     }}>{`${formatVotePower(s.power)} ${symbol}`}</Box>
-                    <Box sx={{width: '50px'}}>{`${per}%`}</Box>
+                    <Box sx={{width: '50px', textAlign: 'right',}}>{`${per}%`}</Box>
                 </Box>
                 <LinearProgress value={per} variant="determinate" sx={{borderRadius: '5px', height: '10px'}}/>
             </Box>;
