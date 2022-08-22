@@ -10,7 +10,7 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
     const [t] = useTranslation();
     const {proposal} = props;
 
-    return <ThemedBox>
+    return <ThemedBox sx={{mb: '40px'}}>
         <H4 sx={{display: 'flex', alignItems: 'center'}}><InfoOutlinedIcon fontSize="small"
                                                                            sx={{mr: '6px'}}/> {t('Information')}
         </H4>

@@ -1,5 +1,3 @@
-import {Strategy} from '@trustmachines/ballot-box-strategies/build/src/types';
-
 export type NETWORK = 'mainnet' | 'testnet';
 
 export interface USER_AUTH {
@@ -26,7 +24,10 @@ export interface Space extends SpaceBase {
     picture: string | null,
     network: NETWORK,
     strategy: string,
-    strategyOptions: any
+    strategyOptions: {
+        symbol: string,
+        [key: string]: any
+    }
 }
 
 export type ProposalStatus = 'new' | 'on' | 'off';

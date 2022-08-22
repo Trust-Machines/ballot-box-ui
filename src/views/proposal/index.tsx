@@ -17,6 +17,7 @@ import {proposalAtom} from '../../store';
 import {getProposal} from '../../api';
 import ProposalInfo from '../components/proposal-info';
 import ProposalVote from '../components/proposal-vote';
+import ProposalStats from '../components/proposal-stats';
 
 
 const SpacePage = (_: RouteComponentProps) => {
@@ -66,14 +67,13 @@ const SpacePage = (_: RouteComponentProps) => {
                             </Box>
                             <ProposalView proposal={proposal}/>
                             {proposal.status === 'on' && <ProposalVote proposal={proposal}/>}
-
-
                         </Box>
                         <Box sx={{
                             flexShrink: 0,
                             flexGrow: 1,
                         }}>
                             <ProposalInfo proposal={proposal}/>
+                            {proposal.status !== 'new' && <ProposalStats proposal={proposal}/>}
                         </Box>
                     </Box>;
                 })()}
