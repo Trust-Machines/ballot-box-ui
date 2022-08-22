@@ -98,7 +98,7 @@ export const updateSpacePicture = (auth: USER_AUTH, spaceId: number, picture: st
 }
 
 export const getSpaceProposals = async (spaceId: number): Promise<Proposal[]> => {
-    return handleApiResponse(fetch(`${API_BASE}/proposals/by-space?spaceId=${spaceId}`, {
+    return handleApiResponse(fetch(`${API_BASE}/spaces/${spaceId}/proposals`, {
         method: 'GET',
     }));
 }
@@ -125,7 +125,7 @@ export const vote = (auth: USER_AUTH, proposalId: number, choice: string): Promi
 
 
 export const getProposalVotes = async (proposalId: number): Promise<Vote[]> => {
-    return handleApiResponse(fetch(`${API_BASE}/votes/by-proposal?proposalId=${proposalId}`, {
+    return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}/votes`, {
         method: 'GET',
     }));
 }
