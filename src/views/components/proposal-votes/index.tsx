@@ -31,7 +31,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
 
 
     useEffect(() => {
-        setVotes({list: [], loading: true, userVote: null});
+        setVotes({...votes, loading: true, userVote: null});
 
         getProposalVotes(proposal.id, userAddress)
             .then(resp => {
