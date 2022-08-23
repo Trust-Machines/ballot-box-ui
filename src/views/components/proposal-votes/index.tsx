@@ -60,7 +60,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
             return <ThemedBox>
                 {votes.list.map((vote, i) => {
                     const isLast = i === votes.list.length - 1;
-                    return <Box sx={{
+                    return <Box key={vote.id} sx={{
                         pb: isLast ? null : '10px',
                         borderBottom: !isLast ? `1px solid ${theme.palette.divider}` : null,
                         mt: i === 0 ? null : '10px',
