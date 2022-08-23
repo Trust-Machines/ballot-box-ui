@@ -11,6 +11,7 @@ const useUserId = (): number | null => {
 
     useEffect(() => {
         if (!session) {
+            setUserId(null);
             localStorage.removeItem('user_id');
         }
     }, [session]);
@@ -21,8 +22,8 @@ const useUserId = (): number | null => {
                 return;
             }
             getMe(auth).then(r => {
-                localStorage.setItem('user_id', String(r.id));
                 setUserId(r.id);
+                localStorage.setItem('user_id', String(r.id));
             });
         }
     }, [auth]);
