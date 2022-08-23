@@ -128,7 +128,6 @@ const SpaceEdit = (props: { space: Space }) => {
     }
 
     return <Box>
-        <H2>{t('Edit space')}</H2>
         <ThemedBox sx={{mb: '20px'}}>
             <TextField label={t('Space name')} inputProps={{maxLength: 30}}
                        fullWidth autoFocus autoComplete="off" value={name}

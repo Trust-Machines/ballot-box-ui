@@ -4,20 +4,21 @@ import Box from '@mui/material/Box';
 import {Tooltip, useTheme} from '@mui/material';
 import {grey} from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
-import {useParams} from '@reach/router'
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import {spaceAtom, userSpacesAtom} from '../../../../store';
+import {useParams} from '@reach/router';
 
 import Link from '../../../../components/link';
 import SetSpacePicture from '../dialogs/set-picture';
 import SpaceIcon from '../../../../components/space-icon';
 import useModal from '../../../../hooks/use-modal';
 import useTranslation from '../../../../hooks/use-translation';
-import {Space} from '../../../../types';
 import useStyles from '../../../../hooks/use-styles';
+import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
+import {spaceAtom, userSpacesAtom} from '../../../../store';
+import {Space} from '../../../../types';
 
 
 const SpaceCard = (props: { space: Space }) => {
@@ -28,7 +29,8 @@ const SpaceCard = (props: { space: Space }) => {
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const params = useParams();
-    const styles = useStyles()
+    const styles = useStyles();
+    const [isSm] = useMediaBreakPoint();
 
     const spaceUpdated = (space: Space) => {
         setSpace(space);
@@ -45,6 +47,12 @@ const SpaceCard = (props: { space: Space }) => {
             requiresOwner: true
         },
         {label: t('Info'), href: `/spaces/${space.id}/info`, selected: params.section === 'info'},
+        {
+            label: t('Settings'),
+            href: `/spaces/${space.id}/edit`,
+            selected: params.section === 'edit',
+            requiresOwner: true
+        }
     ];
 
     const links = [
@@ -79,17 +87,6 @@ const SpaceCard = (props: { space: Space }) => {
             flexShrink: 0,
             position: 'relative',
         }}>
-            {editable && <Box sx={{
-                position: 'absolute',
-                right: '12px',
-                top: '12px'
-            }}>
-                <Link to={`/spaces/${space.id}/edit`}>
-                    <Tooltip title={t('Edit space')} enterDelay={1000}>
-                        <EditIcon/>
-                    </Tooltip>
-                </Link>
-            </Box>}
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -160,6 +157,7 @@ const SpaceCard = (props: { space: Space }) => {
                 </Box>
                 <Box sx={{
                     display: 'flex',
+                    fontSize: !isSm ? '90%' : null
                 }}>
                     {sections.map((i, c) => {
                         if (i.requiresOwner && !editable) {

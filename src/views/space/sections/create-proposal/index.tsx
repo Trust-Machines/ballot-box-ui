@@ -25,7 +25,6 @@ const CreateProposal = (props: { space: Space }) => {
     }, [done]);
 
     return <>
-        <H2>{t('New proposal')}</H2>
         <ProposalForm
             space={space}
             formDefault={{
