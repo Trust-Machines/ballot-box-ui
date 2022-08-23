@@ -14,10 +14,11 @@ import ProposalView from '../components/proposal-view';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useTranslation from '../../hooks/use-translation';
 import {proposalAtom} from '../../store';
-import {getProposal, getProposalVotes} from '../../api';
+import {getProposal} from '../../api';
 import ProposalInfo from '../components/proposal-info';
 import ProposalVote from '../components/proposal-vote';
 import ProposalStats from '../components/proposal-stats';
+import ProposalVotes from '../components/proposal-votes';
 import {VoteWithProposal} from '../../types';
 import useToast from '../../hooks/use-toast';
 
@@ -33,10 +34,6 @@ const SpacePage = (_: RouteComponentProps) => {
         getProposal(Number(params.proposalId)).then(r => {
             setProposal(r);
         })
-            .then(() => getProposalVotes(Number(params.proposalId)))
-            .then(r => {
-                console.log(r)
-            });
 
         return () => {
             setProposal(null);
@@ -82,6 +79,7 @@ const SpacePage = (_: RouteComponentProps) => {
                             </Box>
                             <ProposalView proposal={proposal}/>
                             {proposal.status === 'on' && <ProposalVote proposal={proposal} onVote={onVote}/>}
+                            {proposal.voteCount > 0 && <ProposalVotes proposal={proposal}/>}
                         </Box>
                         <Box sx={{
                             flexShrink: 0,

@@ -124,8 +124,12 @@ export const vote = (auth: USER_AUTH, proposalId: number, choice: string): Promi
 }
 
 
-export const getProposalVotes = async (proposalId: number): Promise<Vote[]> => {
-    return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}/votes`, {
+export const getProposalVotes = async (proposalId: number, userAddress?: string): Promise<Vote[]> => {
+    let u = `${API_BASE}/proposals/${proposalId}/votes`;
+    if (userAddress) {
+        u = `${u}?userAddress=${userAddress}`;
+    }
+    return handleApiResponse(fetch(u, {
         method: 'GET',
     }));
 }
