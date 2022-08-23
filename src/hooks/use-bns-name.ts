@@ -2,15 +2,13 @@ import {useEffect} from 'react';
 import {useAtom} from 'jotai';
 
 import useAddress from './use-address';
-import useNetwork from './use-network';
 import {getBnsName} from '../api/stacks';
 
 import {bnsNameAtom} from '../store';
 
 const useBnsName = (): { address: string, name: string } | null => {
     const [bns, setBns] = useAtom(bnsNameAtom);
-    const address = useAddress();
-    const [network, stacksNetwork] = useNetwork()
+    const address = useAddress('mainnet');
 
     useEffect(() => {
         if (!address) {
@@ -22,7 +20,7 @@ const useBnsName = (): { address: string, name: string } | null => {
             return;
         }
 
-        getBnsName(stacksNetwork, address).then((r) => {
+        getBnsName(address).then((r) => {
             if (r) {
                 setBns({address, name: r});
             } else {
@@ -31,7 +29,7 @@ const useBnsName = (): { address: string, name: string } | null => {
         }).catch(() => {
             setBns(null);
         });
-    }, [setBns, address, network, stacksNetwork]);
+    }, [setBns, address]);
 
     return bns;
 }

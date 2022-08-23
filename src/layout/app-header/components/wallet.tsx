@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-
 import {useTheme} from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,19 +7,19 @@ import {grey} from '@mui/material/colors';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
+import ThemedBox from '../../../components/themed-box';
+import CopyToClipboard from '../../../components/copy-clipboard';
 import useAuth from '../../../hooks/use-auth';
 import useBnsName from '../../../hooks/use-bns-name';
 import useAddress from '../../../hooks/use-address';
 import useTranslation from '../../../hooks/use-translation';
 import useMediaBreakPoint from '../../../hooks/use-media-break-point';
 import useStyles from '../../../hooks/use-styles';
-import ThemedBox from '../../../components/themed-box';
-import CopyToClipboard from '../../../components/copy-clipboard';
 import {truncateMiddle} from '../../../util';
 
 
 export const WalletMenu = (props: { onSignOut: () => void }) => {
-    const address = useAddress();
+    const address = useAddress('mainnet');
     const [t] = useTranslation();
     const {signOut} = useAuth();
     const theme = useTheme();
@@ -65,7 +64,7 @@ const Wallet = () => {
     const [menu, setMenu] = useState(false);
     const theme = useTheme();
     const {openAuth} = useAuth();
-    const address = useAddress();
+    const address = useAddress('mainnet');
     const bnsName = useBnsName();
     const [t] = useTranslation();
     const [isSm] = useMediaBreakPoint();

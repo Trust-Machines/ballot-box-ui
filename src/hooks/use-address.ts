@@ -1,15 +1,9 @@
 import useAuth from './use-auth';
-import useNetwork from './use-network';
+import {NETWORK} from '../types';
 
-const useAddress = (): string | null => {
+const useAddress = (network: NETWORK): string | null => {
     const {data} = useAuth();
-    const [network] = useNetwork();
-
-    if (data) {
-        return data.profile.stxAddress[network];
-    }
-
-    return null;
+    return data ? data.profile.stxAddress[network] : null;
 }
 
 export default useAddress;

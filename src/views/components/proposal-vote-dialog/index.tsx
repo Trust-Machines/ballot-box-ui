@@ -10,7 +10,6 @@ import AuthRequired from '../../../components/auth-required';
 import CloseModal from '../../../components/close-modal';
 import ThemedBox from '../../../components/themed-box';
 import {Muted} from '../../../components/text';
-
 import useAddress from '../../../hooks/use-address';
 import useModal from '../../../hooks/use-modal';
 import useToast from '../../../hooks/use-toast';
@@ -24,16 +23,16 @@ import {NETWORKS} from '../../../constants';
 const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
     const [, showModal] = useModal();
     const [t] = useTranslation();
-    const [inProgress, setInProgress] = useState<boolean>(false);
-    const {proposal, choice, onVote} = props;
     const {auth} = useAuth();
     const [, showMessage] = useToast();
-    const address = useAddress();
     const [votingPower, setVotingPower] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [inProgress, setInProgress] = useState<boolean>(false);
+    const {proposal, choice, onVote} = props;
+    const {space} = proposal;
+    const address = useAddress(space.network);
 
     useEffect(() => {
-        const {space} = proposal;
         if (!proposal.startBlockTip) {
             return;
         }
