@@ -1,5 +1,7 @@
 import moment from 'moment';
 import Box from '@mui/material/Box';
+import CheckIcon from '@mui/icons-material/Check';
+import green from '@mui/material/colors/green';
 import {useTheme, alpha} from '@mui/material';
 import {H3, Muted} from '../../../../components/text'
 import Link from '../../../../components/link';
@@ -29,6 +31,21 @@ const ProposalCard = (props: { proposal: Proposal }) => {
             mb: '20px',
             wordWrap: 'break-word'
         }}>{proposal.body ? truncate(proposal.body, 220) : ''}</Muted>)}
+        {(() => {
+            if (proposal.status === 'off') {
+                const selected = proposal.voteStats.sort((a, b) => b.power - a.power)[0];
+                if (selected.power !== 0) {
+                    return <Box sx={{mb: '20px', display: 'flex', alignItems: 'center'}}>
+                        <CheckIcon sx={{
+                            fontSize: '18px',
+                            color: green[400],
+                            mr: '6px'
+                        }}/><strong>{selected.choice}</strong>
+                    </Box>
+                }
+            }
+            return null;
+        })()}
         <Muted sx={{display: 'flex', alignItems: 'center'}}>
             <Box sx={{
                 display: 'inline-flex',
