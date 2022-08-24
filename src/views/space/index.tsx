@@ -34,9 +34,6 @@ const SpacePage = (_: RouteComponentProps) => {
         });
     }, [params.spaceId]);
 
-    if (!space) {
-        return null;
-    }
 
     return <>
         {space && <Helmet><title>{`${space.name} | BallotBox`}</title></Helmet>}
@@ -44,33 +41,39 @@ const SpacePage = (_: RouteComponentProps) => {
         <AppWrapper>
             <AppHeader/>
             <AppContent>
-                <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                    <SpaceCard space={space}/>
-                    <Box sx={{flexGrow: 1, mt: '20px'}}>
-                        {!params.section && (
-                            <>
-                                {space.about && (
-                                    <Box sx={{
-                                        border: `1px solid ${theme.palette.divider}`,
-                                        padding: '16px',
-                                        borderRadius: '12px',
-                                        flexGrow: 0,
-                                        flexShrink: 0,
-                                        textAlign: 'center',
-                                        wordWrap: 'break-word',
-                                        mb: '20px'
-                                    }}>
-                                        {space.about}
-                                    </Box>
-                                )}
-                                <Proposals space={space}/>
-                            </>
-                        )}
-                        {params.section === 'new-proposal' && <ProposalCreate space={space}/>}
-                        {params.section === 'edit' && <SpaceEdit space={space}/>}
-                        {params.section === 'info' && <SpaceInfo space={space}/>}
-                    </Box>
-                </Box>
+                {(() => {
+                    if (!space) {
+                        return null;
+                    }
+
+                    return <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                        <SpaceCard space={space}/>
+                        <Box sx={{flexGrow: 1, mt: '20px'}}>
+                            {!params.section && (
+                                <>
+                                    {space.about && (
+                                        <Box sx={{
+                                            border: `1px solid ${theme.palette.divider}`,
+                                            padding: '16px',
+                                            borderRadius: '12px',
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            textAlign: 'center',
+                                            wordWrap: 'break-word',
+                                            mb: '20px'
+                                        }}>
+                                            {space.about}
+                                        </Box>
+                                    )}
+                                    <Proposals space={space}/>
+                                </>
+                            )}
+                            {params.section === 'new-proposal' && <ProposalCreate space={space}/>}
+                            {params.section === 'edit' && <SpaceEdit space={space}/>}
+                            {params.section === 'info' && <SpaceInfo space={space}/>}
+                        </Box>
+                    </Box>;
+                })()}
             </AppContent>
         </AppWrapper>
     </>
