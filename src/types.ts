@@ -22,6 +22,7 @@ export interface Space extends SpaceBase {
     id: number,
     userId: number,
     picture: string | null,
+    proposalCount: number,
     network: NETWORK,
     strategy: string,
     strategyOptions: {
