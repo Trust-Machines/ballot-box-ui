@@ -4,6 +4,7 @@ import {RouteComponentProps, useParams} from '@reach/router';
 import {Helmet} from 'react-helmet';
 
 import Proposal from './sections/proposal';
+import ProposalEdit from './sections/edit';
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
@@ -25,7 +26,6 @@ const ProposalPage = (_: RouteComponentProps) => {
         }
     }, [params.proposalId]);
 
-
     return <>
         {proposal && <Helmet><title>{`${proposal.title} | BallotBox`}</title></Helmet>}
         <AppMenu/>
@@ -39,6 +39,10 @@ const ProposalPage = (_: RouteComponentProps) => {
 
                     if (!params.section) {
                         return <Proposal proposal={proposal}/>
+                    }
+
+                    if (params.section === 'edit') {
+                        return <ProposalEdit proposal={proposal}/>
                     }
 
                     return null;

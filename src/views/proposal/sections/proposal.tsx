@@ -17,7 +17,6 @@ import {ProposalWithSpace, VoteWithProposal} from '../../../types';
 export const Proposal = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
     const [t] = useTranslation();
-
     const [, isMd] = useMediaBreakPoint();
     const [, setProposal] = useAtom(proposalAtom);
     const [, showMessage] = useToast();
@@ -46,7 +45,7 @@ export const Proposal = (props: { proposal: ProposalWithSpace }) => {
                 <Link to={`/spaces/${proposal.spaceId}`} sx={{
                     display: 'inline-flex',
                     alignItems: 'center'
-                }}><ArrowBackIcon fontSize="small" sx={{mr: '4px'}}/> Back</Link>
+                }}><ArrowBackIcon fontSize="small" sx={{mr: '4px'}}/>{t('Back')}</Link>
             </Box>
             <ProposalView proposal={proposal}/>
             {proposal.status === 'on' && <ProposalVote proposal={proposal} onVote={onVote}/>}
