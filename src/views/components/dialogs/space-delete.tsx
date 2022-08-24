@@ -6,14 +6,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import AuthRequired from '../../../../components/auth-required';
-import CloseModal from '../../../../components/close-modal';
-import useModal from '../../../../hooks/use-modal';
-import useToast from '../../../../hooks/use-toast';
-import useAuth from '../../../../hooks/use-auth';
-import useTranslation from '../../../../hooks/use-translation';
-import {deleteSpace} from '../../../../api';
-import {Space} from '../../../../types';
+import AuthRequired from '../../../components/auth-required';
+import CloseModal from '../../../components/close-modal';
+import useModal from '../../../hooks/use-modal';
+import useToast from '../../../hooks/use-toast';
+import useAuth from '../../../hooks/use-auth';
+import useTranslation from '../../../hooks/use-translation';
+import {deleteSpace} from '../../../api';
+import {Space} from '../../../types';
 
 const DeleteSpace = (props: { space: Space, onSuccess: () => void }) => {
     const [, showModal] = useModal();

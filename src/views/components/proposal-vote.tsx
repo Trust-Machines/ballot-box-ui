@@ -4,15 +4,15 @@ import green from '@mui/material/colors/green';
 import CheckIcon from '@mui/icons-material/Check';
 import {alpha, useTheme} from '@mui/material';
 
-import ProposalVoteDialog from '../proposal-vote-dialog';
-import {H3} from '../../../components/text';
-import ThemedBox from '../../../components/themed-box';
-import AuthRequired from '../../../components/auth-required';
-import useTranslation from '../../../hooks/use-translation';
-import useStyles from '../../../hooks/use-styles';
-import useModal from '../../../hooks/use-modal';
-import {votesAtom} from '../../../store';
-import {ProposalWithSpace, VoteWithProposal} from '../../../types';
+import ProposalVoteDialog from './proposal-vote-dialog';
+import {H3} from '../../components/text';
+import ThemedBox from '../../components/themed-box';
+import AuthRequired from '../../components/auth-required';
+import useTranslation from '../../hooks/use-translation';
+import useStyles from '../../hooks/use-styles';
+import useModal from '../../hooks/use-modal';
+import {votesAtom} from '../../store';
+import {ProposalWithSpace, VoteWithProposal} from '../../types';
 
 const ProposalVote = (props: { proposal: ProposalWithSpace, onVote: (proposal: VoteWithProposal) => void }) => {
     const {proposal} = props;

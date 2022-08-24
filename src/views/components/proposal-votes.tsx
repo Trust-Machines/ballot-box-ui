@@ -4,14 +4,14 @@ import {useTheme} from '@mui/material';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 
-import useAuth from '../../../hooks/use-auth';
-import useTranslation from '../../../hooks/use-translation';
-import {H3, Muted} from '../../../components/text';
-import ThemedBox from '../../../components/themed-box';
-import {votesAtom} from '../../../store';
-import {getProposalVotes} from '../../../api';
-import {formatVotePower} from '../../../helper';
-import {ProposalWithSpace} from '../../../types';
+import useAuth from '../../hooks/use-auth';
+import useTranslation from '../../hooks/use-translation';
+import {H3, Muted} from '../../components/text';
+import ThemedBox from '../../components/themed-box';
+import {votesAtom} from '../../store';
+import {getProposalVotes} from '../../api';
+import {formatVotePower} from '../../helper';
+import {ProposalWithSpace} from '../../types';
 
 
 const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {

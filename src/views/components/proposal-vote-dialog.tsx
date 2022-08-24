@@ -6,18 +6,18 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {runStrategy} from '@trustmachines/ballot-box-strategies';
 
-import AuthRequired from '../../../components/auth-required';
-import CloseModal from '../../../components/close-modal';
-import ThemedBox from '../../../components/themed-box';
-import {Muted} from '../../../components/text';
-import useAddress from '../../../hooks/use-address';
-import useModal from '../../../hooks/use-modal';
-import useToast from '../../../hooks/use-toast';
-import useAuth from '../../../hooks/use-auth';
-import useTranslation from '../../../hooks/use-translation';
-import {vote} from '../../../api';
-import {ProposalWithSpace, VoteWithProposal} from '../../../types';
-import {NETWORKS} from '../../../constants';
+import AuthRequired from '../../components/auth-required';
+import CloseModal from '../../components/close-modal';
+import ThemedBox from '../../components/themed-box';
+import {Muted} from '../../components/text';
+import useAddress from '../../hooks/use-address';
+import useModal from '../../hooks/use-modal';
+import useToast from '../../hooks/use-toast';
+import useAuth from '../../hooks/use-auth';
+import useTranslation from '../../hooks/use-translation';
+import {vote} from '../../api';
+import {ProposalWithSpace, VoteWithProposal} from '../../types';
+import {NETWORKS} from '../../constants';
 
 
 const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {

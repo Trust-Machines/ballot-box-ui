@@ -1,13 +1,15 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import {H2, Muted} from '../../../components/text';
-import SpaceIcon from '../../../components/space-icon';
-import Link from '../../../components/link';
-import useStyles from '../../../hooks/use-styles';
-import useTranslation from '../../../hooks/use-translation';
-import {ProposalWithSpace} from '../../../types';
-import ProposalBody from '../proposal-body';
-import ProposalDiscussion from '../proposal-discussion';
+
+import ProposalBody from './proposal-body';
+import ProposalDiscussion from './proposal-discussion';
+import {H2, Muted} from '../../components/text';
+import SpaceIcon from '../../components/space-icon';
+import Link from '../../components/link';
+import useStyles from '../../hooks/use-styles';
+import useTranslation from '../../hooks/use-translation';
+import {ProposalWithSpace} from '../../types';
+
 
 const ProposalView = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;

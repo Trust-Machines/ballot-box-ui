@@ -1,10 +1,12 @@
-import {Box, LinearProgress} from '@mui/material';
-import {ProposalWithSpace} from '../../../types';
-import ThemedBox from '../../../components/themed-box';
-import {H3} from '../../../components/text';
-import useTranslation from '../../../hooks/use-translation';
-import {formatVotePower} from '../../../helper';
-import {percentOf} from '../../../util';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+
+import ThemedBox from '../../components/themed-box';
+import {H3} from '../../components/text';
+import useTranslation from '../../hooks/use-translation';
+import {formatVotePower} from '../../helper';
+import {ProposalWithSpace} from '../../types';
+import {percentOf} from '../../util';
 
 const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;

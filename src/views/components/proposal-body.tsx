@@ -2,9 +2,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {alpha} from '@mui/material';
-import useStyles from '../../../hooks/use-styles';
-import useTranslation from '../../../hooks/use-translation';
-import {ProposalWithSpace} from '../../../types';
+
+import useStyles from '../../hooks/use-styles';
+import useTranslation from '../../hooks/use-translation';
+import {ProposalWithSpace} from '../../types';
 
 const ProposalBody = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;

@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react';
-import {Box} from '@mui/material';
+import Box from '@mui/material/Box';
 
-import {H3, H5} from '../../../components/text'
-import ThemedBox from '../../../components/themed-box';
-import Link from '../../../components/link';
-import useTranslation from '../../../hooks/use-translation';
-import {ProposalWithSpace} from '../../../types';
-import {getLinkData, IframelyLinkData} from '../../../api/iframely';
+import {H3, H5} from '../../components/text'
+import ThemedBox from '../../components/themed-box';
+import Link from '../../components/link';
+import useTranslation from '../../hooks/use-translation';
+import {ProposalWithSpace} from '../../types';
+import {getLinkData, IframelyLinkData} from '../../api/iframely';
 
 
 const ProposalDiscussion = (props: { proposal: ProposalWithSpace }) => {

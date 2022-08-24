@@ -1,10 +1,12 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Box from '@mui/material/Box';
 import moment from 'moment';
-import ThemedBox from '../../../components/themed-box';
-import {H4} from '../../../components/text';
-import useTranslation from '../../../hooks/use-translation';
-import {ProposalWithSpace} from '../../../types';
+
+import ThemedBox from '../../components/themed-box';
+import {H4} from '../../components/text';
+import useTranslation from '../../hooks/use-translation';
+import {ProposalWithSpace} from '../../types';
+
 
 const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
     const [t] = useTranslation();
