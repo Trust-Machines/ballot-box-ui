@@ -22,6 +22,7 @@ function App() {
             <Space path='/spaces/:spaceId'/>
             <Space path='/spaces/:spaceId/:section'/>
             <Proposal path='/spaces/:spaceId/proposals/:proposalId'/>
+            <Proposal path='/spaces/:spaceId/proposals/:proposalId/:section'/>
         </Router>
     );
 }
