@@ -1,6 +1,6 @@
 import {AppConfig} from '@stacks/connect-react';
 import {StacksMainnet, StacksTestnet, StacksNetwork} from '@stacks/network';
-import {NETWORK} from '../types';
+import {NETWORK} from './types';
 
 export const API_BASE = process.env.REACT_APP_API_BASE;
 
