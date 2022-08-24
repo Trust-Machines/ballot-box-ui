@@ -23,7 +23,7 @@ import {VoteWithProposal} from '../../types';
 import useToast from '../../hooks/use-toast';
 
 
-const SpacePage = (_: RouteComponentProps) => {
+const ProposalPage = (_: RouteComponentProps) => {
     const [proposal, setProposal] = useAtom(proposalAtom);
     const params = useParams();
     const [, isMd] = useMediaBreakPoint();
@@ -96,4 +96,4 @@ const SpacePage = (_: RouteComponentProps) => {
 }
 
 
-export default SpacePage;
+export default ProposalPage;
