@@ -12,18 +12,19 @@ import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import ProposalChoices from './proposal-choices';
 import AuthRequired from '../../../components/auth-required';
 import {H3} from '../../../components/text';
-import useTranslation from '../../../hooks/use-translation';
 import ThemedBox from '../../../components/themed-box';
+import useTranslation from '../../../hooks/use-translation';
 import useMediaBreakPoint from '../../../hooks/use-media-break-point';
 import useAuth from '../../../hooks/use-auth';
 import useToast from '../../../hooks/use-toast';
 import {Proposal, Space} from '../../../types';
-import {createProposal} from '../../../api/ballot-box';
+import {createProposal, updateProposal} from '../../../api/ballot-box';
 import {toUnixTs} from '../../../util';
 
 type FormStep = 1 | 2;
 
 interface Props {
+    proposalId?: number,
     space: Space,
     onSuccess: (proposal: Proposal) => void,
     formDefault: {
@@ -37,7 +38,7 @@ interface Props {
 }
 
 const ProposalForm = (props: Props) => {
-    const {space, formDefault, onSuccess} = props;
+    const {proposalId, space, formDefault, onSuccess} = props;
     const {auth} = useAuth();
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
@@ -147,15 +148,19 @@ const ProposalForm = (props: Props) => {
             return;
         }
 
-        setInProgress(true);
-        createProposal(auth!, space.id, {
+        const proposal = {
             title,
             body,
             discussionLink,
             startTime: toUnixTs(startDate.toDate().getTime()),
             endTime: toUnixTs(endDate.toDate().getTime()),
             choices
-        }).then(r => {
+        };
+
+        const promise = proposalId ? updateProposal(auth!, proposalId, proposal) : createProposal(auth!, space.id, proposal);
+
+        setInProgress(true);
+        promise.then(r => {
             onSuccess(r);
         }).catch(e => {
             if (e.apiMessage) {
@@ -268,7 +273,7 @@ const ProposalForm = (props: Props) => {
                 case 2:
                     return <AuthRequired inactive={!canSubmit()}>
                         <Button fullWidth variant="contained" onClick={submit}
-                                disabled={inProgress}>{t('Publish')}</Button>
+                                disabled={inProgress}>{proposalId ? t('Update') : t('Publish')}</Button>
                     </AuthRequired>;
             }
         }

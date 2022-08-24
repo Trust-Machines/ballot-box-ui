@@ -1,6 +1,7 @@
 import {useAtom} from 'jotai';
 import Box from '@mui/material/Box';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
 
 import Link from '../../../components/link';
 import ProposalView from '../../components/proposal-view';
@@ -11,7 +12,7 @@ import ProposalStats from '../../components/proposal-stats';
 import useMediaBreakPoint from '../../../hooks/use-media-break-point';
 import useToast from '../../../hooks/use-toast';
 import useTranslation from '../../../hooks/use-translation';
-import {proposalAtom} from '../../../store';
+import {proposalAtom, userSpacesAtom} from '../../../store';
 import {ProposalWithSpace, VoteWithProposal} from '../../../types';
 
 export const Proposal = (props: { proposal: ProposalWithSpace }) => {
@@ -19,7 +20,9 @@ export const Proposal = (props: { proposal: ProposalWithSpace }) => {
     const [t] = useTranslation();
     const [, isMd] = useMediaBreakPoint();
     const [, setProposal] = useAtom(proposalAtom);
+    const [userSpaces] = useAtom(userSpacesAtom);
     const [, showMessage] = useToast();
+    const editable = userSpaces.find(x => x.id === proposal.space.id) !== undefined && proposal.status === 'new';
 
     const onVote = (vote: VoteWithProposal) => {
         setProposal({
@@ -41,11 +44,17 @@ export const Proposal = (props: { proposal: ProposalWithSpace }) => {
             mr: isMd ? '20px' : null,
             mb: !isMd ? '40px' : null
         }}>
-            <Box sx={{mb: '20px'}}>
+            <Box sx={{mb: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Link to={`/spaces/${proposal.spaceId}`} sx={{
                     display: 'inline-flex',
                     alignItems: 'center'
                 }}><ArrowBackIcon fontSize="small" sx={{mr: '4px'}}/>{t('Back')}</Link>
+                {editable && (
+                    <Link to={`/spaces/${proposal.spaceId}/proposals/${proposal.id}/edit`} sx={{
+                        display: 'inline-flex',
+                        alignItems: 'center'
+                    }}><EditIcon fontSize="small" sx={{mr: '4px'}}/>{t('Edit')}</Link>
+                )}
             </Box>
             <ProposalView proposal={proposal}/>
             {proposal.status === 'on' && <ProposalVote proposal={proposal} onVote={onVote}/>}

@@ -105,6 +105,13 @@ export const createProposal = (auth: USER_AUTH, spaceId: number, proposal: Propo
     });
 }
 
+
+export const updateProposal = (auth: USER_AUTH, proposalId: number, proposal: ProposalBase): Promise<Proposal> => {
+    return apiCallWithAuth(auth, `proposals/${proposalId}`, 'PUT', {
+        ...proposal
+    });
+}
+
 export const getProposal = async (proposalId: number): Promise<ProposalWithSpace> => {
     return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}`, {
         method: 'GET',
