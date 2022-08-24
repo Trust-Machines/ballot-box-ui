@@ -8,6 +8,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import AddIcon from '@mui/icons-material/Add';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import {useLocation} from '@reach/router';
 
 import AppMenuItem from './menu-item'
 import {spaceAtom, userSpacesAtom} from '../../store';
@@ -33,6 +34,7 @@ const AppMenu = () => {
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const {data: userData, requestSignature} = useAuth();
     const styles = useStyles();
+    const location = useLocation();
 
     useEffect(() => {
         if (!userId) {
@@ -56,6 +58,8 @@ const AppMenu = () => {
 
     }, [userId, userData]);
 
+    const activeItemBorderColor = theme.palette.mode === 'light' ? grey[900] : grey[50];
+
     const menu = <Box sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -67,7 +71,9 @@ const AppMenu = () => {
         borderRight: `1px solid ${theme.palette.divider}`,
         background: styles.menuBgColor,
     }}>
-        <AppMenuItem href="/" title={t('Home')}>
+        <AppMenuItem href="/" title={t('Home')} sx={{
+            borderColor: location.pathname === '/' ? activeItemBorderColor : null
+        }}>
             <HomeIcon/>
         </AppMenuItem>
         {userData && !userId && (
@@ -76,14 +82,17 @@ const AppMenu = () => {
             </AppMenuItem>
         )}
         {userSpaces.map(s => {
-            const selected = space?.id === s.id;
+            const selected = location.pathname.startsWith('/spaces/') && space?.id === s.id;
             return <AppMenuItem title={s.name} href={`/spaces/${s.id}`} key={s.id} sx={{
-                borderColor: selected ? (theme.palette.mode === 'light' ? grey[900] : grey[50]) : null
+                borderColor: selected ? activeItemBorderColor : null
             }}>
                 <SpaceIcon space={s} sx={{width: '40px'}}/>
             </AppMenuItem>
         })}
-        <AppMenuItem title={t('Create a space')} sx={{mb: '30px'}} href="/create-space">
+        <AppMenuItem title={t('Create a space')} href="/create-space" sx={{
+            mb: '30px',
+            borderColor: location.pathname === '/create-space' ? activeItemBorderColor : null
+        }}>
             <AddIcon/>
         </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
