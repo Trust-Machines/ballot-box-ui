@@ -12,7 +12,7 @@ import useModal from '../../../hooks/use-modal';
 import useToast from '../../../hooks/use-toast';
 import useAuth from '../../../hooks/use-auth';
 import useTranslation from '../../../hooks/use-translation';
-import {deleteSpace} from '../../../api';
+import {deleteSpace} from '../../../api/ballot-box';
 import {Space} from '../../../types';
 
 const DeleteSpace = (props: { space: Space, onSuccess: () => void }) => {

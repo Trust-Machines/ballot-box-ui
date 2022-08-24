@@ -18,7 +18,7 @@ import useMediaBreakPoint from '../../../hooks/use-media-break-point';
 import useAuth from '../../../hooks/use-auth';
 import useToast from '../../../hooks/use-toast';
 import {Proposal, Space} from '../../../types';
-import {createProposal} from '../../../api';
+import {createProposal} from '../../../api/ballot-box';
 import {toUnixTs} from '../../../util';
 
 type FormStep = 1 | 2;

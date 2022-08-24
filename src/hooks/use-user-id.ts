@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 
 import useAuth from './use-auth';
 import {userIdAtom} from '../store';
-import {getMe} from '../api';
+import {getMe} from '../api/ballot-box';
 
 const useUserId = (): number | null => {
     const [userId, setUserId] = useAtom(userIdAtom);

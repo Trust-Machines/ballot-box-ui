@@ -15,7 +15,7 @@ import useAuth from '../../../hooks/use-auth';
 import useTranslation from '../../../hooks/use-translation';
 import useToast from '../../../hooks/use-toast';
 import useModal from '../../../hooks/use-modal';
-import {updateSpace} from '../../../api';
+import {updateSpace} from '../../../api/ballot-box';
 import {Space} from '../../../types';
 
 

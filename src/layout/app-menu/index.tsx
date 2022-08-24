@@ -19,7 +19,7 @@ import useAppTheme from '../../hooks/use-app-theme';
 import useTranslation from '../../hooks/use-translation';
 import useUserId from '../../hooks/use-user-id';
 import useStyles from '../../hooks/use-styles';
-import {getUserSpaces} from '../../api';
+import {getUserSpaces} from '../../api/ballot-box';
 
 
 const AppMenu = () => {

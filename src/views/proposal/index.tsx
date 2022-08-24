@@ -14,7 +14,7 @@ import ProposalView from '../components/proposal-view';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import useTranslation from '../../hooks/use-translation';
 import {proposalAtom} from '../../store';
-import {getProposal} from '../../api';
+import {getProposal} from '../../api/ballot-box';
 import ProposalInfo from '../components/proposal-info';
 import ProposalVote from '../components/proposal-vote';
 import ProposalStats from '../components/proposal-stats';

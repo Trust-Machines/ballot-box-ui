@@ -15,7 +15,7 @@ import useModal from '../../hooks/use-modal';
 import useToast from '../../hooks/use-toast';
 import useAuth from '../../hooks/use-auth';
 import useTranslation from '../../hooks/use-translation';
-import {vote} from '../../api';
+import {vote} from '../../api/ballot-box';
 import {ProposalWithSpace, VoteWithProposal} from '../../types';
 import {NETWORKS} from '../../constants';
 

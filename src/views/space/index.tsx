@@ -15,7 +15,7 @@ import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';
 import AppContent from '../../layout/app-content';
 import {spaceAtom} from '../../store';
-import {getSpace} from '../../api';
+import {getSpace} from '../../api/ballot-box';
 
 
 const SpacePage = (_: RouteComponentProps) => {

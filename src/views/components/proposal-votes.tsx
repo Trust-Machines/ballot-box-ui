@@ -9,7 +9,7 @@ import useTranslation from '../../hooks/use-translation';
 import {H3, Muted} from '../../components/text';
 import ThemedBox from '../../components/themed-box';
 import {votesAtom} from '../../store';
-import {getProposalVotes} from '../../api';
+import {getProposalVotes} from '../../api/ballot-box';
 import {formatVotePower} from '../../helper';
 import {ProposalWithSpace} from '../../types';
 

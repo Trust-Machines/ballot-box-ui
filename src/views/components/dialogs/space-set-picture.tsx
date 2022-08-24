@@ -12,7 +12,7 @@ import useModal from '../../../hooks/use-modal';
 import useToast from '../../../hooks/use-toast';
 import useAuth from '../../../hooks/use-auth';
 import useTranslation from '../../../hooks/use-translation';
-import {updateSpacePicture} from '../../../api';
+import {updateSpacePicture} from '../../../api/ballot-box';
 import {Space} from '../../../types';
 
 const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => void }) => {

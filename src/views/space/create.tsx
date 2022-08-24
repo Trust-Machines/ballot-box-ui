@@ -22,7 +22,7 @@ import AuthRequired from '../../components/auth-required';
 import useTranslation from '../../hooks/use-translation';
 import useAuth from '../../hooks/use-auth';
 import useToast from '../../hooks/use-toast';
-import {createSpace} from '../../api';
+import {createSpace} from '../../api/ballot-box';
 import {userSpacesAtom} from '../../store';
 
 const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange: (values: Record<string, string>) => void }) => {

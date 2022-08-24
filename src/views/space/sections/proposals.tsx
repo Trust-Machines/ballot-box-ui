@@ -5,7 +5,7 @@ import {Space} from '../../../types';
 import {Muted} from '../../../components/text';
 import ProposalCard from '../../components/proposal-card';
 import useTranslation from '../../../hooks/use-translation';
-import {getSpaceProposals} from '../../../api';
+import {getSpaceProposals} from '../../../api/ballot-box';
 import {proposalsAtom} from '../../../store';
 
 
