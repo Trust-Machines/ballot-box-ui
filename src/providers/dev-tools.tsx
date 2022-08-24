@@ -1,9 +1,9 @@
 import React from 'react';
 import {useAtomDevtools} from 'jotai/devtools';
-import {networkAtom} from '../store';
+import {userSessionAtom} from '../store';
 
 const DevToolsProvider: React.FC = ({children}) => {
-    useAtomDevtools(networkAtom, 'Network');
+    useAtomDevtools(userSessionAtom, 'UserSession');
     return <>{children}</>;
 }
 
