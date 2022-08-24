@@ -52,6 +52,12 @@ export const getMe = (auth: USER_AUTH): Promise<{ id: number }> => {
     }));
 }
 
+export const getSpaces = async (): Promise<Space[]> => {
+    return handleApiResponse(fetch(`${API_BASE}/spaces`, {
+        method: 'GET',
+    }));
+}
+
 export const getUserSpaces = async (userId: number): Promise<Space[]> => {
     return handleApiResponse(fetch(`${API_BASE}/spaces/by-user?userId=${userId}`, {
         method: 'GET',

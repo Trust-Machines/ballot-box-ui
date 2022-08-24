@@ -1,5 +1,4 @@
 import {atom} from 'jotai';
-import {Space} from '../types';
 
 const userIdInitial = () => {
     if (localStorage.getItem('user_id')) {
@@ -15,4 +14,4 @@ const userIdInitial = () => {
 
 export const userIdAtom = atom<number | null>(userIdInitial());
 
-export const userSpacesAtom = atom<Space[]>([]);
+
