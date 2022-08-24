@@ -10,15 +10,15 @@ import LinkIcon from '@mui/icons-material/Link';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import {useParams} from '@reach/router';
 
-import Link from '../../../../components/link';
+import Link from '../../../components/link';
 import SetSpacePicture from '../dialogs/set-picture';
-import SpaceIcon from '../../../../components/space-icon';
-import useModal from '../../../../hooks/use-modal';
-import useTranslation from '../../../../hooks/use-translation';
-import useStyles from '../../../../hooks/use-styles';
-import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
-import {spaceAtom, userSpacesAtom} from '../../../../store';
-import {Space} from '../../../../types';
+import SpaceIcon from '../../../components/space-icon';
+import useModal from '../../../hooks/use-modal';
+import useTranslation from '../../../hooks/use-translation';
+import useStyles from '../../../hooks/use-styles';
+import useMediaBreakPoint from '../../../hooks/use-media-break-point';
+import {spaceAtom, userSpacesAtom} from '../../../store';
+import {Space} from '../../../types';
 
 
 const SpaceCard = (props: { space: Space }) => {

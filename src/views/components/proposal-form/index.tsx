@@ -10,16 +10,16 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 
 import ProposalChoices from './proposal-choices';
-import AuthRequired from '../../../../components/auth-required';
-import {H3} from '../../../../components/text';
-import useTranslation from '../../../../hooks/use-translation';
-import ThemedBox from '../../../../components/themed-box';
-import useMediaBreakPoint from '../../../../hooks/use-media-break-point';
-import useAuth from '../../../../hooks/use-auth';
-import useToast from '../../../../hooks/use-toast';
-import {Proposal, Space} from '../../../../types';
-import {createProposal} from '../../../../api';
-import {toUnixTs} from '../../../../util';
+import AuthRequired from '../../../components/auth-required';
+import {H3} from '../../../components/text';
+import useTranslation from '../../../hooks/use-translation';
+import ThemedBox from '../../../components/themed-box';
+import useMediaBreakPoint from '../../../hooks/use-media-break-point';
+import useAuth from '../../../hooks/use-auth';
+import useToast from '../../../hooks/use-toast';
+import {Proposal, Space} from '../../../types';
+import {createProposal} from '../../../api';
+import {toUnixTs} from '../../../util';
 
 type FormStep = 1 | 2;
 

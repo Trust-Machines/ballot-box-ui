@@ -6,14 +6,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormHelperText from '@mui/material/FormHelperText';
 
-import AuthRequired from '../../../../../components/auth-required';
-import CloseModal from '../../../../../components/close-modal';
-import useModal from '../../../../../hooks/use-modal';
-import useToast from '../../../../../hooks/use-toast';
-import useAuth from '../../../../../hooks/use-auth';
-import useTranslation from '../../../../../hooks/use-translation';
-import {updateSpacePicture} from '../../../../../api';
-import {Space} from '../../../../../types';
+import AuthRequired from '../../../../components/auth-required';
+import CloseModal from '../../../../components/close-modal';
+import useModal from '../../../../hooks/use-modal';
+import useToast from '../../../../hooks/use-toast';
+import useAuth from '../../../../hooks/use-auth';
+import useTranslation from '../../../../hooks/use-translation';
+import {updateSpacePicture} from '../../../../api';
+import {Space} from '../../../../types';
 
 const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => void }) => {
     const inputRef = useRef<HTMLInputElement>(null);

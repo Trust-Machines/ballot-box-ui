@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import green from '@mui/material/colors/green';
 import {useTheme, alpha} from '@mui/material';
-import {H3, Muted} from '../../../../components/text'
-import Link from '../../../../components/link';
-import useTranslation from '../../../../hooks/use-translation';
-import useStyles from '../../../../hooks/use-styles';
-import {Proposal} from '../../../../types';
-import {truncate} from '../../../../util';
+import {H3, Muted} from '../../../components/text'
+import Link from '../../../components/link';
+import useTranslation from '../../../hooks/use-translation';
+import useStyles from '../../../hooks/use-styles';
+import {Proposal} from '../../../types';
+import {truncate} from '../../../util';
 
 const ProposalCard = (props: { proposal: Proposal }) => {
     const {proposal} = props;

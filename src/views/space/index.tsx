@@ -9,7 +9,7 @@ import SpaceEdit from './sections/edit';
 import SpaceInfo from './sections/info';
 import Proposals from './sections/proposals';
 import ProposalCreate from './sections/create-proposal';
-import SpaceCard from './components/space-card';
+import SpaceCard from '../components/space-card';
 import AppMenu from '../../layout/app-menu';
 import AppHeader from '../../layout/app-header';
 import AppWrapper from '../../layout/app-wrapper';

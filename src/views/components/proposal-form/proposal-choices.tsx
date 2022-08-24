@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
 
-import {Muted} from '../../../../components/text';
-import useTranslation from '../../../../hooks/use-translation';
+import {Muted} from '../../../components/text';
+import useTranslation from '../../../hooks/use-translation';
 
 const ProposalChoices = (props: { choices: string[], onChange: (choices: string[]) => void }) => {
     const [t] = useTranslation();

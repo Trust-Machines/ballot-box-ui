@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import moment, {Moment} from 'moment';
 import {useNavigate} from '@reach/router';
 import {useAtom} from 'jotai';
-import ProposalForm from '../../components/proposal-form';
+import ProposalForm from '../../../components/proposal-form';
 import {Space} from '../../../../types';
 import {H2} from '../../../../components/text';
 import useTranslation from '../../../../hooks/use-translation';
