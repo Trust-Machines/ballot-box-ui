@@ -1,5 +1,4 @@
 import {
-    NETWORK,
     USER_AUTH,
     Space,
     SpaceBase,
@@ -46,15 +45,11 @@ export const apiCallWithAuth = <T>(auth: USER_AUTH, endpoint: string, method: 'G
     }));
 }
 
-export const apiGet = <T>(auth: USER_AUTH, endpoint: string): Promise<T> => {
-    return handleApiResponse(fetch(`${API_BASE}/${endpoint}`, {
+export const getMe = (auth: USER_AUTH): Promise<{ id: number }> => {
+    return handleApiResponse(fetch(`${API_BASE}/me`, {
         method: 'GET',
         headers: makeApiHeaders(auth)
     }));
-}
-
-export const getMe = (auth: USER_AUTH): Promise<{ id: number }> => {
-    return apiGet(auth, 'me');
 }
 
 export const getUserSpaces = async (userId: number): Promise<Space[]> => {
@@ -122,7 +117,6 @@ export const vote = (auth: USER_AUTH, proposalId: number, choice: string): Promi
         choice
     });
 }
-
 
 export const getProposalVotes = async (proposalId: number, userAddress?: string): Promise<Vote[]> => {
     let u = `${API_BASE}/proposals/${proposalId}/votes`;
