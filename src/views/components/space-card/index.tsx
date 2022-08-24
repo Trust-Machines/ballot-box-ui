@@ -11,7 +11,7 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import {useParams} from '@reach/router';
 
 import Link from '../../../components/link';
-import SetSpacePicture from '../dialogs/set-picture';
+import SetSpacePicture from '../dialogs/space-set-picture';
 import SpaceIcon from '../../../components/space-icon';
 import useModal from '../../../hooks/use-modal';
 import useTranslation from '../../../hooks/use-translation';
