@@ -13,17 +13,17 @@ import strategies from '@trustmachines/ballot-box-strategies';
 import {InputBaseProps} from '@mui/material/InputBase';
 import {SelectChangeEvent} from '@mui/material/Select';
 
-import AppMenu from '../../../layout/app-menu';
-import AppWrapper from '../../../layout/app-wrapper';
-import AppHeader from '../../../layout/app-header';
-import AppContent from '../../../layout/app-content';
-import {H2} from '../../../components/text';
-import AuthRequired from '../../../components/auth-required';
-import useTranslation from '../../../hooks/use-translation';
-import useAuth from '../../../hooks/use-auth';
-import useToast from '../../../hooks/use-toast';
-import {createSpace} from '../../../api';
-import {userSpacesAtom} from '../../../store';
+import AppMenu from '../../layout/app-menu';
+import AppWrapper from '../../layout/app-wrapper';
+import AppHeader from '../../layout/app-header';
+import AppContent from '../../layout/app-content';
+import {H2} from '../../components/text';
+import AuthRequired from '../../components/auth-required';
+import useTranslation from '../../hooks/use-translation';
+import useAuth from '../../hooks/use-auth';
+import useToast from '../../hooks/use-toast';
+import {createSpace} from '../../api';
+import {userSpacesAtom} from '../../store';
 
 const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange: (values: Record<string, string>) => void }) => {
     const strategy = strategies[props.strategy];

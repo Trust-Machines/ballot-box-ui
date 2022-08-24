@@ -1,9 +1,9 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import strategies from '@trustmachines/ballot-box-strategies';
-import useTranslation from '../../../../hooks/use-translation';
-import {H3, Muted} from '../../../../components/text';
-import {Space} from '../../../../types';
+import useTranslation from '../../../hooks/use-translation';
+import {H3, Muted} from '../../../components/text';
+import {Space} from '../../../types';
 
 const StrategyOptions = (props: { space: Space }) => {
     const {space} = props;

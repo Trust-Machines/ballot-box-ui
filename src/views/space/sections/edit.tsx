@@ -6,17 +6,17 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
 
-import AuthRequired from '../../../../components/auth-required';
-import ThemedBox from '../../../../components/themed-box';
-import {H2} from '../../../../components/text';
-import DeleteSpace from '../../../components/dialogs/space-delete';
-import {spaceAtom, userSpacesAtom} from '../../../../store';
-import useAuth from '../../../../hooks/use-auth';
-import useTranslation from '../../../../hooks/use-translation';
-import useToast from '../../../../hooks/use-toast';
-import useModal from '../../../../hooks/use-modal';
-import {updateSpace} from '../../../../api';
-import {Space} from '../../../../types';
+import AuthRequired from '../../../components/auth-required';
+import ThemedBox from '../../../components/themed-box';
+import {H2} from '../../../components/text';
+import DeleteSpace from '../../components/dialogs/space-delete';
+import {spaceAtom, userSpacesAtom} from '../../../store';
+import useAuth from '../../../hooks/use-auth';
+import useTranslation from '../../../hooks/use-translation';
+import useToast from '../../../hooks/use-toast';
+import useModal from '../../../hooks/use-modal';
+import {updateSpace} from '../../../api';
+import {Space} from '../../../types';
 
 
 const SpaceEdit = (props: { space: Space }) => {
