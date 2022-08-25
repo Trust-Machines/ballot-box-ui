@@ -28,6 +28,7 @@ const SpacePage = (_: RouteComponentProps) => {
             return;
         }
 
+        setSpace(null);
         getSpace(Number(params.spaceId)).then(r => {
             setSpace(r);
             return r;
