@@ -77,7 +77,7 @@ const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string
                         <Muted>{t('Option')}</Muted>
                         <Box sx={{textAlign: 'right'}}>{choice.toUpperCase()}</Box>
                         <Muted>{t('Your Voting Power')}</Muted>
-                        <Box sx={{textAlign: 'right'}}>{votingPower.toFixed(4)}</Box>
+                        <Box sx={{textAlign: 'right'}}>{`${votingPower.toFixed(4)} ${space.strategyOptions.symbol}`}</Box>
                     </Box>
                 </ThemedBox>
             </DialogContent>
