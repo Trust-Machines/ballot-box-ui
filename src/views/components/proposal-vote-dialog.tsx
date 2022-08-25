@@ -15,13 +15,16 @@ import useModal from '../../hooks/use-modal';
 import useToast from '../../hooks/use-toast';
 import useAuth from '../../hooks/use-auth';
 import useTranslation from '../../hooks/use-translation';
+import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import {vote} from '../../api/ballot-box';
 import {ProposalWithSpace, VoteWithProposal} from '../../types';
 import {NETWORKS} from '../../constants';
+import {truncateMiddle} from '../../util';
 
 
 const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
     const [, showModal] = useModal();
+    const [isSm] = useMediaBreakPoint();
     const [t] = useTranslation();
     const {auth} = useAuth();
     const [, showMessage] = useToast();
@@ -72,10 +75,13 @@ const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string
                         gridTemplateColumns: '1fr 1fr',
                         gap: '20px',
                         fontWeight: '600',
-
                     }}>
                         <Muted>{t('Option')}</Muted>
                         <Box sx={{textAlign: 'right'}}>{choice.toUpperCase()}</Box>
+                        <Muted>{t('Network')}</Muted>
+                        <Box sx={{textAlign: 'right'}}>{space.network}</Box>
+                        <Muted>{t('Your address')}</Muted>
+                        <Box sx={{textAlign: 'right'}} title={address!}>{isSm ? truncateMiddle(address!, 8) : truncateMiddle(address!, 4)}</Box>
                         <Muted>{t('Your Voting Power')}</Muted>
                         <Box sx={{textAlign: 'right'}}>{`${votingPower.toFixed(4)} ${space.strategyOptions.symbol}`}</Box>
                     </Box>
