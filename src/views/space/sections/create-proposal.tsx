@@ -7,6 +7,7 @@ import {Space} from '../../../types';
 import useTranslation from '../../../hooks/use-translation';
 import useToast from '../../../hooks/use-toast';
 import {proposalsAtom} from '../../../store';
+import {toUnixTs} from '../../../util';
 
 const CreateProposal = (props: { space: Space }) => {
     const {space} = props;
@@ -15,6 +16,7 @@ const CreateProposal = (props: { space: Space }) => {
     const [, showMessage] = useToast();
     const [done, setDone] = useState(false);
     const [proposals, setProposals] = useAtom(proposalsAtom);
+    let timer: any;
 
     useEffect(() => {
         if (done) {
@@ -23,20 +25,49 @@ const CreateProposal = (props: { space: Space }) => {
         }
     }, [done]);
 
+    const getFormData = (field: string) => {
+        const key = `proposal_form_${field}`;
+        if (localStorage.getItem(key)) {
+            try {
+                return JSON.parse(localStorage.getItem(key) || '');
+            } catch (e) {
+                return;
+            }
+        }
+    }
+
+    const startDateStorage = getFormData('startDate');
+    const endDateStorage = getFormData('endDate');
+
     return <>
         <ProposalForm
             space={space}
             formDefault={{
-                title: '',
-                body: '',
-                discussionLink: '',
-                choices: ['For', 'Against', 'Abstain'],
-                startDate: moment().add(2, 'hour').set('minutes', 0).set('seconds', 0).set('millisecond', 0),
-                endDate: moment().add(2, 'hour').set('minutes', 0).set('seconds', 0).set('millisecond', 0).add(1, 'day')
+                title: getFormData('title') || '',
+                body: getFormData('body') || '',
+                discussionLink: getFormData('discussionLink') || '',
+                choices: getFormData('choices') || ['For', 'Against', 'Abstain'],
+                startDate: startDateStorage ? moment.unix(startDateStorage) : moment().add(2, 'hour').set('minutes', 0).set('seconds', 0).set('millisecond', 0),
+                endDate: endDateStorage ? moment.unix(endDateStorage) : moment().add(2, 'hour').set('minutes', 0).set('seconds', 0).set('millisecond', 0).add(1, 'day')
             }}
             onSuccess={(p) => {
                 setProposals([...proposals, p]);
                 setDone(true);
+                for (let k of Object.keys(localStorage)) {
+                    if (k.startsWith('proposal_form_')) {
+                        localStorage.removeItem(k);
+                    }
+                }
+            }}
+            onChange={(a) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    let v: any = a.value;
+                    if (a.field === 'startDate' || a.field === 'endDate') {
+                        v = toUnixTs(a.value.toDate().getTime())
+                    }
+                    localStorage.setItem(`proposal_form_${a.field}`, JSON.stringify(v));
+                }, 500);
             }}
         />
     </>

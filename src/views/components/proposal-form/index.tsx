@@ -27,6 +27,16 @@ interface Props {
     proposalId?: number,
     space: Space,
     onSuccess: (proposal: Proposal) => void,
+    onChange?: (data: {
+        field: 'title' | 'body' | 'discussionLink',
+        value: string
+    } | {
+        field: 'choices',
+        value: string[]
+    } | {
+        field: 'startDate' | 'endDate',
+        value: Moment
+    }) => void,
     formDefault: {
         title: string,
         body: string,
@@ -179,6 +189,9 @@ const ProposalForm = (props: Props) => {
                    onChange={(e) => {
                        resetError();
                        setTitle(e.target.value);
+                       if (props.onChange) {
+                           props.onChange({field: 'title', value: e.target.value});
+                       }
                    }}/>
         <TextField sx={{mb: '20px'}} label={t('Description (optional)')}
                    inputProps={{maxLength: 14000, sx: {resize: 'vertical'}}} multiline rows={12}
@@ -186,6 +199,9 @@ const ProposalForm = (props: Props) => {
                    onChange={(e) => {
                        resetError();
                        setBody(e.target.value);
+                       if (props.onChange) {
+                           props.onChange({field: 'body', value: e.target.value});
+                       }
                    }}/>
         <TextField label={t('Discussion (optional)')}
                    inputProps={{maxLength: 150}} placeholder="https://forum.stacks.org/proposal"
@@ -195,6 +211,9 @@ const ProposalForm = (props: Props) => {
                    onChange={(e) => {
                        resetError();
                        setDiscussionLink(e.target.value);
+                       if (props.onChange) {
+                           props.onChange({field: 'discussionLink', value: e.target.value});
+                       }
                    }}/>
     </>;
 
@@ -204,6 +223,9 @@ const ProposalForm = (props: Props) => {
             <ProposalChoices choices={choices} onChange={(choices) => {
                 resetError();
                 setChoices(choices);
+                if (props.onChange) {
+                    props.onChange({field: 'choices', value: choices});
+                }
             }}/>
             <FormHelperText error>{error === 'choices' ? errorMessage : ' '}</FormHelperText>
         </ThemedBox>
@@ -224,6 +246,9 @@ const ProposalForm = (props: Props) => {
                             resetError();
                             if (v) {
                                 setStartDate(v);
+                                if (props.onChange) {
+                                    props.onChange({field: 'startDate', value: v});
+                                }
                             }
                         }}
                     />
@@ -242,6 +267,9 @@ const ProposalForm = (props: Props) => {
                             resetError();
                             if (v) {
                                 setEndDate(v);
+                                if (props.onChange) {
+                                    props.onChange({field: 'endDate', value: v});
+                                }
                             }
                         }}
                     />
