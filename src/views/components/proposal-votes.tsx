@@ -3,6 +3,7 @@ import {useAtom} from 'jotai';
 import {useTheme} from '@mui/material';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import {green} from '@mui/material/colors';
 
 import useAuth from '../../hooks/use-auth';
 import useTranslation from '../../hooks/use-translation';
@@ -63,19 +64,31 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
             return <ThemedBox>
                 {votes.list.map((vote, i) => {
                     const isLast = i === votes.list.length - 1;
+                    const emphasise = votes.userVote?.id === vote.id;
+
                     return <Box key={vote.id} sx={{
                         pb: isLast ? null : '10px',
                         borderBottom: !isLast ? `1px solid ${theme.palette.divider}` : null,
                         mt: i === 0 ? null : '10px',
                         display: 'flex',
-                        fontWeight: votes.userVote?.id === vote.id ? 600 : null
-                    }}>
+                        alignItems: 'center',
+                        fontWeight: emphasise ? 600 : null
+                    }}>{emphasise ?
                         <Box sx={{
-                            width: '120px',
-                            maxWidth: '260px',
+                            width: '12px',
+                            height: '12px',
+                            background: green[400],
+                            borderRadius: '50%',
+                            flexShrink: 0,
+                            mr: '6px'
+                        }}/> : null}
+                        <Box sx={{
+                            width: emphasise ? '102px' : '120px',
+                            maxWidth: emphasise ? '242px' : '260px',
                             flexGrow: 1,
                             ...commonSx
-                        }}>{vote.userName || vote.userAddress}</Box>
+                        }} title={vote.userAddress}>
+                            {vote.userName || vote.userAddress}</Box>
                         <Box sx={{
                             width: '120px',
                             textAlign: 'center',
