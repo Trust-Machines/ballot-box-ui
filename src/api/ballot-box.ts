@@ -118,6 +118,10 @@ export const updateProposal = (auth: USER_AUTH, proposalId: number, proposal: Pr
     });
 }
 
+export const deleteProposal = (auth: USER_AUTH, proposalId: number) => {
+    return apiCallWithAuth(auth, `proposals/${proposalId}`, 'DELETE', {});
+}
+
 export const getProposal = async (proposalId: number): Promise<ProposalWithSpace> => {
     return handleApiResponse(fetch(`${API_BASE}/proposals/${proposalId}`, {
         method: 'GET',

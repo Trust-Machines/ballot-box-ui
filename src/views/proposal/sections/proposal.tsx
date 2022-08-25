@@ -44,7 +44,7 @@ export const Proposal = (props: { proposal: ProposalWithSpace }) => {
             mr: isMd ? '20px' : null,
             mb: !isMd ? '40px' : null
         }}>
-            <Box sx={{mb: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Box sx={{mb: '30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Link to={`/spaces/${proposal.spaceId}`} sx={{
                     display: 'inline-flex',
                     alignItems: 'center'
