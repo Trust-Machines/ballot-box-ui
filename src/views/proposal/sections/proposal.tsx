@@ -58,7 +58,7 @@ export const Proposal = (props: { proposal: ProposalWithSpace }) => {
             </Box>
             <ProposalView proposal={proposal}/>
             {proposal.status === 'on' && <ProposalVote proposal={proposal} onVote={onVote}/>}
-            {proposal.voteCount > 0 && <ProposalVotes proposal={proposal}/>}
+            {proposal.status !== 'new' && <ProposalVotes proposal={proposal}/>}
         </Box>
         <Box sx={{
             flexShrink: 0,

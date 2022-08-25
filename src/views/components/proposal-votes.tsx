@@ -41,6 +41,9 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
                     userVote: resp[0] && resp[0].userAddress === userAddress ? resp[0] : null
                 });
             })
+        return () => {
+            setVotes({list: [], loading: true, userVote: null});
+        }
     }, [proposal, userAddress]);
 
     return <>
@@ -54,7 +57,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
             }
 
             if (votes.list.length === 0) {
-                return <Muted>{t('No votes')}</Muted>
+                return <Muted>{t('No votes, yet.')}</Muted>
             }
 
             return <ThemedBox>
