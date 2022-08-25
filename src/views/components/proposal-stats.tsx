@@ -7,6 +7,7 @@ import useTranslation from '../../hooks/use-translation';
 import {formatVotePower} from '../../helper';
 import {ProposalWithSpace} from '../../types';
 import {percentOf} from '../../util';
+import useStyles from '../../hooks/use-styles';
 
 const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
@@ -14,12 +15,7 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
     const total = proposal.voteStats.reduce((p, c) => p + c.power, 0);
     const {symbol} = proposal.space.strategyOptions;
     const {voteStats} = proposal;
-    const commonSx = {
-        mr: '6px',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-    };
+    const {textTruncateStyles} = useStyles();
 
     return <ThemedBox sx={{fontSize: '90%', fontWeight: '600'}}>
         <H3>{t('Results')}</H3>
@@ -33,12 +29,14 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                     <Box sx={{
                         width: '114px',
                         flexGrow: 1,
-                        ...commonSx
+                        mr: '6px',
+                        ...textTruncateStyles
                     }}>{s.choice}</Box>
                     <Box sx={{
                         width: '70px',
                         textAlign: 'right',
-                        ...commonSx
+                        mr: '6px',
+                        ...textTruncateStyles
                     }}>{`${formatVotePower(s.power)} ${symbol}`}</Box>
                     <Box sx={{width: '50px', textAlign: 'right',}}>{`${per.toFixed(2)}%`}</Box>
                 </Box>

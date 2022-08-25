@@ -6,11 +6,10 @@ import Link from '../../components/link';
 import SpaceIcon from '../../components/space-icon';
 import {Space} from '../../types';
 
-
 const SpaceCardSmall = (props: { space: Space }) => {
     const {space} = props;
     const theme = useTheme();
-    const {linkHoverColor} = useStyles();
+    const {linkHoverColor, textTruncateStyles} = useStyles();
 
     return <Link to={`/spaces/${space.id}`}>
         <Box sx={{
@@ -35,9 +34,7 @@ const SpaceCardSmall = (props: { space: Space }) => {
                 fontSize: '18px',
                 fontWeight: '600',
                 maxWidth: '160px',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                ...textTruncateStyles
             }}>{space.name}</Box>
         </Box>
     </Link>;

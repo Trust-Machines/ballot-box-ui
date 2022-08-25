@@ -27,6 +27,11 @@ const useStyles = () => {
                 default:
                     return ''
             }
+        },
+        textTruncateStyles: {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
         }
     }
 }

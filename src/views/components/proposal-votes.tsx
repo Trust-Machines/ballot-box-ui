@@ -7,6 +7,7 @@ import {green} from '@mui/material/colors';
 
 import useAuth from '../../hooks/use-auth';
 import useTranslation from '../../hooks/use-translation';
+import useStyles from '../../hooks/use-styles';
 import {H3, Muted} from '../../components/text';
 import ThemedBox from '../../components/themed-box';
 import {votesAtom} from '../../store';
@@ -22,14 +23,8 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
     const [votes, setVotes] = useAtom(votesAtom);
     const {data} = useAuth();
     const theme = useTheme();
+    const {textTruncateStyles} = useStyles();
     const userAddress = (data && data.profile.stxAddress[proposal.space.network]) || null;
-    const commonSx = {
-        mr: '6px',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-    };
-
 
     useEffect(() => {
         setVotes({...votes, loading: true, userVote: null});
@@ -86,19 +81,22 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
                             width: emphasise ? '102px' : '120px',
                             maxWidth: emphasise ? '242px' : '260px',
                             flexGrow: 1,
-                            ...commonSx
+                            mr: '6px',
+                            ...textTruncateStyles
                         }} title={vote.userAddress}>
                             {vote.userName || vote.userAddress}</Box>
                         <Box sx={{
                             width: '120px',
                             textAlign: 'center',
                             flexGrow: 1,
-                            ...commonSx
+                            mr: '6px',
+                            ...textTruncateStyles
                         }}>{vote.choice.toUpperCase()}</Box>
                         <Box sx={{
                             width: '100px',
                             textAlign: 'right',
-                            ...commonSx
+                            mr: '6px',
+                            ...textTruncateStyles
                         }}>{`${formatVotePower(vote.power)} ${symbol}`}</Box>
                     </Box>
                 })}
