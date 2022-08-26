@@ -1,56 +1,44 @@
 import {useAtom} from 'jotai';
 import {UserSession, UserData, FinishedAuthData, showConnect} from '@stacks/connect-react';
-import {openSignatureRequestPopup, SignatureData} from '@stacks/connect';
+import {useAccount} from '@micro-stacks/react';
+import {StacksSessionState} from 'micro-stacks/connect';
+import {useAccountsRaw} from '@micro-stacks/react';
+import {useAuth as useAuth1} from '@micro-stacks/react';
+import {useOpenSignMessage} from '@micro-stacks/react';
+import {userDataAtom, userAuthAtom} from '../store';
+import {SIGNATURE_MESSAGE} from '../constants';
 
-import {userSessionAtom, userDataAtom, userAuthAtom} from '../store';
-import {appConfig, baseAuthOptions, NETWORKS, SIGNATURE_MESSAGE} from '../constants';
 
-
-const useAuth = (): { auth: { signature: string, publicKey: string } | null, session: UserSession | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
-    const [userSession, setUserSession] = useAtom(userSessionAtom);
+const useAuth = (): { auth: { signature: string, publicKey: string } | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
     const [userData] = useAtom(userDataAtom);
     const [userAuth, setUserAuth] = useAtom(userAuthAtom);
-
+    const {openAuthRequest, signOut} = useAuth1()
+    const {openSignMessage} = useOpenSignMessage();
+    const a  = useAccountsRaw();
+    console.log(a[0].address)
 
     const openAuth = () => {
-        const authOptions = {
-            onFinish: (payload: FinishedAuthData) => {
-                setUserSession(payload.userSession);
-                requestSignature();
-            },
-            userSession: new UserSession({appConfig}),
-            ...baseAuthOptions
-        };
-        setUserSession(null);
         setUserAuth(null);
-        showConnect(authOptions);
+        openAuthRequest().then(() => {
+            requestSignature();
+        })
     };
-
-    const signOut = () => {
-        if (!userSession) {
-            return;
-        }
-
-        setUserSession(null);
-        userSession.signUserOut();
-    }
 
     const requestSignature = () => {
         const signOptions = {
-            userSession: userSession!,
-            ...baseAuthOptions,
-            message: SIGNATURE_MESSAGE,
-            network: NETWORKS['mainnet'],
-            onFinish: (data: SignatureData) => {
-                setUserAuth({signature: data.signature, publicKey: data.publicKey});
-            },
+            message: SIGNATURE_MESSAGE
         };
 
-        openSignatureRequestPopup(signOptions).then();
+        openSignMessage(signOptions).then((data) => {
+            if (!data) {
+                return;
+            }
+            setUserAuth({signature: data.signature, publicKey: data.publicKey});
+        });
     }
 
     return {
-        auth: userAuth, session: userSession, data: userData, openAuth, signOut, requestSignature
+        auth: userAuth, data: userData, openAuth, signOut, requestSignature
     };
 }
 

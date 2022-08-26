@@ -7,14 +7,14 @@ import {getMe} from '../api/ballot-box';
 
 const useUserId = (): number | null => {
     const [userId, setUserId] = useAtom(userIdAtom);
-    const {auth, session} = useAuth();
+    const {auth, data} = useAuth();
 
     useEffect(() => {
-        if (!session) {
+        if (!data) {
             setUserId(null);
             localStorage.removeItem('user_id');
         }
-    }, [session]);
+    }, [data]);
 
     useEffect(() => {
         if (auth) {

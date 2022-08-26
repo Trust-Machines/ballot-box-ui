@@ -1,4 +1,4 @@
-import {StacksNetwork} from '@stacks/network';
+import {StacksNetwork} from 'micro-stacks/network';
 import numeral from 'numeral';
 import {NETWORK} from './types';
 import {NETWORKS} from './constants';

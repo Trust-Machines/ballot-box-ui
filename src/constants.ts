@@ -1,5 +1,5 @@
 import {AppConfig} from '@stacks/connect-react';
-import {StacksMainnet, StacksTestnet, StacksNetwork} from '@stacks/network';
+import {StacksMainnet, StacksTestnet, StacksNetwork} from 'micro-stacks/network';
 import {NETWORK} from './types';
 
 export const API_BASE = process.env.REACT_APP_API_BASE;
@@ -14,7 +14,6 @@ export const baseAuthOptions = {
         icon: `${window.origin}/logo512.png`,
     },
 }
-
 
 export const NETWORKS: Record<NETWORK, StacksNetwork> = {
     'mainnet': new StacksMainnet(),

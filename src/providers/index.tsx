@@ -1,6 +1,6 @@
 import React from 'react'
 import {Provider} from 'jotai';
-import {Connect} from '@stacks/connect-react';
+import {ClientProvider} from '@micro-stacks/react';
 
 import DevToolsProvider from './dev-tools';
 import ThemeProvider from './theme';
@@ -12,7 +12,15 @@ import {baseAuthOptions} from '../constants';
 const Providers: React.FC = ({children}) => {
     return (
         <Provider>
-            <Connect authOptions={baseAuthOptions}>
+            <ClientProvider appName={baseAuthOptions.appDetails.name}
+                            appIconUrl={baseAuthOptions.appDetails.icon}
+                            onNoWalletFound={() => {
+                                /*
+                                showModal({
+                                    body: <InstallWalletDialog/>
+                                })
+                                 */
+                            }}>
                 <DevToolsProvider>
                     <ThemeProvider>
                         <ModalProvider>
@@ -22,7 +30,7 @@ const Providers: React.FC = ({children}) => {
                         </ModalProvider>
                     </ThemeProvider>
                 </DevToolsProvider>
-            </Connect>
+            </ClientProvider>
         </Provider>
     )
 }

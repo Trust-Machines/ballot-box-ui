@@ -1642,6 +1642,26 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
+"@micro-stacks/client@1.0.3", "@micro-stacks/client@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@micro-stacks/client/-/client-1.0.3.tgz#8d0d942f1f1143b81c40ce3552465de4d7da897b"
+  integrity sha512-Lmtl+Goad2w29SBWpjziyskg+Zn7IHy+6vFiO2mBxHkQq9yTOEoVsPvpaTsGUJ+ZJtylTQ4DP7jzCh/gw17Kxw==
+  dependencies:
+    fast-deep-equal "3.1.3"
+    micro-stacks "1.1.2"
+    tiny-invariant ">=1.2.0"
+    zustand "4.0.0"
+
+"@micro-stacks/react@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@micro-stacks/react/-/react-1.0.3.tgz#4971219cc68fbd4f5ee031e0ef2c45d50eee3b6a"
+  integrity sha512-bBJAUz3ZWISxaJysbtQErIJ9eMbVCpiD44OYjbepACiZ8YIhL7VCZ7p5T1aHkXQjj6Kekp+gjNZANDN9/tuuLQ==
+  dependencies:
+    "@micro-stacks/client" "1.0.3"
+    micro-stacks "1.1.2"
+    react-async-hook "^4.0.0"
+    use-sync-external-store "^1.2.0"
+
 "@mui/base@5.0.0-alpha.88":
   version "5.0.0-alpha.88"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.88.tgz#0930d1849c74ba62a28ab2d8533de88764173ba4"
@@ -1758,10 +1778,15 @@
     react-transition-group "^4.4.2"
     rifm "^0.12.1"
 
-"@noble/hashes@^1.0.0", "@noble/hashes@~1.1.1":
+"@noble/hashes@1.1.2", "@noble/hashes@^1.0.0", "@noble/hashes@~1.1.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.1.2.tgz#e9e035b9b166ca0af657a7848eb2718f0f22f183"
   integrity sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==
+
+"@noble/secp256k1@1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@noble/secp256k1/-/secp256k1-1.6.3.tgz#7eed12d9f4404b416999d0c87686836c4c5c9b94"
+  integrity sha512-T04e4iTurVy7I8Sw4+c5OSN9/RkPlo1uKxAomtxQNLq8j1uPAqnsqG1bqvY3Jv7c13gyr6dui0zmh/I3+f/JaQ==
 
 "@noble/secp256k1@^1.5.5":
   version "1.6.0"
@@ -2231,6 +2256,15 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
+
+"@trustmachines/ballot-box-strategies@/Users/talha.btc/Desktop/ballot-box/ballot-box-strategies":
+  version "0.0.9"
+  dependencies:
+    axios "^0.27.2"
+    bignumber.js "^9.0.2"
+    micro-stacks "^1.1.2"
+    tslib "^2.4.0"
+    typescript "^4.7.4"
 
 "@trustmachines/ballot-box-strategies@^0.0.9":
   version "0.0.9"
@@ -5096,7 +5130,7 @@ express@^4.17.3:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
+fast-deep-equal@3.1.3, fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
@@ -6989,6 +7023,14 @@ methods@~1.1.2:
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==
 
+micro-stacks@1.1.2, micro-stacks@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/micro-stacks/-/micro-stacks-1.1.2.tgz#e38a73afd91054ebc6a13c15fef9a355bd8a8495"
+  integrity sha512-Uu+YcbcGVgiCHFWVyhHh+bzdSAEtjYq1l+ISFNpTV/bNCDjNNZnVoE0ZBsh7lxM43OQZLL3wHgtdONBuLGlpPQ==
+  dependencies:
+    "@noble/hashes" "1.1.2"
+    "@noble/secp256k1" "1.6.3"
+
 micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
@@ -8325,6 +8367,11 @@ react-app-rewired@^2.2.1:
   dependencies:
     semver "^5.6.0"
 
+react-async-hook@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-async-hook/-/react-async-hook-4.0.0.tgz#1f0467586654e1f33b7433bd98c300a0c5f9b3d0"
+  integrity sha512-97lgjFkOcHCTYSrsKBpsXg3iVWM0LnzedB749iP76sb3/8Ouu4nHIkCLEOrQWHVYqrYxjF05NN6GHoXWFkB3Kw==
+
 react-dev-utils@^12.0.1:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-12.0.1.tgz#ba92edb4a1f379bd46ccd6bcd4e7bc398df33e73"
@@ -9472,6 +9519,11 @@ thunky@^1.0.2:
   resolved "https://registry.yarnpkg.com/thunky/-/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
 
+tiny-invariant@>=1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.2.0.tgz#a1141f86b672a9148c72e978a19a73b9b94a15a9"
+  integrity sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==
+
 tmpl@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
@@ -9695,6 +9747,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-sync-external-store@1.2.0, use-sync-external-store@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
@@ -10272,3 +10329,10 @@ zone-file@^2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/zone-file/-/zone-file-2.0.0-beta.3.tgz#fad3eb8c624ad8ae746b4547e9947804283048a1"
   integrity sha512-6tE3PSRcpN5lbTTLlkLez40WkNPc9vw/u1J2j6DBiy0jcVX48nCkWrx2EC+bWHqC2SLp069Xw4AdnYn/qp/W5g==
+
+zustand@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.0.0.tgz#739cba69209ffe67b31e7d6741c25b51496114a7"
+  integrity sha512-OrsfQTnRXF1LZ9/vR/IqN9ws5EXUhb149xmPjErZnUrkgxS/gAHGy2dPNIVkVvoxrVe1sIydn4JjF0dYHmGeeQ==
+  dependencies:
+    use-sync-external-store "1.2.0"
