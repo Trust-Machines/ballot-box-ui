@@ -2,7 +2,7 @@ import {atom} from 'jotai';
 import {ProposalWithSpace, Proposal, Space, Vote} from '../types';
 
 export {userSessionAtom, userDataAtom, userAuthAtom} from './auth';
-export {themeAtom, toastAtom, modalAtom, appMenuVisibilityAtom} from './ui';
+export {themeAtom, toastAtom, modalAtom, appMenuVisibilityAtom, authWindowStateAtom} from './ui';
 export {userIdAtom} from './user-data';
 
 export const bnsNameAtom = atom<{ address: string, name: string } | null>(null);

@@ -22,3 +22,4 @@ export const themeAtom = atom<PaletteMode>(initialTheme());
 export const toastAtom = atom<Toast>({message: null, type: null});
 export const modalAtom = atom<Modal>(null);
 export const appMenuVisibilityAtom = atom<boolean>(false);
+export const authWindowStateAtom = atom<boolean>(false);
