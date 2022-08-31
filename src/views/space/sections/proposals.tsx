@@ -25,7 +25,7 @@ const Proposals = (props: { space: Space }) => {
     }, [space.id]);
 
     if (loading) {
-        return <>Loading...</>;
+        return <Muted sx={{textAlign: 'center', mt: '100px'}}>{t('Loading...')}</Muted>;
     }
 
     if (proposals.length === 0) {
