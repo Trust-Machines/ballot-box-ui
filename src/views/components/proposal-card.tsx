@@ -17,7 +17,7 @@ const ProposalCard = (props: { proposal: Proposal }) => {
     const styles = useStyles();
     const theme = useTheme();
 
-    return <Box component={Link} to={`/spaces/${proposal.spaceId}/proposals/${proposal.id}`} sx={{
+    return <Link to={`/spaces/${proposal.spaceId}/proposals/${proposal.id}`} sx={{
         display: 'block',
         border: `1px solid ${theme.palette.divider}`,
         padding: '18px',
@@ -66,7 +66,7 @@ const ProposalCard = (props: { proposal: Proposal }) => {
                 <>{' '}{t('Closed, {{v}} votes', {v: proposal.voteCount})}</>
             )}
         </Muted>
-    </Box>
+    </Link>
 }
 
 export default ProposalCard;
