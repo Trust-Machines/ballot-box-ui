@@ -17,6 +17,7 @@ const themes = {
         ...themeOptions,
         palette: {
             mode: 'dark',
+            divider: '#e5e7eb17'
         }
     })
 }

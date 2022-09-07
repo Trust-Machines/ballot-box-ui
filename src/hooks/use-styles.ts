@@ -5,7 +5,7 @@ import {Proposal} from '../types';
 const useStyles = () => {
     const theme = useTheme();
     const appBgLight = '#ffffff';
-    const appBgDark = '#3b3b3b';
+    const appBgDark = '#201E23';
 
     return {
         appBgLight,
@@ -13,7 +13,7 @@ const useStyles = () => {
         appBg: theme.palette.mode === 'light' ? appBgLight : appBgDark,
         textColor: theme.palette.mode === 'light' ? grey[900] : grey[300],
         mutedTextColor: theme.palette.mode === 'light' ? grey[600] : grey[500],
-        menuBgColor: theme.palette.mode === 'light' ? grey[50] : grey[900],
+        menuBgColor: theme.palette.mode === 'light' ? grey[50] : appBgDark,
         linkColor: theme.palette.mode === 'light' ? grey[800] : grey[200],
         linkHoverColor: grey[500],
         proposalColor: (proposal: Proposal): string => {
