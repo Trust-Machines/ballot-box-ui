@@ -21,7 +21,7 @@ const ContactDialog = () => {
     };
 
     return <>
-        <DialogTitle>{t('Contact')}<CloseModal onClick={handleClose}/></DialogTitle>
+        <DialogTitle>{t('Contact Us')}<CloseModal onClick={handleClose}/></DialogTitle>
         <DialogContent>
             <DialogContentText>
                 <Trans
@@ -52,7 +52,8 @@ const AppFooter = () => {
         borderTop: `1px solid ${theme.palette.divider}`,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
+        pr: '20px',
         fontSize: '90%'
     }}>
         <Box sx={{
@@ -62,7 +63,7 @@ const AppFooter = () => {
             ':hover': {color: linkColor}
         }} onClick={() => {
             showModal({body: <ContactDialog/>})
-        }}>{t('Contact')}</Box>
+        }}>{t('Contact Us')}</Box>
     </Box>
 }
 
