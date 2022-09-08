@@ -2245,7 +2245,7 @@
 
 "@trustmachines/ballot-box-strategies@^0.0.9":
   version "0.0.9"
-  resolved "https://registry.npmjs.org/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.0.9.tgz"
+  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.0.9.tgz#5017661d7f622611ddbd481f015ceafa3287e56c"
   integrity sha512-mUZ+qEY/FDQrElIEn+pdjUauGMpy8FB1tDpq7L5hsunkS8DyNlByrmpiishCTsh1dYhZc7ZGqwg8vaKLQ0dBVA==
   dependencies:
     "@stacks/network" "^4.3.4"
