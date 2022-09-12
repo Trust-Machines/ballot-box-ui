@@ -26,13 +26,13 @@ const ContactDialog = () => {
             <DialogContentText>
                 <Trans
                     i18n={i18n}
-                    defaults="If you have any questions or encounter issues, please contact us at <0>hello@console.xyz</0>"
+                    defaults="If you have any questions or encounter issues, please contact us at <0>hello@ballotbox.xyz</0>"
                     components={[<Box sx={{
                         color: linkColor,
                         textDecoration: 'none',
                         cursor: 'pointer',
                         ':hover': {color: linkHoverColor}
-                    }} component="a" href="mailto:hello@console.xyz"/>]}
+                    }} component="a" href="mailto:hello@ballotbox.xyz"/>]}
                 />
             </DialogContentText>
         </DialogContent>
