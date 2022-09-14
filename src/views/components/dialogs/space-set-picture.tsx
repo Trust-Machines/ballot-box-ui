@@ -1,18 +1,18 @@
 import React, {useRef, useState} from 'react';
-
+import {useAtom} from 'jotai';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormHelperText from '@mui/material/FormHelperText';
 
-import AuthRequired from '../../../components/auth-required';
 import CloseModal from '../../../components/close-modal';
 import useModal from '../../../hooks/use-modal';
 import useToast from '../../../hooks/use-toast';
-import useAuth from '../../../hooks/use-auth';
+import useRequireAuth from '../../../hooks/use-require-auth';
 import useTranslation from '../../../hooks/use-translation';
 import {updateSpacePicture} from '../../../api/ballot-box';
+import {authWindowStateAtom} from '../../../store';
 import {Space} from '../../../types';
 
 const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => void }) => {
@@ -23,14 +23,16 @@ const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => voi
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [imgSrc, setImgSrc] = useState('');
     const {space, onSuccess} = props;
-    const {auth} = useAuth();
-
+    const requireAuthSignature = useRequireAuth();
+    const [authWindowState] = useAtom(authWindowStateAtom);
 
     const handleClose = () => {
         showModal(null);
     };
 
     const submit = async () => {
+        const auth = await requireAuthSignature();
+
         setInProgress(true);
         const data = imgSrc.split(',')[1];
         updateSpacePicture(auth!, space!.id, data).then(r => {
@@ -82,11 +84,10 @@ const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => voi
                             <Box component="img" sx={{width: '200px', height: '200px', borderRadius: '50%', mb: '20px'}}
                                  src={imgSrc}/>
                             <Box>
-                                <AuthRequired>
-                                    <Button disabled={inProgress} variant="contained" sx={{mr: '10px'}}
-                                            onClick={submit}>{t('Upload')}</Button>
-                                </AuthRequired>
-                                <Button disabled={inProgress} onClick={selectFile}>{t('Select another file')}</Button>
+                                <Button disabled={inProgress || authWindowState} variant="contained" sx={{mr: '10px'}}
+                                        onClick={submit}>{t('Upload')}</Button>
+                                <Button disabled={inProgress || authWindowState}
+                                        onClick={selectFile}>{t('Select another file')}</Button>
                             </Box>
                         </>
                     )}

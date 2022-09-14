@@ -6,12 +6,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
 
-import AuthRequired from '../../../components/auth-required';
 import ThemedBox from '../../../components/themed-box';
 import {H2} from '../../../components/text';
 import DeleteSpace from '../../components/dialogs/space-delete';
-import {spaceAtom, userSpacesAtom} from '../../../store';
-import useAuth from '../../../hooks/use-auth';
+import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
+import useRequireAuth from '../../../hooks/use-require-auth';
 import useTranslation from '../../../hooks/use-translation';
 import useToast from '../../../hooks/use-toast';
 import useModal from '../../../hooks/use-modal';
@@ -22,10 +21,11 @@ import {Space} from '../../../types';
 const SpaceEdit = (props: { space: Space }) => {
     const {space} = props;
     const [t] = useTranslation();
-    const {auth} = useAuth();
+    const requireAuthSignature = useRequireAuth();
     const [, showMessage] = useToast();
     const [, showModal] = useModal();
     const [, setSpace] = useAtom(spaceAtom);
+    const [authWindowState] = useAtom(authWindowStateAtom);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const navigate = useNavigate();
     const [name, setName] = useState(space.name);
@@ -84,7 +84,7 @@ const SpaceEdit = (props: { space: Space }) => {
         setErrorMessage('');
     }
 
-    const submit = () => {
+    const submit = async () => {
         const props = {
             name,
             about,
@@ -101,8 +101,10 @@ const SpaceEdit = (props: { space: Space }) => {
             return;
         }
 
+        const auth = await requireAuthSignature();
+
         setInProgress(true);
-        updateSpace(auth!, space.id, props).then(r => {
+        updateSpace(auth, space.id, props).then(r => {
             setSpace(r);
             showMessage(t('Space updated'), 'success');
         }).catch(e => {
@@ -190,9 +192,8 @@ const SpaceEdit = (props: { space: Space }) => {
                            }}/>
             </Box>
             <Box sx={{mt: '12px', display: 'flex', justifyContent: 'center'}}>
-                <AuthRequired>
-                    <Button disabled={inProgress} variant="contained" onClick={submit}>{t('Update')}</Button>
-                </AuthRequired>
+                <Button disabled={inProgress || authWindowState} variant="contained"
+                        onClick={submit}>{t('Update')}</Button>
             </Box>
         </ThemedBox>
         <H2>{t('Danger zone')}</H2>

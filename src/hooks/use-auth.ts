@@ -4,23 +4,25 @@ import {openSignatureRequestPopup, SignatureData} from '@stacks/connect';
 
 import {userSessionAtom, userDataAtom, userAuthAtom, authWindowStateAtom} from '../store';
 import {appConfig, baseAuthOptions, NETWORKS, SIGNATURE_MESSAGE} from '../constants';
+import {USER_AUTH} from '../types';
 
-const useAuth = (): { auth: { signature: string, publicKey: string } | null, session: UserSession | null, data: UserData | null, openAuth: () => void, signOut: () => void, requestSignature: () => void } => {
+const useAuth = (): { auth: { signature: string, publicKey: string } | null, session: UserSession | null, data: UserData | null, requestAuth: () => Promise<any>, signOut: () => void, requestSignature: () => Promise<USER_AUTH> } => {
     const [userSession, setUserSession] = useAtom(userSessionAtom);
     const [userData] = useAtom(userDataAtom);
     const [userAuth, setUserAuth] = useAtom(userAuthAtom);
     const [, setAuthWindowState] = useAtom(authWindowStateAtom);
 
-    const openAuth = () => {
+    const requestAuth = (): Promise<any> => new Promise((resolve, reject) => {
         setAuthWindowState(true);
         const authOptions = {
             onFinish: (payload: FinishedAuthData) => {
                 setAuthWindowState(false);
                 setUserSession(payload.userSession);
-                requestSignature();
+                resolve(true);
             },
             onCancel: () => {
                 setAuthWindowState(false);
+                reject();
             },
             userSession: new UserSession({appConfig}),
             ...baseAuthOptions
@@ -28,7 +30,7 @@ const useAuth = (): { auth: { signature: string, publicKey: string } | null, ses
         setUserSession(null);
         setUserAuth(null);
         showConnect(authOptions);
-    };
+    });
 
     const signOut = () => {
         if (!userSession) {
@@ -39,7 +41,7 @@ const useAuth = (): { auth: { signature: string, publicKey: string } | null, ses
         userSession.signUserOut();
     }
 
-    const requestSignature = () => {
+    const requestSignature = (): Promise<any> => new Promise((resolve, reject) => {
         setAuthWindowState(true);
         const signOptions = {
             userSession: userSession!,
@@ -48,18 +50,21 @@ const useAuth = (): { auth: { signature: string, publicKey: string } | null, ses
             network: NETWORKS['mainnet'],
             onFinish: (data: SignatureData) => {
                 setAuthWindowState(false);
-                setUserAuth({signature: data.signature, publicKey: data.publicKey});
+                const auth = {signature: data.signature, publicKey: data.publicKey};
+                setUserAuth(auth);
+                resolve(auth);
             },
             onCancel: () => {
                 setAuthWindowState(false);
+                reject();
             }
         };
 
         openSignatureRequestPopup(signOptions).then();
-    }
+    });
 
     return {
-        auth: userAuth, session: userSession, data: userData, openAuth, signOut, requestSignature
+        auth: userAuth, session: userSession, data: userData, requestAuth, signOut, requestSignature
     };
 }
 

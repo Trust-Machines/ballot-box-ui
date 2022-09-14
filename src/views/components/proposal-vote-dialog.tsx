@@ -6,32 +6,29 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {runStrategy} from '@trustmachines/ballot-box-strategies';
 
-import AuthRequired from '../../components/auth-required';
 import CloseModal from '../../components/close-modal';
 import ThemedBox from '../../components/themed-box';
 import {Muted} from '../../components/text';
 import useAddress from '../../hooks/use-address';
 import useModal from '../../hooks/use-modal';
 import useToast from '../../hooks/use-toast';
-import useAuth from '../../hooks/use-auth';
 import useTranslation from '../../hooks/use-translation';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import {vote} from '../../api/ballot-box';
-import {ProposalWithSpace, VoteWithProposal} from '../../types';
+import {ProposalWithSpace, USER_AUTH, VoteWithProposal} from '../../types';
 import {NETWORKS} from '../../constants';
 import {truncateMiddle} from '../../util';
 
 
-const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
+const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
     const [, showModal] = useModal();
     const [isSm] = useMediaBreakPoint();
     const [t] = useTranslation();
-    const {auth} = useAuth();
     const [, showMessage] = useToast();
     const [votingPower, setVotingPower] = useState(0);
     const [loading, setLoading] = useState(true);
     const [inProgress, setInProgress] = useState<boolean>(false);
-    const {proposal, choice, onVote} = props;
+    const {auth, proposal, choice, onVote} = props;
     const {space} = proposal;
     const address = useAddress(space.network);
 
@@ -53,7 +50,7 @@ const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string
 
     const handleConfirm = async () => {
         setInProgress(true);
-        vote(auth!, proposal.id, choice).then((r) => {
+        vote(auth, proposal.id, choice).then((r) => {
             showModal(null);
             onVote(r);
         }).catch(e => {
@@ -81,18 +78,18 @@ const ProposalVoteDialog = (props: { proposal: ProposalWithSpace, choice: string
                         <Muted>{t('Network')}</Muted>
                         <Box sx={{textAlign: 'right'}}>{space.network}</Box>
                         <Muted>{t('Your address')}</Muted>
-                        <Box sx={{textAlign: 'right'}} title={address!}>{isSm ? truncateMiddle(address!, 8) : truncateMiddle(address!, 4)}</Box>
+                        <Box sx={{textAlign: 'right'}}
+                             title={address!}>{isSm ? truncateMiddle(address!, 8) : truncateMiddle(address!, 4)}</Box>
                         <Muted>{t('Your Voting Power')}</Muted>
-                        <Box sx={{textAlign: 'right'}}>{`${votingPower.toFixed(4)} ${space.strategyOptions.symbol}`}</Box>
+                        <Box
+                            sx={{textAlign: 'right'}}>{`${votingPower.toFixed(4)} ${space.strategyOptions.symbol}`}</Box>
                     </Box>
                 </ThemedBox>
             </DialogContent>
             <DialogActions sx={{justifyContent: 'center'}}>
                 <Button onClick={handleClose} disabled={inProgress}>{t('Cancel')}</Button>
-                <AuthRequired>
-                    <Button variant="contained" onClick={handleConfirm}
-                            disabled={loading || inProgress || votingPower === 0}>{t('Vote')}</Button>
-                </AuthRequired>
+                <Button variant="contained" onClick={handleConfirm}
+                        disabled={loading || inProgress || votingPower === 0}>{t('Vote')}</Button>
             </DialogActions>
         </>
     );
