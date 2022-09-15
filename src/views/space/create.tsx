@@ -18,12 +18,11 @@ import AppWrapper from '../../layout/app-wrapper';
 import AppHeader from '../../layout/app-header';
 import AppContent from '../../layout/app-content';
 import {H2} from '../../components/text';
-import AuthRequired from '../../components/auth-required';
+import useRequireAuth from '../../hooks/use-require-auth';
 import useTranslation from '../../hooks/use-translation';
-import useAuth from '../../hooks/use-auth';
 import useToast from '../../hooks/use-toast';
 import {createSpace} from '../../api/ballot-box';
-import {userSpacesAtom} from '../../store';
+import {userSpacesAtom, authWindowStateAtom} from '../../store';
 
 const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange: (values: Record<string, string>) => void }) => {
     const strategy = strategies[props.strategy];
@@ -89,7 +88,7 @@ const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange:
 
 const CreateSpace = (_: RouteComponentProps) => {
     const [t] = useTranslation();
-    const {auth} = useAuth();
+    const requireAuthSignature = useRequireAuth();
     const [, showMessage] = useToast();
     const navigate = useNavigate();
     const [name, setName] = useState<string>('');
@@ -99,6 +98,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     const [isStrategyListOpen, setIsStrategyListOpen] = useState(false);
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
+    const [authWindowState] = useAtom(authWindowStateAtom);
 
     let strategyOptionList = Object.keys(strategies).map(s => ({
         label: strategies[s].description,
@@ -152,8 +152,10 @@ const CreateSpace = (_: RouteComponentProps) => {
             return;
         }
 
+        const auth = await requireAuthSignature();
+
         setInProgress(true);
-        createSpace(auth!, name, network, strategy, strategyOptions).then(space => {
+        createSpace(auth, name, network, strategy, strategyOptions).then(space => {
             setUserSpaces([...userSpaces, space]);
             showMessage(t('Your new space created'), 'success');
             navigate(`/spaces/${space.id}`).then();
@@ -224,11 +226,7 @@ const CreateSpace = (_: RouteComponentProps) => {
                             setStrategyOptions(values);
                         }}/>
                     </>)}
-                    <AuthRequired inactive={!canSubmit}>
-                        <Button variant="contained" onClick={submit} disabled={inProgress}>
-                            {t('Submit')}
-                        </Button>
-                    </AuthRequired>
+                    <Button variant="contained" onClick={submit} disabled={inProgress || authWindowState}>{t('Submit')}</Button>
                 </Box>
             </AppContent>
         </AppWrapper>

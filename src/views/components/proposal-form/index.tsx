@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useAtom} from 'jotai';
 import Joi from 'joi';
 import moment, {Moment} from 'moment';
 import TextField from '@mui/material/TextField';
@@ -10,15 +11,15 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 
 import ProposalChoices from './proposal-choices';
-import AuthRequired from '../../../components/auth-required';
 import {H3} from '../../../components/text';
 import ThemedBox from '../../../components/themed-box';
 import useTranslation from '../../../hooks/use-translation';
 import useMediaBreakPoint from '../../../hooks/use-media-break-point';
-import useAuth from '../../../hooks/use-auth';
+import useRequireAuth from '../../../hooks/use-require-auth';
 import useToast from '../../../hooks/use-toast';
 import {Proposal, Space} from '../../../types';
 import {createProposal, updateProposal} from '../../../api/ballot-box';
+import {authWindowStateAtom} from '../../../store';
 import {toUnixTs} from '../../../util';
 
 type FormStep = 1 | 2;
@@ -49,10 +50,11 @@ interface Props {
 
 const ProposalForm = (props: Props) => {
     const {proposalId, space, formDefault, onSuccess} = props;
-    const {auth} = useAuth();
+    const requireAuthSignature = useRequireAuth();
     const [, isMd] = useMediaBreakPoint();
     const [t] = useTranslation();
     const [, showMessage] = useToast();
+    const [authWindowState] = useAtom(authWindowStateAtom);
     const [step, setStep] = useState<FormStep>(1);
     const [title, setTitle] = useState(formDefault.title);
     const [body, setBody] = useState(formDefault.body);
@@ -129,21 +131,7 @@ const ProposalForm = (props: Props) => {
             .required(),
     });
 
-    const canSubmit = () => {
-        if (step !== 2) {
-            return false;
-        }
-
-        const props = {
-            choices,
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString()
-        }
-
-        return !validationSchema2.validate(props).error;
-    }
-
-    const submit = () => {
+    const submit = async () => {
         const props = {
             choices,
             startDate: startDate.toISOString(),
@@ -167,7 +155,9 @@ const ProposalForm = (props: Props) => {
             choices
         };
 
-        const promise = proposalId ? updateProposal(auth!, proposalId, proposal) : createProposal(auth!, space.id, proposal);
+        const auth = await requireAuthSignature();
+
+        const promise = proposalId ? updateProposal(auth, proposalId, proposal) : createProposal(auth, space.id, proposal);
 
         setInProgress(true);
         promise.then(r => {
@@ -297,12 +287,10 @@ const ProposalForm = (props: Props) => {
             switch (step) {
                 case 1:
                     return <Button fullWidth variant="contained" onClick={next}
-                                   disabled={inProgress}>{t('Continue')}</Button>;
+                                   disabled={inProgress || authWindowState}>{t('Continue')}</Button>;
                 case 2:
-                    return <AuthRequired inactive={!canSubmit()}>
-                        <Button fullWidth variant="contained" onClick={submit}
-                                disabled={inProgress}>{proposalId ? t('Update') : t('Publish')}</Button>
-                    </AuthRequired>;
+                    return <Button fullWidth variant="contained" onClick={submit}
+                                   disabled={inProgress || authWindowState}>{proposalId ? t('Update') : t('Publish')}</Button>;
             }
         }
 

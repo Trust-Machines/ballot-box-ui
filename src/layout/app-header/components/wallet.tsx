@@ -63,7 +63,7 @@ export const WalletMenu = (props: { onSignOut: () => void }) => {
 const Wallet = () => {
     const [menu, setMenu] = useState(false);
     const theme = useTheme();
-    const {openAuth} = useAuth();
+    const {requestAuth, requestSignature} = useAuth();
     const address = useAddress('mainnet');
     const bnsName = useBnsName();
     const [t] = useTranslation();
@@ -74,7 +74,7 @@ const Wallet = () => {
         }}>
             <Box onClick={() => {
                 if (!address) {
-                    openAuth();
+                    requestAuth().then(requestSignature);
                     return;
                 }
 
