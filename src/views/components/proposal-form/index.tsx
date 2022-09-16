@@ -277,7 +277,8 @@ const ProposalForm = (props: Props) => {
 
             switch (step) {
                 case 1:
-                    return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={preview}>Preview</Button>;
+                    return null
+                    // return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={preview}>Preview</Button>;
                 case 2:
                     return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={back}>Back</Button>;
             }
