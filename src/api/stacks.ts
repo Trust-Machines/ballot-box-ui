@@ -9,3 +9,8 @@ export const getBnsName = (address: string): Promise<string | null> => {
     })
 }
 
+export const getBlock = (height: number): Promise<{
+    hash: string
+}> => {
+    return fetch(`${NETWORKS['mainnet'].coreApiUrl}/extended/v1/block/by_height/${height}`).then(r => r.json());
+}
