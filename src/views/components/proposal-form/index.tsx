@@ -20,7 +20,7 @@ import useToast from '../../../hooks/use-toast';
 import {Proposal, Space} from '../../../types';
 import {createProposal, updateProposal} from '../../../api/ballot-box';
 import {authWindowStateAtom} from '../../../store';
-import {toUnixTs} from '../../../util';
+import {toUnixTs, unixTsNow} from '../../../util';
 
 type FormStep = 1 | 2;
 
@@ -228,7 +228,7 @@ const ProposalForm = (props: Props) => {
                         minDateTime={moment()}
                         renderInput={(props) => {
                             return <TextField fullWidth {...props} error={error === 'startDate'}
-                                              helperText={error === 'startDate' ? errorMessage : ' '}/>
+                                              helperText={!error && startDate.unix() < unixTsNow() ? 'Starts immediately, taking the current block number as the snapshot.' : (error === 'startDate' ? errorMessage : ' ')}/>
                         }}
                         label={t('Start')}
                         value={startDate}
@@ -277,7 +277,8 @@ const ProposalForm = (props: Props) => {
 
             switch (step) {
                 case 1:
-                    return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={preview}>Preview</Button>;
+                    return null
+                    // return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={preview}>Preview</Button>;
                 case 2:
                     return <Button fullWidth variant="outlined" sx={sx} color="info" onClick={back}>Back</Button>;
             }

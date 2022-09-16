@@ -12,7 +12,7 @@ import {H3, Muted} from '../../components/text';
 import ThemedBox from '../../components/themed-box';
 import {votesAtom} from '../../store';
 import {getProposalVotes} from '../../api/ballot-box';
-import {formatVotePower} from '../../helper';
+import {formatVotePower, explorerLink} from '../../helper';
 import {ProposalWithSpace} from '../../types';
 
 
@@ -23,7 +23,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
     const [votes, setVotes] = useAtom(votesAtom);
     const {data} = useAuth();
     const theme = useTheme();
-    const {textTruncateStyles} = useStyles();
+    const {textTruncateStyles, linkColor, linkHoverColor} = useStyles();
     const userAddress = (data && data.profile.stxAddress[proposal.space.network]) || null;
 
     useEffect(() => {
@@ -77,13 +77,23 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
                             flexShrink: 0,
                             mr: '6px'
                         }}/> : null}
-                        <Box sx={{
-                            width: emphasise ? '102px' : '120px',
-                            maxWidth: emphasise ? '242px' : '260px',
-                            flexGrow: 1,
-                            mr: '6px',
-                            ...textTruncateStyles
-                        }} title={vote.userAddress}>
+                        <Box component="a"
+                             href={explorerLink(proposal.space.network, `address/${vote.userAddress}`)}
+                             target="_blank"
+                             rel="noreferrer"
+                             sx={{
+                                 width: emphasise ? '102px' : '120px',
+                                 maxWidth: emphasise ? '242px' : '260px',
+                                 flexGrow: 1,
+                                 mr: '6px',
+                                 color: linkColor,
+                                 textDecoration: 'none',
+                                 cursor: 'pointer',
+                                 ':hover': {
+                                     color: linkHoverColor
+                                 },
+                                 ...textTruncateStyles
+                             }} title={vote.userAddress}>
                             {vote.userName || vote.userAddress}</Box>
                         <Box sx={{
                             width: '120px',

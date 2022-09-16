@@ -14,3 +14,5 @@ export const truncate = (s: string, cut: number) => {
 }
 
 export const toUnixTs = (now: number) =>  Math.floor(now / 1000);
+
+export const unixTsNow = () => Math.floor(Date.now() / 1000);

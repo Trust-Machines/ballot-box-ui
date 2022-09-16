@@ -1,16 +1,31 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Box from '@mui/material/Box';
 import moment from 'moment';
+import {useEffect, useState} from 'react';
 
 import ThemedBox from '../../components/themed-box';
 import {H4} from '../../components/text';
 import useTranslation from '../../hooks/use-translation';
+import useStyles from '../../hooks/use-styles';
+import {getBlock} from '../../api/stacks';
 import {ProposalWithSpace} from '../../types';
+import {explorerLink} from '../../helper';
 
 
 const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
     const [t] = useTranslation();
     const {proposal} = props;
+    const {linkColor, linkHoverColor} = useStyles();
+    const [blockHash, setBlockHash] = useState('');
+
+    useEffect(() => {
+        if (proposal.startBlock) {
+            getBlock(proposal.startBlock).then(r => {
+                setBlockHash(r.hash);
+            })
+        }
+
+    }, [proposal]);
 
     return <ThemedBox sx={{mb: '40px'}}>
         <H4 sx={{display: 'flex', alignItems: 'center'}}><InfoOutlinedIcon fontSize="small"
@@ -31,7 +46,25 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
             {proposal.startBlock && (
                 <>
                     <Box>{t('Snapshot')}</Box>
-                    <Box>{proposal.startBlock}</Box>
+                    <Box component="a"
+                         onClick={(e) => {
+                             if (!blockHash) {
+                                 e.preventDefault();
+                             }
+                         }}
+                         href={explorerLink(proposal.space.network, `/block/${blockHash}`)}
+                         target="_blank"
+                         rel="noreferrer"
+                         sx={{
+                             color: linkColor,
+                             textDecoration: 'none',
+                             cursor: 'pointer',
+                             ':hover': {
+                                 color: linkHoverColor
+                             },
+                         }}>
+                        {proposal.startBlock}
+                    </Box>
                 </>
             )}
         </Box>

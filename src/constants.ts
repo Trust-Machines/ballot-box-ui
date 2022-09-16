@@ -24,3 +24,5 @@ export const NETWORKS: Record<NETWORK, StacksNetwork> = {
 export const SIGNATURE_MESSAGE = 'BallotBoxAuth';
 
 export const IFRAMELY_API_KEY = process.env.REACT_APP_IFRAMELY_API_KEY;
+
+export const EXPLORER_BASE = 'https://explorer.stacks.co';

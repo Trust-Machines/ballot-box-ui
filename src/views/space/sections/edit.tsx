@@ -177,7 +177,7 @@ const SpaceEdit = (props: { space: Space }) => {
                            helperText={error === 'twitterHandle' ? errorMessage : ' '}
                            onChange={(e) => {
                                resetError();
-                               setTwitterHandle(e.target.value);
+                               setTwitterHandle(e.target.value.replace('@', ''));
                            }}/>
             </Box>
             <Box sx={{mt: '12px'}}>
@@ -188,7 +188,7 @@ const SpaceEdit = (props: { space: Space }) => {
                            helperText={error === 'githubHandle' ? errorMessage : ' '}
                            onChange={(e) => {
                                resetError();
-                               setGithubHandle(e.target.value);
+                               setGithubHandle(e.target.value.replace('@', ''));
                            }}/>
             </Box>
             <Box sx={{mt: '12px', display: 'flex', justifyContent: 'center'}}>
