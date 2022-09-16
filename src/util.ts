@@ -13,6 +13,17 @@ export const truncate = (s: string, cut: number) => {
     }
 }
 
-export const toUnixTs = (now: number) =>  Math.floor(now / 1000);
+export const toUnixTs = (now: number) => Math.floor(now / 1000);
 
 export const unixTsNow = () => Math.floor(Date.now() / 1000);
+
+
+export const getHandleFromLink = (baseUrl: string, link: string) => {
+    if (link.startsWith(baseUrl)) {
+        const parts = link.split('/');
+        const handle = parts[parts.length - 1];
+        return handle.trim();
+    }
+
+    return null;
+}

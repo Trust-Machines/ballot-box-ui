@@ -16,6 +16,7 @@ import useToast from '../../../hooks/use-toast';
 import useModal from '../../../hooks/use-modal';
 import {updateSpace} from '../../../api/ballot-box';
 import {Space} from '../../../types';
+import {getHandleFromLink} from '../../../util';
 
 
 const SpaceEdit = (props: { space: Space }) => {
@@ -177,7 +178,12 @@ const SpaceEdit = (props: { space: Space }) => {
                            helperText={error === 'twitterHandle' ? errorMessage : ' '}
                            onChange={(e) => {
                                resetError();
-                               setTwitterHandle(e.target.value.replace('@', ''));
+                               const handle = getHandleFromLink('https://twitter.com/', e.target.value);
+                               if (handle) {
+                                   setTwitterHandle(handle);
+                                   return;
+                               }
+                               setTwitterHandle(e.target.value);
                            }}/>
             </Box>
             <Box sx={{mt: '12px'}}>
@@ -188,7 +194,12 @@ const SpaceEdit = (props: { space: Space }) => {
                            helperText={error === 'githubHandle' ? errorMessage : ' '}
                            onChange={(e) => {
                                resetError();
-                               setGithubHandle(e.target.value.replace('@', ''));
+                               const handle = getHandleFromLink('https://github.com/', e.target.value);
+                               if (handle) {
+                                   setGithubHandle(handle);
+                                   return;
+                               }
+                               setGithubHandle(e.target.value);
                            }}/>
             </Box>
             <Box sx={{mt: '12px', display: 'flex', justifyContent: 'center'}}>
