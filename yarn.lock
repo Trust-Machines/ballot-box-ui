@@ -2250,10 +2250,10 @@
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@trustmachines/ballot-box-strategies@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.1.1.tgz#50ed9c291feb7234d87a4fe76570b89bf5a6de30"
-  integrity sha512-jiYXyliB6ULUxUDSOP1yKdCU3QXA/+V63ROaMMskeDzdeuS/4bCKKe5eD9RIA4OjCM2AGNKM085Qgkc49hUbig==
+"@trustmachines/ballot-box-strategies@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@trustmachines/ballot-box-strategies/-/ballot-box-strategies-0.2.0.tgz#d083daefdd18f6bf71070c5486301c160feca593"
+  integrity sha512-gjilIX7hMNSEGgY9K36qeNbO15UlczUDIILCP9OkZ15UMveMB2Y/3W1Vz9KOOr6pfgX/VOTWYqSv0ZaLi/Wa/A==
   dependencies:
     "@stacks/network" "^4.3.4"
     "@stacks/transactions" "^4.3.4"

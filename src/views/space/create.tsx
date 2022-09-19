@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import strategies from '@trustmachines/ballot-box-strategies';
 import {InputBaseProps} from '@mui/material/InputBase';
 import {SelectChangeEvent} from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
 
 import AppMenu from '../../layout/app-menu';
 import AppWrapper from '../../layout/app-wrapper';
@@ -81,6 +82,7 @@ const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange:
                            handleChange(e, entryName);
                        }}
             />
+            {entry.help ? <FormHelperText>{entry.help}</FormHelperText> : ''}
         </Box>
     })}</>
 
@@ -226,7 +228,8 @@ const CreateSpace = (_: RouteComponentProps) => {
                             setStrategyOptions(values);
                         }}/>
                     </>)}
-                    <Button variant="contained" onClick={submit} disabled={inProgress || authWindowState}>{t('Submit')}</Button>
+                    <Button variant="contained" onClick={submit}
+                            disabled={inProgress || authWindowState}>{t('Submit')}</Button>
                 </Box>
             </AppContent>
         </AppWrapper>
