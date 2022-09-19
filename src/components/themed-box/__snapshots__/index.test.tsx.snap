@@ -3,7 +3,7 @@
 exports[`1 Default render 1`] = `
 <div>
   <div
-    class="MuiBox-root css-14h3jy0"
+    class="MuiBox-root css-1by4xjv"
   >
     <span>
       children
@@ -15,7 +15,7 @@ exports[`1 Default render 1`] = `
 exports[`2 Render with custom style 1`] = `
 <div>
   <div
-    class="MuiBox-root css-14k07pk"
+    class="MuiBox-root css-n0y69c"
   >
     <span>
       children
