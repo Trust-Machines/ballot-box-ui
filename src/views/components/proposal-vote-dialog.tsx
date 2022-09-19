@@ -18,6 +18,7 @@ import {vote} from '../../api/ballot-box';
 import {ProposalWithSpace, USER_AUTH, VoteWithProposal} from '../../types';
 import {NETWORKS} from '../../constants';
 import {truncateMiddle} from '../../util';
+import {formatVotePower} from '../../helper';
 
 
 const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
@@ -48,7 +49,7 @@ const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpac
         }).finally(() => {
             setLoading(false);
         })
-    }, []);
+    }, [proposal]);
 
     const handleClose = () => {
         showModal(null);
@@ -88,7 +89,7 @@ const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpac
                              title={address!}>{isSm ? truncateMiddle(address!, 8) : truncateMiddle(address!, 4)}</Box>
                         <Muted>{t('Your Voting Power')}</Muted>
                         <Box
-                            sx={{textAlign: 'right'}}>{`${votingPower.toFixed(4)} ${space.strategyOptions.symbol}`}</Box>
+                            sx={{textAlign: 'right'}}>{formatVotePower(votingPower, space, 4)}</Box>
                     </Box>
                 </ThemedBox>
             </DialogContent>

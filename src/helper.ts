@@ -1,14 +1,25 @@
 import {StacksNetwork} from '@stacks/network';
 import numeral from 'numeral';
-import {NETWORK} from './types';
+import strategies from '@trustmachines/ballot-box-strategies';
+import {NETWORK, Space} from './types';
 import {NETWORKS, EXPLORER_BASE} from './constants';
 
 export const getStacksNetwork = (n: NETWORK): StacksNetwork => {
     return NETWORKS[n];
 }
 
-export const formatVotePower = (power: number) => {
-    return numeral(power).format('0.00a');
+export const formatVotePowerAbbr = (power: number, space: Space, fractionDigits: number) => {
+    const {symbol} = space.strategyOptions;
+    const pattern = strategies[space.strategy].baseOptions?.noDecimalFormat ? '0' : `0.${'0'.repeat(fractionDigits)}a`;
+    return `${numeral(power).format(pattern)} ${symbol}`;
+}
+
+export const formatVotePower = (power: number, space: Space, fractionDigits: number) => {
+    const {symbol} = space.strategyOptions;
+    if (strategies[space.strategy].baseOptions?.noDecimalFormat) {
+        return `${power} ${symbol}`;
+    }
+    return `${power.toFixed(fractionDigits)} ${symbol}`;
 }
 
 

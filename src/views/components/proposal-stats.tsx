@@ -4,7 +4,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import ThemedBox from '../../components/themed-box';
 import {H3} from '../../components/text';
 import useTranslation from '../../hooks/use-translation';
-import {formatVotePower} from '../../helper';
+import {formatVotePowerAbbr} from '../../helper';
 import {ProposalWithSpace} from '../../types';
 import {percentOf} from '../../util';
 import useStyles from '../../hooks/use-styles';
@@ -13,7 +13,6 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
     const [t] = useTranslation();
     const total = proposal.voteStats.reduce((p, c) => p + c.power, 0);
-    const {symbol} = proposal.space.strategyOptions;
     const {voteStats} = proposal;
     const {textTruncateStyles} = useStyles();
 
@@ -37,7 +36,7 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                         textAlign: 'right',
                         mr: '6px',
                         ...textTruncateStyles
-                    }}>{`${formatVotePower(s.power)} ${symbol}`}</Box>
+                    }}>{formatVotePowerAbbr(s.power, proposal.space, 2)}</Box>
                     <Box sx={{width: '50px', textAlign: 'right',}}>{`${per.toFixed(2)}%`}</Box>
                 </Box>
                 <LinearProgress value={per} variant="determinate" sx={{borderRadius: '5px', height: '10px'}}/>
