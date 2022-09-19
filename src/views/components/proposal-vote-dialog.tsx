@@ -33,11 +33,17 @@ const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpac
     const address = useAddress(space.network);
 
     useEffect(() => {
-        if (!proposal.startBlockTip) {
+        if (!proposal.startBlockTip || !proposal.startBlock) {
             return;
         }
 
-        runStrategy(space.strategy, NETWORKS[space.network], address!, proposal.startBlockTip, space.strategyOptions).then(r => {
+        runStrategy(space.strategy, {
+            network: NETWORKS[space.network],
+            address: address!,
+            blockTip: proposal.startBlockTip,
+            blockHeight: proposal.startBlock,
+            options: space.strategyOptions
+        }).then(r => {
             setVotingPower(r);
         }).finally(() => {
             setLoading(false);
