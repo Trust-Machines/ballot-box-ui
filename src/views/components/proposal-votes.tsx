@@ -12,13 +12,12 @@ import {H3, Muted} from '../../components/text';
 import ThemedBox from '../../components/themed-box';
 import {votesAtom} from '../../store';
 import {getProposalVotes} from '../../api/ballot-box';
-import {formatVotePower, explorerLink} from '../../helper';
+import {formatVotePowerAbbr, explorerLink} from '../../helper';
 import {ProposalWithSpace} from '../../types';
 
 
 const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
     const {proposal} = props;
-    const {symbol} = proposal.space.strategyOptions;
     const [t] = useTranslation();
     const [votes, setVotes] = useAtom(votesAtom);
     const {data} = useAuth();
@@ -107,7 +106,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
                             textAlign: 'right',
                             mr: '6px',
                             ...textTruncateStyles
-                        }}>{`${formatVotePower(vote.power)} ${symbol}`}</Box>
+                        }}>{formatVotePowerAbbr(vote.power, proposal.space, 2)}</Box>
                     </Box>
                 })}
             </ThemedBox>

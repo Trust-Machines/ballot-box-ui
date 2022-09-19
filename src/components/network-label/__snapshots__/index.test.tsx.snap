@@ -3,7 +3,7 @@
 exports[`1 Testnet 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1fkbu3c-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-hksfs4-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
@@ -17,7 +17,7 @@ exports[`1 Testnet 1`] = `
 exports[`2 Mainnet 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorPrimary MuiChip-filledPrimary css-qokti5-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorPrimary MuiChip-filledPrimary css-h2nkvs-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
