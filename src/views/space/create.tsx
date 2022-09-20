@@ -19,11 +19,15 @@ import AppWrapper from '../../layout/app-wrapper';
 import AppHeader from '../../layout/app-header';
 import AppContent from '../../layout/app-content';
 import {H2} from '../../components/text';
+import TestStrategy from '../components/test-strategy';
 import useRequireAuth from '../../hooks/use-require-auth';
 import useTranslation from '../../hooks/use-translation';
 import useToast from '../../hooks/use-toast';
+import useModal from '../../hooks/use-modal';
 import {createSpace} from '../../api/ballot-box';
 import {userSpacesAtom, authWindowStateAtom} from '../../store';
+import {NETWORK} from '../../types';
+
 
 const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange: (values: Record<string, string>) => void }) => {
     const strategy = strategies[props.strategy];
@@ -90,11 +94,12 @@ const StrategyOptions = (props: { strategy: string, readOnly: boolean, onChange:
 
 const CreateSpace = (_: RouteComponentProps) => {
     const [t] = useTranslation();
+    const [, showModal] = useModal();
     const requireAuthSignature = useRequireAuth();
     const [, showMessage] = useToast();
     const navigate = useNavigate();
     const [name, setName] = useState<string>('');
-    const [network, setNetwork] = useState<string>('mainnet');
+    const [network, setNetwork] = useState<NETWORK>('mainnet');
     const [strategy, setStrategy] = useState<string>('empty');
     const [strategyOptions, setStrategyOptions] = useState<any>({});
     const [isStrategyListOpen, setIsStrategyListOpen] = useState(false);
@@ -119,7 +124,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     }
 
     const handleNetworkChange = (event: SelectChangeEvent) => {
-        setNetwork(event.target.value as string);
+        setNetwork(event.target.value as NETWORK);
     };
 
     const handleStrategyChange = (event: SelectChangeEvent) => {
@@ -148,6 +153,26 @@ const CreateSpace = (_: RouteComponentProps) => {
 
     const canSubmit = name && isStrategyOptionsValid();
 
+    const test = () => {
+        if (!isStrategyOptionsValid()) {
+            showMessage(t('Please fill all strategy options'), 'error');
+            return;
+        }
+
+        // Append hardcoded values to options
+        const options = {...strategyOptions};
+        for (let k of Object.keys(strategies[strategy].schema)) {
+            const item = strategies[strategy].schema[k];
+            if (item.type === 'hardcoded') {
+                options[k] = item.value;
+            }
+        }
+
+        showModal({
+            body: <TestStrategy network={network} strategy={strategy} strategyOptions={options}/>
+        });
+    }
+
     const submit = async () => {
         if (!canSubmit) {
             showMessage(t('Please fill all fields in the form'), 'error');
@@ -172,6 +197,7 @@ const CreateSpace = (_: RouteComponentProps) => {
 
     const showStrategyOptions = strategy !== 'empty' &&
         Object.keys(strategies[strategy].schema).filter(a => strategies[strategy].schema[a].type !== 'hardcoded').length > 0;
+    const showTestButton = strategy !== 'empty';
 
     return <>
         <Helmet><title>BallotBox | Create a space</title></Helmet>
@@ -228,8 +254,19 @@ const CreateSpace = (_: RouteComponentProps) => {
                             setStrategyOptions(values);
                         }}/>
                     </>)}
-                    <Button variant="contained" onClick={submit}
-                            disabled={inProgress || authWindowState}>{t('Submit')}</Button>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}>
+                        <Button variant="contained" onClick={submit}
+                                disabled={inProgress || authWindowState}>{t('Submit')}</Button>
+
+                        {showTestButton && (<>
+                            <Button variant="outlined" onClick={test} color="info"
+                                    size="small">{t('Test Strategy')}</Button>
+                        </>)}
+                    </Box>
                 </Box>
             </AppContent>
         </AppWrapper>
