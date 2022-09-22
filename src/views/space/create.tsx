@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {useAtom} from 'jotai';
 import {RouteComponentProps, useNavigate} from '@reach/router';
 import {Helmet} from 'react-helmet';
@@ -33,7 +33,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     const [name, setName] = useState<string>('');
     const [network, setNetwork] = useState<NETWORK>('mainnet');
     const [strategy, setStrategy] = useState<string>('empty');
-    const [strategyOptions, setStrategyOptions] = useState<any>({});
+    const [strategyOptions, setStrategyOptions] = useState<Record<string, string>>({});
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const [authWindowState] = useAtom(authWindowStateAtom);

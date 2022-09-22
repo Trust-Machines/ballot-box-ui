@@ -26,7 +26,6 @@ import {getHandleFromLink} from '../../../util';
 import TestStrategy from '../../components/test-strategy';
 import NetworkSelect from '../../components/network-select';
 
-
 const SpaceEdit = (props: { space: Space }) => {
     const {space} = props;
     const [t] = useTranslation();
