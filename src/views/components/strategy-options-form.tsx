@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import useTranslation from '../../hooks/use-translation';
 
 
-const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, values: Record<string, string>, onChange: (res: { isValid: boolean, values: Record<string, string> }) => void }) => {
+const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, values: Record<string, any>, onChange: (res: { isValid: boolean, values: Record<string, string> }) => void }) => {
     const [t] = useTranslation();
     const {values, onChange} = props;
 
