@@ -9,6 +9,11 @@ export interface ApiError {
     error: string
 }
 
+export interface StrategyOptionsRecord {
+    symbol: string,
+    [key: string]: any
+}
+
 export interface SpaceBase {
     name: string,
     about: string | null,
@@ -16,6 +21,9 @@ export interface SpaceBase {
     termsLink: string | null,
     twitterHandle: string | null,
     githubHandle: string | null,
+    network: NETWORK,
+    strategy: string,
+    strategyOptions: StrategyOptionsRecord
 }
 
 export interface Space extends SpaceBase {
@@ -23,12 +31,6 @@ export interface Space extends SpaceBase {
     userId: number,
     picture: string | null,
     proposalCount: number,
-    network: NETWORK,
-    strategy: string,
-    strategyOptions: {
-        symbol: string,
-        [key: string]: any
-    }
 }
 
 export type ProposalStatus = 'new' | 'on' | 'off';
@@ -55,6 +57,12 @@ export interface Proposal extends ProposalBase {
     status: ProposalStatus,
     voteCount: number,
     voteStats: VoteStats;
+    network: NETWORK,
+    strategy: string,
+    strategyOptions: {
+        symbol: string,
+        [key: string]: any
+    }
 }
 
 export interface ProposalWithSpace extends Proposal {
