@@ -90,6 +90,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     const canSubmit = name && isStrategyOptionsValid();
 
     const test = () => {
+        /*
         if (!isStrategyOptionsValid()) {
             showMessage(t('Please fill all strategy options'), 'error');
             return;
@@ -107,6 +108,8 @@ const CreateSpace = (_: RouteComponentProps) => {
         showModal({
             body: <TestStrategy network={network} strategy={strategy} strategyOptions={options}/>
         });
+
+         */
     }
 
     const submit = async () => {

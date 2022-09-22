@@ -20,7 +20,7 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
 
     useEffect(() => {
         if (proposal.startBlock) {
-            getBlock(proposal.startBlock).then(r => {
+            getBlock(proposal.space.network, proposal.startBlock).then(r => {
                 setBlockHash(r.hash);
             })
         }

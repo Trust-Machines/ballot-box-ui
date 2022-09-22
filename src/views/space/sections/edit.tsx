@@ -11,6 +11,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import {blue} from '@mui/material/colors';
+import strategies from '@trustmachines/ballot-box-strategies';
 
 import ThemedBox from '../../../components/themed-box';
 import {H2, H3} from '../../../components/text';
@@ -25,6 +26,8 @@ import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
 import {updateSpace} from '../../../api/ballot-box';
 import {NETWORK, Space, StrategyOptionsRecord} from '../../../types';
 import {getHandleFromLink} from '../../../util';
+import TestStrategy from '../../components/test-strategy';
+
 
 const SpaceEdit = (props: { space: Space }) => {
     const {space} = props;
@@ -147,6 +150,8 @@ const SpaceEdit = (props: { space: Space }) => {
         navigate('/').then();
     }
 
+
+
     return <Box>
         <ThemedBox sx={{mb: '20px'}}>
             <H3 sx={{mb: '20px'}}>{t('Basic Information')}</H3>
@@ -261,7 +266,8 @@ const SpaceEdit = (props: { space: Space }) => {
             <StrategyOptionsForm values={strategyOptions} strategy={strategy} readOnly={inProgress}
                                  onChange={setStrategyOptions}/>
         </ThemedBox>
-        <Box sx={{mb: '20px', display: 'flex', justifyContent: 'center'}}>
+        <Box sx={{mb: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <TestStrategy strategy={strategy} network={network} strategyOptions={strategyOptions} />
             <Button disabled={inProgress || authWindowState} variant="contained"
                     onClick={submit}>{t('Update')}</Button>
         </Box>

@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import {runStrategy} from '@trustmachines/ballot-box-strategies';
+import strategies, {runStrategy} from '@trustmachines/ballot-box-strategies';
 import {validateStacksAddress} from '@stacks/transactions';
 
 import CloseModal from '../../components/close-modal';
@@ -19,7 +19,13 @@ import {getCurrentBlock, getBlock} from '../../api/stacks';
 import {NETWORK, Space} from '../../types';
 import {NETWORKS} from '../../constants';
 
-const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptions: any }) => {
+interface Props {
+    strategy: string,
+    network: NETWORK,
+    strategyOptions: any
+}
+
+const TestStrategyDialog = (props: Props) => {
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const [, showMessage] = useToast();
@@ -50,7 +56,7 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
     }
 
     useEffect(() => {
-        getCurrentBlock().then(r => {
+        getCurrentBlock(network).then(r => {
             setHeight(r.height);
             setMaxHeight(r.height);
         }).finally(() => {
@@ -78,7 +84,7 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
         setPower(null);
         let power: number | null = null;
         try {
-            const block = await getBlock(height);
+            const block = await getBlock(network, height);
 
             power = await runStrategy(strategy, {
                 network: NETWORKS[network],
@@ -149,6 +155,37 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
             </DialogActions>
         </>
     );
+}
+
+export const TestStrategy = (props: Props) => {
+    const [t] = useTranslation();
+    const {strategy, strategyOptions} = props;
+    const [, showModal] = useModal();
+    const [, showMessage] = useToast();
+
+    const test = () => {
+        const strategyOptionsValid = Object.keys(strategies[strategy].schema).filter(x => strategies[strategy].schema[x].type !== 'hardcoded').find(x => !strategyOptions[x]) === undefined;
+
+        if (!strategyOptionsValid) {
+            showMessage(t('Please fill all strategy options'), 'error');
+            return;
+        }
+
+        // Append hardcoded values to options
+        const options = {...strategyOptions};
+        for (let k of Object.keys(strategies[strategy].schema)) {
+            const item = strategies[strategy].schema[k];
+            if (item.type === 'hardcoded') {
+                options[k] = item.value;
+            }
+        }
+
+        showModal({
+            body: <TestStrategyDialog {...props} strategyOptions={options}/>
+        });
+    }
+
+    return <Button variant="outlined" onClick={test} color="info" size="small">{t('Test Strategy')}</Button>
 }
 
 export default TestStrategy;
