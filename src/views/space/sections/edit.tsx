@@ -9,21 +9,22 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
+import FormHelperText from '@mui/material/FormHelperText';
+import {blue} from '@mui/material/colors';
 
 import ThemedBox from '../../../components/themed-box';
 import {H2, H3} from '../../../components/text';
 import DeleteSpace from '../../components/dialogs/space-delete';
-import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
+import StrategySelect from '../../components/strategy-select';
+import StrategyOptionsForm from '../../components/strategy-options-form';
 import useRequireAuth from '../../../hooks/use-require-auth';
 import useTranslation from '../../../hooks/use-translation';
 import useToast from '../../../hooks/use-toast';
 import useModal from '../../../hooks/use-modal';
+import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
 import {updateSpace} from '../../../api/ballot-box';
 import {NETWORK, Space, StrategyOptionsRecord} from '../../../types';
 import {getHandleFromLink} from '../../../util';
-import StrategySelect from '../../components/strategy-select';
-import StrategyOptionsForm from '../../components/strategy-options-form';
 
 const SpaceEdit = (props: { space: Space }) => {
     const {space} = props;
@@ -44,7 +45,6 @@ const SpaceEdit = (props: { space: Space }) => {
     const [network, setNetwork] = useState(space.network);
     const [strategy, setStrategy] = useState(space.strategy);
     const [strategyOptions, setStrategyOptions] = useState<Record<string, string>>(space.strategyOptions);
-    const [strategyOptionsValid, setStrategyOptionsValid] = useState(true);
     const [error, setError] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [inProgress, setInProgress] = useState<boolean>(false);
@@ -99,10 +99,6 @@ const SpaceEdit = (props: { space: Space }) => {
     }
 
     const submit = async () => {
-        if (!strategyOptionsValid) {
-            return;
-        }
-
         const props = {
             name,
             about,
@@ -228,7 +224,12 @@ const SpaceEdit = (props: { space: Space }) => {
             </FormControl>
         </ThemedBox>
         <ThemedBox sx={{mb: '20px'}}>
-            <H3 sx={{mb: '20px'}}>{t('Voting settings')}</H3>
+            <H3>{t('Voting settings')}</H3>
+            <FormHelperText
+                sx={{
+                    mb: '20px',
+                    color: blue['400']
+                }}>{t('Updated settings are used only for new proposals.')}</FormHelperText>
             <FormControl fullWidth sx={{mb: '22px'}}>
                 <InputLabel id="network-select-label">{t('Network')}</InputLabel>
                 <Select
@@ -257,16 +258,13 @@ const SpaceEdit = (props: { space: Space }) => {
                     }
                 }}/>
             </FormControl>
-            <StrategyOptionsForm values={strategyOptions} strategy={strategy} readOnly={inProgress} onChange={r => {
-                setStrategyOptions(r.values);
-                setStrategyOptionsValid(r.isValid);
-            }}/>
+            <StrategyOptionsForm values={strategyOptions} strategy={strategy} readOnly={inProgress}
+                                 onChange={setStrategyOptions}/>
         </ThemedBox>
         <Box sx={{mb: '20px', display: 'flex', justifyContent: 'center'}}>
             <Button disabled={inProgress || authWindowState} variant="contained"
                     onClick={submit}>{t('Update')}</Button>
         </Box>
-
         <H2>{t('Danger zone')}</H2>
         <ThemedBox>
             <Box sx={{display: 'flex', alignItems: 'center'}}>

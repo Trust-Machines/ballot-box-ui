@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import useTranslation from '../../hooks/use-translation';
 
 
-const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, values: Record<string, any>, onChange: (res: { isValid: boolean, values: Record<string, string> }) => void }) => {
+const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, values: Record<string, any>, onChange: (values: Record<string, string>) => void }) => {
     const [t] = useTranslation();
     const {values, onChange} = props;
 
@@ -18,7 +18,7 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, entryName: string) => {
         const value = formatValue(e.target.value, entryName);
         const newValues = {...values, ...{[entryName]: value}};
-        onChange({values: newValues, isValid: false});
+        onChange(newValues);
     }
 
     const formatValue = (value: string, entryName: string) => {
@@ -34,9 +34,10 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
     const showStrategyOptions = props.strategy !== 'empty' &&
         Object.keys(strategies[props.strategy].schema).filter(a => strategies[props.strategy].schema[a].type !== 'hardcoded').length > 0;
 
+
     useEffect(() => {
         if (!showStrategyOptions) {
-            onChange({values: {}, isValid: true});
+            onChange({});
         }
     }, [showStrategyOptions]);
 
