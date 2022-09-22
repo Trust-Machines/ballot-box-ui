@@ -185,6 +185,10 @@ export const TestStrategy = (props: Props) => {
         });
     }
 
+    if (strategy === 'empty') {
+        return null;
+    }
+
     return <Button variant="outlined" onClick={test} color="info" size="small">{t('Test Strategy')}</Button>
 }
 

@@ -13,7 +13,6 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
     const {values, onChange} = props;
 
     const strategy = strategies[props.strategy];
-    const schemaEntries = Object.keys(strategy.schema);
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, entryName: string) => {
         const value = formatValue(e.target.value, entryName);
@@ -34,7 +33,6 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
     const showStrategyOptions = props.strategy !== 'empty' &&
         Object.keys(strategies[props.strategy].schema).filter(a => strategies[props.strategy].schema[a].type !== 'hardcoded').length > 0;
 
-
     useEffect(() => {
         if (!showStrategyOptions) {
             onChange({});
@@ -44,6 +42,8 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
     if (!showStrategyOptions) {
         return null;
     }
+
+    const schemaEntries = Object.keys(strategy.schema);
 
     return <>
         <Box sx={{mb: '16px', fontSize: '18px'}}>{t('Strategy options')}</Box>
@@ -79,9 +79,9 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
                            onChange={(e) => {
                                handleChange(e, entryName);
                            }}
-                           helperText={' '}
+                           helperText={entry.help ? null : ' '}
                 />
-                {entry.help ? <FormHelperText>{entry.help}</FormHelperText> : ''}
+                {entry.help ? <FormHelperText sx={{ml: 0}}>{entry.help}</FormHelperText> : ''}
             </FormControl>
         })}</>
 }

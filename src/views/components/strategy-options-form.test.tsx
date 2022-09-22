@@ -10,8 +10,9 @@ test('1 stx-balance', () => {
 
 
 test('2 sip-010-get-balance', () => {
-    const view = render(<StrategyOptionsForm strategy="sip-010-get-balance" readOnly={false} values={{}} onChange={() => {
-    }}/>);
+    const view = render(<StrategyOptionsForm strategy="sip-010-get-balance" readOnly={false} values={{}}
+                                             onChange={() => {
+                                             }}/>);
     expect(view.container).toMatchSnapshot()
 });
 
@@ -26,4 +27,14 @@ test('3 sip-010-get-balance with values', () => {
     expect(view.container).toMatchSnapshot()
 });
 
+test('4 empty', () => {
+    const view = render(<StrategyOptionsForm strategy="empty" readOnly={false} values={{}} onChange={() => {
+    }}/>);
+    expect(view.container).toMatchSnapshot()
+});
 
+test('5 sip-009-balance', () => {
+    const view = render(<StrategyOptionsForm strategy="sip-009-balance" readOnly={false} values={{}} onChange={() => {
+    }}/>);
+    expect(view.container).toMatchSnapshot()
+});
