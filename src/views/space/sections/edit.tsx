@@ -7,11 +7,8 @@ import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import {blue} from '@mui/material/colors';
-import strategies from '@trustmachines/ballot-box-strategies';
 
 import ThemedBox from '../../../components/themed-box';
 import {H2, H3} from '../../../components/text';
@@ -27,6 +24,7 @@ import {updateSpace} from '../../../api/ballot-box';
 import {NETWORK, Space, StrategyOptionsRecord} from '../../../types';
 import {getHandleFromLink} from '../../../util';
 import TestStrategy from '../../components/test-strategy';
+import NetworkSelect from '../../components/network-select';
 
 
 const SpaceEdit = (props: { space: Space }) => {
@@ -150,8 +148,6 @@ const SpaceEdit = (props: { space: Space }) => {
         navigate('/').then();
     }
 
-
-
     return <Box>
         <ThemedBox sx={{mb: '20px'}}>
             <H3 sx={{mb: '20px'}}>{t('Basic Information')}</H3>
@@ -237,20 +233,10 @@ const SpaceEdit = (props: { space: Space }) => {
                 }}>{t('Updated settings are used only for new proposals.')}</FormHelperText>
             <FormControl fullWidth sx={{mb: '22px'}}>
                 <InputLabel id="network-select-label">{t('Network')}</InputLabel>
-                <Select
-                    fullWidth
-                    id="network-select"
-                    value={network}
-                    label={t('Network')}
-                    onChange={(e) => {
-                        resetError();
-                        setNetwork(e.target.value as NETWORK);
-                    }}
-                    readOnly={inProgress}
-                >
-                    <MenuItem value="mainnet">Mainnet</MenuItem>
-                    <MenuItem value="testnet">Testnet</MenuItem>
-                </Select>
+                <NetworkSelect value={network} readonly={inProgress} onChange={v => {
+                    resetError();
+                    setNetwork(v as NETWORK);
+                }}/>
             </FormControl>
             <FormControl fullWidth sx={{mb: '22px'}}>
                 <InputLabel id="strategy-select-label">{t('Voting Strategy')}</InputLabel>
@@ -267,7 +253,7 @@ const SpaceEdit = (props: { space: Space }) => {
                                  onChange={setStrategyOptions}/>
         </ThemedBox>
         <Box sx={{mb: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <TestStrategy strategy={strategy} network={network} strategyOptions={strategyOptions} />
+            <TestStrategy strategy={strategy} network={network} strategyOptions={strategyOptions}/>
             <Button disabled={inProgress || authWindowState} variant="contained"
                     onClick={submit}>{t('Update')}</Button>
         </Box>

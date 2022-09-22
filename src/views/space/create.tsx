@@ -5,11 +5,8 @@ import {Helmet} from 'react-helmet';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import {SelectChangeEvent} from '@mui/material/Select';
 
 import AppMenu from '../../layout/app-menu';
 import AppWrapper from '../../layout/app-wrapper';
@@ -18,14 +15,14 @@ import AppContent from '../../layout/app-content';
 import {H2} from '../../components/text';
 import StrategyOptionsForm from '../components/strategy-options-form';
 import TestStrategy from '../components/test-strategy';
+import StrategySelect from '../components/strategy-select';
+import NetworkSelect from '../components/network-select';
 import useRequireAuth from '../../hooks/use-require-auth';
 import useTranslation from '../../hooks/use-translation';
 import useToast from '../../hooks/use-toast';
 import {createSpace} from '../../api/ballot-box';
 import {userSpacesAtom, authWindowStateAtom} from '../../store';
 import {NETWORK} from '../../types';
-import StrategySelect from '../components/strategy-select';
-
 
 const CreateSpace = (_: RouteComponentProps) => {
     const [t] = useTranslation();
@@ -40,14 +37,6 @@ const CreateSpace = (_: RouteComponentProps) => {
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const [authWindowState] = useAtom(authWindowStateAtom);
-
-    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
-    }
-
-    const handleNetworkChange = (event: SelectChangeEvent) => {
-        setNetwork(event.target.value as NETWORK);
-    };
 
     const submit = async () => {
         if (name.trim() === '') {
@@ -81,7 +70,9 @@ const CreateSpace = (_: RouteComponentProps) => {
                     <H2>{t('Create space')}</H2>
                     <Box sx={{mb: '20px'}}>
                         <TextField autoFocus inputRef={inputRef} label={t('Space name')} value={name} fullWidth
-                                   onChange={handleNameChange}
+                                   onChange={e => {
+                                       setName(e.target.value);
+                                   }}
                                    inputProps={{
                                        maxLength: 30
                                    }}
@@ -93,17 +84,9 @@ const CreateSpace = (_: RouteComponentProps) => {
                     </Box>
                     <FormControl sx={{mb: '20px'}} fullWidth>
                         <InputLabel id="network-select-label">{t('Network')}</InputLabel>
-                        <Select
-                            labelId="network-select-label"
-                            id="network-select"
-                            value={network}
-                            label={t('Network')}
-                            onChange={handleNetworkChange}
-                            readOnly={inProgress}
-                        >
-                            <MenuItem value="mainnet">Mainnet</MenuItem>
-                            <MenuItem value="testnet">Testnet</MenuItem>
-                        </Select>
+                        <NetworkSelect value={network} readonly={inProgress} onChange={v => {
+                            setNetwork(v as NETWORK);
+                        }}/>
                     </FormControl>
                     <FormControl fullWidth sx={{mb: '22px'}}>
                         <InputLabel id="strategy-select-label">{t('Voting Strategy')}</InputLabel>
