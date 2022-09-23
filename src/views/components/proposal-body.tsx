@@ -5,9 +5,9 @@ import {alpha} from '@mui/material';
 
 import useStyles from '../../hooks/use-styles';
 import useTranslation from '../../hooks/use-translation';
-import {ProposalWithSpace} from '../../types';
+import {Proposal} from '../../types';
 
-const ProposalBody = (props: { proposal: ProposalWithSpace }) => {
+const ProposalBody = (props: { proposal: Proposal }) => {
     const {proposal} = props;
     const styles = useStyles();
     const [t] = useTranslation();

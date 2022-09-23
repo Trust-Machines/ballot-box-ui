@@ -8,11 +8,11 @@ import {H4} from '../../components/text';
 import useTranslation from '../../hooks/use-translation';
 import useStyles from '../../hooks/use-styles';
 import {getBlock} from '../../api/stacks';
-import {ProposalWithSpace} from '../../types';
+import {Proposal} from '../../types';
 import {explorerLink} from '../../helper';
 
 
-const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
+const ProposalInfo = (props: { proposal: Proposal }) => {
     const [t] = useTranslation();
     const {proposal} = props;
     const {linkColor, linkHoverColor} = useStyles();

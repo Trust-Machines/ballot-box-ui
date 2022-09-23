@@ -5,11 +5,11 @@ import ThemedBox from '../../components/themed-box';
 import {H3} from '../../components/text';
 import useTranslation from '../../hooks/use-translation';
 import {formatVotePowerAbbr} from '../../helper';
-import {ProposalWithSpace} from '../../types';
+import {Proposal} from '../../types';
 import {percentOf} from '../../util';
 import useStyles from '../../hooks/use-styles';
 
-const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
+const ProposalStats = (props: { proposal: Proposal }) => {
     const {proposal} = props;
     const [t] = useTranslation();
     const total = proposal.voteStats.reduce((p, c) => p + c.power, 0);

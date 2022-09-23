@@ -12,9 +12,9 @@ import useTranslation from '../../hooks/use-translation';
 import useStyles from '../../hooks/use-styles';
 import useModal from '../../hooks/use-modal';
 import {authWindowStateAtom, votesAtom} from '../../store';
-import {ProposalWithSpace, VoteWithProposal} from '../../types';
+import {Proposal, VoteWithProposal} from '../../types';
 
-const ProposalVote = (props: { proposal: ProposalWithSpace, onVote: (proposal: VoteWithProposal) => void }) => {
+const ProposalVote = (props: { proposal: Proposal, onVote: (proposal: VoteWithProposal) => void }) => {
     const {proposal} = props;
     const [votes] = useAtom(votesAtom);
     const [t] = useTranslation();

@@ -13,10 +13,10 @@ import ThemedBox from '../../components/themed-box';
 import {votesAtom} from '../../store';
 import {getProposalVotes} from '../../api/ballot-box';
 import {formatVotePowerAbbr, explorerLink} from '../../helper';
-import {ProposalWithSpace} from '../../types';
+import {Proposal} from '../../types';
 
 
-const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
+const ProposalVotes = (props: { proposal: Proposal }) => {
     const {proposal} = props;
     const [t] = useTranslation();
     const [votes, setVotes] = useAtom(votesAtom);

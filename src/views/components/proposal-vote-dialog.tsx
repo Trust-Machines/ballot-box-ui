@@ -15,13 +15,13 @@ import useToast from '../../hooks/use-toast';
 import useTranslation from '../../hooks/use-translation';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import {vote} from '../../api/ballot-box';
-import {ProposalWithSpace, USER_AUTH, VoteWithProposal} from '../../types';
+import {Proposal, USER_AUTH, VoteWithProposal} from '../../types';
 import {NETWORKS} from '../../constants';
 import {truncateMiddle} from '../../util';
 import {formatVotePower} from '../../helper';
 
 
-const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
+const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: Proposal, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
     const [, showModal] = useModal();
     const [isSm] = useMediaBreakPoint();
     const [t] = useTranslation();

@@ -5,11 +5,11 @@ import {H3, H5} from '../../components/text'
 import ThemedBox from '../../components/themed-box';
 import Link from '../../components/link';
 import useTranslation from '../../hooks/use-translation';
-import {ProposalWithSpace} from '../../types';
+import {Proposal} from '../../types';
 import {getLinkData, IframelyLinkData} from '../../api/iframely';
 
 
-const ProposalDiscussion = (props: { proposal: ProposalWithSpace }) => {
+const ProposalDiscussion = (props: { proposal: Proposal }) => {
     const {proposal} = props;
     const [t] = useTranslation();
     const [linkData, setLinkData] = useState<IframelyLinkData | null>(null);
