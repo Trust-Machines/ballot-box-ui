@@ -100,7 +100,7 @@ const TestStrategy = (props: {
             <DialogContent sx={{padding: '20px'}}>
                 <ThemedBox>
                     <Box sx={{mb: '20px'}}>
-                        <TextField autoFocus label={t('Address')} value={userAddress} fullWidth
+                        <TextField autoFocus label={t('Test the voting power of a wallet address')} value={userAddress} fullWidth
                                    onChange={addressChanged}
                                    inputProps={{
                                        maxLength: 100
