@@ -22,7 +22,7 @@ import useTranslation from '../../hooks/use-translation';
 import useToast from '../../hooks/use-toast';
 import {createSpace} from '../../api/ballot-box';
 import {userSpacesAtom, authWindowStateAtom} from '../../store';
-import {NETWORK} from '../../types';
+import {NETWORK, StrategyOptionsRecord} from '../../types';
 
 const CreateSpace = (_: RouteComponentProps) => {
     const [t] = useTranslation();
@@ -33,7 +33,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     const [name, setName] = useState<string>('');
     const [network, setNetwork] = useState<NETWORK>('mainnet');
     const [strategy, setStrategy] = useState<string>('empty');
-    const [strategyOptions, setStrategyOptions] = useState<Record<string, string>>({});
+    const [strategyOptions, setStrategyOptions] = useState<StrategyOptionsRecord>({} as StrategyOptionsRecord);
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
     const [authWindowState] = useAtom(authWindowStateAtom);
@@ -92,7 +92,7 @@ const CreateSpace = (_: RouteComponentProps) => {
                         <InputLabel id="strategy-select-label">{t('Voting Strategy')}</InputLabel>
                         <StrategySelect value={strategy} readonly={inProgress} onChange={(v) => {
                             setStrategy(v);
-                            setStrategyOptions({});
+                            setStrategyOptions({} as StrategyOptionsRecord);
                         }}/>
                     </FormControl>
                     <StrategyOptionsForm strategy={strategy} readOnly={inProgress} values={{}} onChange={(values) => {

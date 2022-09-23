@@ -44,7 +44,7 @@ const SpaceEdit = (props: { space: Space }) => {
     const [githubHandle, setGithubHandle] = useState(space.githubHandle || '');
     const [network, setNetwork] = useState(space.network);
     const [strategy, setStrategy] = useState(space.strategy);
-    const [strategyOptions, setStrategyOptions] = useState<Record<string, string>>(space.strategyOptions);
+    const [strategyOptions, setStrategyOptions] = useState<StrategyOptionsRecord>(space.strategyOptions);
     const [error, setError] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [inProgress, setInProgress] = useState<boolean>(false);
@@ -108,7 +108,7 @@ const SpaceEdit = (props: { space: Space }) => {
             githubHandle,
             network,
             strategy,
-            strategyOptions: strategyOptions as StrategyOptionsRecord
+            strategyOptions
         }
 
         const validation = validator(props);
@@ -244,7 +244,7 @@ const SpaceEdit = (props: { space: Space }) => {
                     if (v === space.strategy) {
                         setStrategyOptions(space.strategyOptions);
                     } else {
-                        setStrategyOptions({});
+                        setStrategyOptions({} as StrategyOptionsRecord);
                     }
                 }}/>
             </FormControl>

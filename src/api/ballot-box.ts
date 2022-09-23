@@ -5,7 +5,7 @@ import {
     ProposalBase,
     Proposal,
     ProposalWithSpace,
-    VoteWithProposal, Vote
+    VoteWithProposal, Vote, StrategyOptionsRecord
 } from '../types';
 import {API_BASE} from '../constants';
 
@@ -70,7 +70,7 @@ export const getSpace = async (spaceId: number): Promise<Space> => {
     }));
 }
 
-export const createSpace = (auth: USER_AUTH, name: string, network: string, strategy: string, strategyOptions: any): Promise<Space> => {
+export const createSpace = (auth: USER_AUTH, name: string, network: string, strategy: string, strategyOptions: StrategyOptionsRecord): Promise<Space> => {
     return apiCallWithAuth(auth, 'spaces', 'POST', {
         name,
         about: '',

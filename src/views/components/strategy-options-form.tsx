@@ -6,9 +6,10 @@ import FormHelperText from '@mui/material/FormHelperText';
 import strategies from '@trustmachines/ballot-box-strategies';
 import Box from '@mui/material/Box';
 import useTranslation from '../../hooks/use-translation';
+import {StrategyOptionsRecord} from '../../types';
 
 
-const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, values: Record<string, any>, onChange: (values: Record<string, string>) => void }) => {
+const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, values: Record<string, any>, onChange: (values: StrategyOptionsRecord) => void }) => {
     const [t] = useTranslation();
     const {values, onChange} = props;
 
@@ -17,7 +18,7 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, entryName: string) => {
         const value = formatValue(e.target.value, entryName);
         const newValues = {...values, ...{[entryName]: value}};
-        onChange(newValues);
+        onChange(newValues as StrategyOptionsRecord);
     }
 
     const formatValue = (value: string, entryName: string) => {
@@ -35,7 +36,7 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
 
     useEffect(() => {
         if (!showStrategyOptions) {
-            onChange({});
+            onChange({} as StrategyOptionsRecord);
         }
     }, [showStrategyOptions]);
 
