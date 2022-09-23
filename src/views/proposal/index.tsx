@@ -25,7 +25,7 @@ const ProposalPage = (_: RouteComponentProps) => {
             setProposal(null);
         }
     }, [params.proposalId]);
-
+console.log(JSON.stringify(proposal))
     return <>
         {proposal && <Helmet><title>{`${proposal.title} | BallotBox`}</title></Helmet>}
         <AppMenu/>
