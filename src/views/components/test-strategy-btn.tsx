@@ -146,7 +146,7 @@ const TestStrategyDialog = (props: Props) => {
     );
 }
 
-export const TestStrategy = (props: Props) => {
+export const TestStrategyBtn = (props: Props) => {
     const [t] = useTranslation();
     const {strategy, strategyOptions} = props;
     const [, showModal] = useModal();
@@ -181,4 +181,4 @@ export const TestStrategy = (props: Props) => {
     return <Button variant="outlined" onClick={test} color="info" size="small">{t('Test Strategy')}</Button>
 }
 
-export default TestStrategy;
+export default TestStrategyBtn;

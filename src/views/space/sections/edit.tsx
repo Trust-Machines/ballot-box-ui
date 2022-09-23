@@ -23,7 +23,7 @@ import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
 import {updateSpace} from '../../../api/ballot-box';
 import {NETWORK, Space, StrategyOptionsRecord} from '../../../types';
 import {getHandleFromLink} from '../../../util';
-import TestStrategy from '../../components/test-strategy';
+import TestStrategyBtn from '../../components/test-strategy-btn';
 import NetworkSelect from '../../components/network-select';
 
 const SpaceEdit = (props: { space: Space }) => {
@@ -252,7 +252,7 @@ const SpaceEdit = (props: { space: Space }) => {
                                  onChange={setStrategyOptions}/>
         </ThemedBox>
         <Box sx={{mb: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <TestStrategy strategy={strategy} network={network} strategyOptions={strategyOptions}/>
+            <TestStrategyBtn strategy={strategy} network={network} strategyOptions={strategyOptions}/>
             <Button disabled={inProgress || authWindowState} variant="contained"
                     onClick={submit}>{t('Update')}</Button>
         </Box>

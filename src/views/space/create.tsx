@@ -14,7 +14,7 @@ import AppHeader from '../../layout/app-header';
 import AppContent from '../../layout/app-content';
 import {H2} from '../../components/text';
 import StrategyOptionsForm from '../components/strategy-options-form';
-import TestStrategy from '../components/test-strategy';
+import TestStrategyBtn from '../components/test-strategy-btn';
 import StrategySelect from '../components/strategy-select';
 import NetworkSelect from '../components/network-select';
 import useRequireAuth from '../../hooks/use-require-auth';
@@ -105,7 +105,7 @@ const CreateSpace = (_: RouteComponentProps) => {
                         mt: '20px'
                     }}>
                         {strategy === 'empty' ? <span/> :
-                            <TestStrategy strategy={strategy} network={network} strategyOptions={strategyOptions}/>}
+                            <TestStrategyBtn strategy={strategy} network={network} strategyOptions={strategyOptions}/>}
 
                         <Button variant="contained" onClick={submit}
                                 disabled={inProgress || authWindowState}>{t('Submit')}</Button>
