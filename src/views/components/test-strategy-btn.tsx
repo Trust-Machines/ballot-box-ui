@@ -15,7 +15,7 @@ export const TestStrategyBtn = (props: { strategy: string, network: NETWORK, str
     const [, showMessage] = useToast();
 
     const test = () => {
-        const strategyOptionsValid = Object.keys(strategies[strategy].schema).filter(x => strategies[strategy].schema[x].type !== 'hardcoded').find(x => !strategyOptions[x]) === undefined;
+        const strategyOptionsValid = Object.keys(strategies[strategy].schema).filter(x => strategies[strategy].schema[x].type !== 'hardcoded').find(x => strategyOptions[x] === undefined) === undefined;
 
         if (!strategyOptionsValid) {
             showMessage(t('Please fill all strategy options'), 'error');
