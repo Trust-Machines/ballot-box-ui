@@ -52,7 +52,7 @@ const StrategyOptionsForm = (props: { strategy: string, readOnly: boolean, value
         {schemaEntries.map(entryName => {
             const entry = strategy.schema[entryName];
             const inputProps: InputBaseProps['inputProps'] = {};
-            const value = values[entryName] || '';
+            const value = values[entryName] !== undefined ? values[entryName] : '';
 
             // make ts happy
             if (entry.type === 'hardcoded') {
