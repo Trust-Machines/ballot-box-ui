@@ -43,15 +43,12 @@ const SpaceCard = (props: { space: Space }) => {
         {
             label: t('New Proposal'),
             href: `/spaces/${space.id}/new-proposal`,
-            selected: params.section === 'new-proposal',
-            requiresOwner: true
+            selected: params.section === 'new-proposal'
         },
-        {label: t('Info'), href: `/spaces/${space.id}/info`, selected: params.section === 'info'},
         {
             label: t('Settings'),
             href: `/spaces/${space.id}/edit`,
-            selected: params.section === 'edit',
-            requiresOwner: true
+            selected: params.section === 'edit'
         }
     ];
 
@@ -159,11 +156,7 @@ const SpaceCard = (props: { space: Space }) => {
                     display: 'flex',
                     fontSize: !isSm ? '90%' : null
                 }}>
-                    {sections.map((i, c) => {
-                        if (i.requiresOwner && !editable) {
-                            return null;
-                        }
-
+                    {editable && sections.map((i, c) => {
                         return <Link key={i.href} to={i.href}
                                      sx={{
                                          borderBottom: `2px solid ${i.selected ? styles.linkColor : 'transparent'}`,
