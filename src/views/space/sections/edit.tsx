@@ -5,19 +5,26 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {useNavigate} from '@reach/router';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import {blue} from '@mui/material/colors';
 
 import ThemedBox from '../../../components/themed-box';
-import {H2} from '../../../components/text';
+import {H2, H3} from '../../../components/text';
 import DeleteSpace from '../../components/dialogs/space-delete';
-import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
+import StrategySelect from '../../components/strategy-select';
+import StrategyOptionsForm from '../../components/strategy-options-form';
 import useRequireAuth from '../../../hooks/use-require-auth';
 import useTranslation from '../../../hooks/use-translation';
 import useToast from '../../../hooks/use-toast';
 import useModal from '../../../hooks/use-modal';
+import {spaceAtom, userSpacesAtom, authWindowStateAtom} from '../../../store';
 import {updateSpace} from '../../../api/ballot-box';
-import {Space} from '../../../types';
+import {NETWORK, Space, StrategyOptionsRecord} from '../../../types';
 import {getHandleFromLink} from '../../../util';
-
+import TestStrategyBtn from '../../components/test-strategy-btn';
+import NetworkSelect from '../../components/network-select';
 
 const SpaceEdit = (props: { space: Space }) => {
     const {space} = props;
@@ -35,6 +42,9 @@ const SpaceEdit = (props: { space: Space }) => {
     const [termsLink, setTermsLink] = useState(space.termsLink || '');
     const [twitterHandle, setTwitterHandle] = useState(space.twitterHandle || '');
     const [githubHandle, setGithubHandle] = useState(space.githubHandle || '');
+    const [network, setNetwork] = useState(space.network);
+    const [strategy, setStrategy] = useState(space.strategy);
+    const [strategyOptions, setStrategyOptions] = useState<StrategyOptionsRecord>(space.strategyOptions);
     const [error, setError] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [inProgress, setInProgress] = useState<boolean>(false);
@@ -73,6 +83,9 @@ const SpaceEdit = (props: { space: Space }) => {
                 .min(3)
                 .max(40)
                 .required(),
+            network: Joi.string(),
+            strategy: Joi.string(),
+            strategyOptions: Joi.any()
         }).messages({
             'string.uriCustomScheme': t('Link must be a valid uri with a scheme matching the https pattern')
         })
@@ -92,8 +105,12 @@ const SpaceEdit = (props: { space: Space }) => {
             websiteLink,
             termsLink,
             twitterHandle,
-            githubHandle
+            githubHandle,
+            network,
+            strategy,
+            strategyOptions
         }
+
         const validation = validator(props);
 
         if (validation.error) {
@@ -132,15 +149,18 @@ const SpaceEdit = (props: { space: Space }) => {
 
     return <Box>
         <ThemedBox sx={{mb: '20px'}}>
-            <TextField label={t('Space name')} inputProps={{maxLength: 30}}
-                       fullWidth autoFocus autoComplete="off" value={name}
-                       error={error === 'name'}
-                       helperText={error === 'name' ? errorMessage : ' '}
-                       onChange={(e) => {
-                           resetError();
-                           setName(e.target.value);
-                       }}/>
-            <Box sx={{mt: '12px'}}>
+            <H3 sx={{mb: '20px'}}>{t('Basic Information')}</H3>
+            <FormControl fullWidth>
+                <TextField label={t('Space name')} inputProps={{maxLength: 30}}
+                           fullWidth autoFocus autoComplete="off" value={name}
+                           error={error === 'name'}
+                           helperText={error === 'name' ? errorMessage : ' '}
+                           onChange={(e) => {
+                               resetError();
+                               setName(e.target.value);
+                           }}/>
+            </FormControl>
+            <FormControl fullWidth>
                 <TextField label={t('About')} inputProps={{maxLength: 250}}
                            fullWidth autoComplete="off" value={about}
                            helperText={' '}
@@ -148,8 +168,8 @@ const SpaceEdit = (props: { space: Space }) => {
                                resetError();
                                setAbout(e.target.value);
                            }}/>
-            </Box>
-            <Box sx={{mt: '12px'}}>
+            </FormControl>
+            <FormControl fullWidth>
                 <TextField label={t('Website')} placeholder="https://superdao.com" inputProps={{maxLength: 150}}
                            fullWidth autoComplete="off" value={websiteLink}
                            error={error === 'websiteLink'}
@@ -158,8 +178,8 @@ const SpaceEdit = (props: { space: Space }) => {
                                resetError();
                                setWebsiteLink(e.target.value);
                            }}/>
-            </Box>
-            <Box sx={{mt: '12px'}}>
+            </FormControl>
+            <FormControl fullWidth>
                 <TextField label={t('Terms')} placeholder="https://forum.superdao.com/terms"
                            inputProps={{maxLength: 150}}
                            fullWidth autoComplete="off" value={termsLink}
@@ -169,8 +189,8 @@ const SpaceEdit = (props: { space: Space }) => {
                                resetError();
                                setTermsLink(e.target.value);
                            }}/>
-            </Box>
-            <Box sx={{mt: '12px'}}>
+            </FormControl>
+            <FormControl fullWidth>
                 <TextField label={t('Twitter')} placeholder="superdao"
                            inputProps={{maxLength: 40}}
                            fullWidth autoComplete="off" value={twitterHandle}
@@ -185,8 +205,8 @@ const SpaceEdit = (props: { space: Space }) => {
                                }
                                setTwitterHandle(e.target.value);
                            }}/>
-            </Box>
-            <Box sx={{mt: '12px'}}>
+            </FormControl>
+            <FormControl fullWidth>
                 <TextField label={t('Github')} placeholder="superdao_code"
                            inputProps={{maxLength: 40}}
                            fullWidth autoComplete="off" value={githubHandle}
@@ -201,12 +221,41 @@ const SpaceEdit = (props: { space: Space }) => {
                                }
                                setGithubHandle(e.target.value);
                            }}/>
-            </Box>
-            <Box sx={{mt: '12px', display: 'flex', justifyContent: 'center'}}>
-                <Button disabled={inProgress || authWindowState} variant="contained"
-                        onClick={submit}>{t('Update')}</Button>
-            </Box>
+            </FormControl>
         </ThemedBox>
+        <ThemedBox sx={{mb: '20px'}}>
+            <H3>{t('Voting settings')}</H3>
+            <FormHelperText
+                sx={{
+                    mb: '20px',
+                    color: blue['400']
+                }}>{t('Updated settings are used only for new proposals.')}</FormHelperText>
+            <FormControl fullWidth sx={{mb: '22px'}}>
+                <InputLabel id="network-select-label">{t('Network')}</InputLabel>
+                <NetworkSelect value={network} readonly={inProgress} onChange={v => {
+                    resetError();
+                    setNetwork(v as NETWORK);
+                }}/>
+            </FormControl>
+            <FormControl fullWidth sx={{mb: '22px'}}>
+                <InputLabel id="strategy-select-label">{t('Voting Strategy')}</InputLabel>
+                <StrategySelect value={strategy} readonly={inProgress} onChange={(v) => {
+                    setStrategy(v);
+                    if (v === space.strategy) {
+                        setStrategyOptions(space.strategyOptions);
+                    } else {
+                        setStrategyOptions({} as StrategyOptionsRecord);
+                    }
+                }}/>
+            </FormControl>
+            <StrategyOptionsForm values={strategyOptions} strategy={strategy} readOnly={inProgress}
+                                 onChange={setStrategyOptions}/>
+        </ThemedBox>
+        <Box sx={{mb: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <TestStrategyBtn strategy={strategy} network={network} strategyOptions={strategyOptions}/>
+            <Button disabled={inProgress || authWindowState} variant="contained"
+                    onClick={submit}>{t('Update')}</Button>
+        </Box>
         <H2>{t('Danger zone')}</H2>
         <ThemedBox>
             <Box sx={{display: 'flex', alignItems: 'center'}}>

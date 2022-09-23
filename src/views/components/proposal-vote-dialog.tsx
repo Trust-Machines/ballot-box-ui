@@ -15,13 +15,13 @@ import useToast from '../../hooks/use-toast';
 import useTranslation from '../../hooks/use-translation';
 import useMediaBreakPoint from '../../hooks/use-media-break-point';
 import {vote} from '../../api/ballot-box';
-import {ProposalWithSpace, USER_AUTH, VoteWithProposal} from '../../types';
+import {Proposal, USER_AUTH, VoteWithProposal} from '../../types';
 import {NETWORKS} from '../../constants';
 import {truncateMiddle} from '../../util';
 import {formatVotePower} from '../../helper';
 
 
-const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpace, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
+const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: Proposal, choice: string, onVote: (proposal: VoteWithProposal) => void }) => {
     const [, showModal] = useModal();
     const [isSm] = useMediaBreakPoint();
     const [t] = useTranslation();
@@ -30,20 +30,19 @@ const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpac
     const [loading, setLoading] = useState(true);
     const [inProgress, setInProgress] = useState<boolean>(false);
     const {auth, proposal, choice, onVote} = props;
-    const {space} = proposal;
-    const address = useAddress(space.network);
+    const address = useAddress(proposal.network);
 
     useEffect(() => {
         if (!proposal.startBlockTip || !proposal.startBlock) {
             return;
         }
 
-        runStrategy(space.strategy, {
-            network: NETWORKS[space.network],
+        runStrategy(proposal.strategy, {
+            network: NETWORKS[proposal.network],
             address: address!,
             blockTip: proposal.startBlockTip,
             blockHeight: proposal.startBlock,
-            options: space.strategyOptions
+            options: proposal.strategyOptions
         }).then(r => {
             setVotingPower(r);
         }).finally(() => {
@@ -83,13 +82,18 @@ const ProposalVoteDialog = (props: { auth: USER_AUTH, proposal: ProposalWithSpac
                         <Muted>{t('Option')}</Muted>
                         <Box sx={{textAlign: 'right'}}>{choice.toUpperCase()}</Box>
                         <Muted>{t('Network')}</Muted>
-                        <Box sx={{textAlign: 'right'}}>{space.network}</Box>
+                        <Box sx={{textAlign: 'right'}}>{proposal.network}</Box>
                         <Muted>{t('Your address')}</Muted>
                         <Box sx={{textAlign: 'right'}}
                              title={address!}>{isSm ? truncateMiddle(address!, 8) : truncateMiddle(address!, 4)}</Box>
                         <Muted>{t('Your Voting Power')}</Muted>
                         <Box
-                            sx={{textAlign: 'right'}}>{formatVotePower(votingPower, space, 4)}</Box>
+                            sx={{textAlign: 'right'}}>{formatVotePower({
+                            power:  votingPower,
+                            strategy: proposal.strategy,
+                            strategyOptions: proposal.strategyOptions,
+                            fractionDigits: 4
+                        })}</Box>
                     </Box>
                 </ThemedBox>
             </DialogContent>

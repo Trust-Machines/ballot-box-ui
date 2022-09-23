@@ -5,11 +5,11 @@ import ThemedBox from '../../components/themed-box';
 import {H3} from '../../components/text';
 import useTranslation from '../../hooks/use-translation';
 import {formatVotePowerAbbr} from '../../helper';
-import {ProposalWithSpace} from '../../types';
+import {Proposal} from '../../types';
 import {percentOf} from '../../util';
 import useStyles from '../../hooks/use-styles';
 
-const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
+const ProposalStats = (props: { proposal: Proposal }) => {
     const {proposal} = props;
     const [t] = useTranslation();
     const total = proposal.voteStats.reduce((p, c) => p + c.power, 0);
@@ -36,7 +36,12 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                         textAlign: 'right',
                         mr: '6px',
                         ...textTruncateStyles
-                    }}>{formatVotePowerAbbr(s.power, proposal.space, 2)}</Box>
+                    }}>{formatVotePowerAbbr({
+                        power: s.power,
+                        strategy: proposal.strategy,
+                        strategyOptions: proposal.strategyOptions,
+                        fractionDigits: 2
+                    })}</Box>
                     <Box sx={{width: '50px', textAlign: 'right',}}>{`${per.toFixed(2)}%`}</Box>
                 </Box>
                 <LinearProgress value={per} variant="determinate" sx={{borderRadius: '5px', height: '10px'}}/>

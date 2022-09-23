@@ -1,25 +1,29 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import {runStrategy} from '@trustmachines/ballot-box-strategies';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 import {validateStacksAddress} from '@stacks/transactions';
+import {runStrategy} from '@trustmachines/ballot-box-strategies';
 
-import CloseModal from '../../components/close-modal';
-import ThemedBox from '../../components/themed-box';
-import useAddress from '../../hooks/use-address';
-import useModal from '../../hooks/use-modal';
-import useTranslation from '../../hooks/use-translation';
-import useToast from '../../hooks/use-toast';
-import {formatVotePower} from '../../helper';
-import {getCurrentBlock, getBlock} from '../../api/stacks';
-import {NETWORK, Space} from '../../types';
-import {NETWORKS} from '../../constants';
+import useModal from '../../../hooks/use-modal';
+import useTranslation from '../../../hooks/use-translation';
+import useToast from '../../../hooks/use-toast';
+import useAddress from '../../../hooks/use-address';
+import CloseModal from '../../../components/close-modal';
+import ThemedBox from '../../../components/themed-box';
+import {formatVotePower} from '../../../helper';
+import {getBlock, getCurrentBlock} from '../../../api/stacks';
+import {NETWORKS} from '../../../constants';
+import {NETWORK} from '../../../types';
 
-const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptions: any }) => {
+const TestStrategy = (props: {
+    strategy: string,
+    network: NETWORK,
+    strategyOptions: any
+}) => {
     const [, showModal] = useModal();
     const [t] = useTranslation();
     const [, showMessage] = useToast();
@@ -31,26 +35,10 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
     const [maxHeight, setMaxHeight] = useState<number | null>(null);
     const [power, setPower] = useState<number | null>(null);
 
-    const {strategy, network, strategyOptions,} = props;
-
-    const space: Space = {
-        id: 1,
-        userId: 1,
-        picture: null,
-        proposalCount: 1,
-        network,
-        strategy,
-        strategyOptions,
-        name: '',
-        about: null,
-        websiteLink: null,
-        termsLink: null,
-        twitterHandle: null,
-        githubHandle: null,
-    }
+    const {strategy, network, strategyOptions} = props;
 
     useEffect(() => {
-        getCurrentBlock().then(r => {
+        getCurrentBlock(network).then(r => {
             setHeight(r.height);
             setMaxHeight(r.height);
         }).finally(() => {
@@ -78,7 +66,7 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
         setPower(null);
         let power: number | null = null;
         try {
-            const block = await getBlock(height);
+            const block = await getBlock(network, height);
 
             power = await runStrategy(strategy, {
                 network: NETWORKS[network],
@@ -138,7 +126,12 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
                     </Box>
                     <Box sx={{height: '30px'}}>
                         {power !== null && (
-                            <> Voting power: {formatVotePower(power, space, 4)}</>
+                            <> Voting power: {formatVotePower({
+                                power,
+                                strategy,
+                                strategyOptions,
+                                fractionDigits: 4
+                            })}</>
                         )}
                     </Box>
                 </ThemedBox>
@@ -151,4 +144,5 @@ const TestStrategy = (props: { strategy: string, network: NETWORK, strategyOptio
     );
 }
 
-export default TestStrategy;
+
+export default TestStrategy
