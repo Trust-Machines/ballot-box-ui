@@ -1,22 +1,29 @@
-import {StacksNetwork} from '@stacks/network';
 import numeral from 'numeral';
 import strategies from '@trustmachines/ballot-box-strategies';
-import {NETWORK, Space} from './types';
-import {NETWORKS, EXPLORER_BASE} from './constants';
+import {NETWORK, StrategyOptionsRecord} from './types';
+import {EXPLORER_BASE} from './constants';
 
-export const getStacksNetwork = (n: NETWORK): StacksNetwork => {
-    return NETWORKS[n];
-}
-
-export const formatVotePowerAbbr = (power: number, space: Space, fractionDigits: number) => {
-    const {symbol} = space.strategyOptions;
-    const pattern = strategies[space.strategy].baseOptions?.noDecimalFormat ? '0' : `0.${'0'.repeat(fractionDigits)}a`;
+export const formatVotePowerAbbr = (options: {
+    power: number,
+    strategy: string,
+    strategyOptions: StrategyOptionsRecord,
+    fractionDigits: number
+}) => {
+    const {power, strategyOptions, strategy, fractionDigits} = options;
+    const {symbol} = strategyOptions;
+    const pattern = strategies[strategy].baseOptions?.noDecimalFormat ? '0' : `0.${'0'.repeat(fractionDigits)}a`;
     return `${numeral(power).format(pattern)} ${symbol}`;
 }
 
-export const formatVotePower = (power: number, space: Space, fractionDigits: number) => {
-    const {symbol} = space.strategyOptions;
-    if (strategies[space.strategy].baseOptions?.noDecimalFormat) {
+export const formatVotePower = (options: {
+    power: number,
+    strategy: string,
+    strategyOptions: StrategyOptionsRecord,
+    fractionDigits: number
+}) => {
+    const {power, strategyOptions, strategy, fractionDigits} = options;
+    const {symbol} = strategyOptions;
+    if (strategies[strategy].baseOptions?.noDecimalFormat) {
         return `${power} ${symbol}`;
     }
     return `${power.toFixed(fractionDigits)} ${symbol}`;

@@ -36,7 +36,12 @@ const ProposalStats = (props: { proposal: ProposalWithSpace }) => {
                         textAlign: 'right',
                         mr: '6px',
                         ...textTruncateStyles
-                    }}>{formatVotePowerAbbr(s.power, proposal.space, 2)}</Box>
+                    }}>{formatVotePowerAbbr({
+                        power: s.power,
+                        strategy: proposal.strategy,
+                        strategyOptions: proposal.strategyOptions,
+                        fractionDigits: 2
+                    })}</Box>
                     <Box sx={{width: '50px', textAlign: 'right',}}>{`${per.toFixed(2)}%`}</Box>
                 </Box>
                 <LinearProgress value={per} variant="determinate" sx={{borderRadius: '5px', height: '10px'}}/>

@@ -20,7 +20,7 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
 
     useEffect(() => {
         if (proposal.startBlock) {
-            getBlock(proposal.space.network, proposal.startBlock).then(r => {
+            getBlock(proposal.network, proposal.startBlock).then(r => {
                 setBlockHash(r.hash);
             })
         }
@@ -38,7 +38,7 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
             fontSize: '90%'
         }}>
             <Box>{t('Strategy')}</Box>
-            <Box>{proposal.space.strategy}</Box>
+            <Box>{proposal.strategy}</Box>
             <Box>{t('Start Date')}</Box>
             <Box>{moment.unix(proposal.startTime).format('MMM Do YY, h:mm a')}</Box>
             <Box>{t('End Date')}</Box>
@@ -52,7 +52,7 @@ const ProposalInfo = (props: { proposal: ProposalWithSpace }) => {
                                  e.preventDefault();
                              }
                          }}
-                         href={explorerLink(proposal.space.network, `/block/${blockHash}`)}
+                         href={explorerLink(proposal.network, `/block/${blockHash}`)}
                          target="_blank"
                          rel="noreferrer"
                          sx={{

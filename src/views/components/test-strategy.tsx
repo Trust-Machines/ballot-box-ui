@@ -16,7 +16,7 @@ import useTranslation from '../../hooks/use-translation';
 import useToast from '../../hooks/use-toast';
 import {formatVotePower} from '../../helper';
 import {getCurrentBlock, getBlock} from '../../api/stacks';
-import {NETWORK, Space} from '../../types';
+import {NETWORK} from '../../types';
 import {NETWORKS} from '../../constants';
 
 interface Props {
@@ -37,23 +37,7 @@ const TestStrategyDialog = (props: Props) => {
     const [maxHeight, setMaxHeight] = useState<number | null>(null);
     const [power, setPower] = useState<number | null>(null);
 
-    const {strategy, network, strategyOptions,} = props;
-
-    const space: Space = {
-        id: 1,
-        userId: 1,
-        picture: null,
-        proposalCount: 1,
-        network,
-        strategy,
-        strategyOptions,
-        name: '',
-        about: null,
-        websiteLink: null,
-        termsLink: null,
-        twitterHandle: null,
-        githubHandle: null,
-    }
+    const {strategy, network, strategyOptions} = props;
 
     useEffect(() => {
         getCurrentBlock(network).then(r => {
@@ -144,7 +128,12 @@ const TestStrategyDialog = (props: Props) => {
                     </Box>
                     <Box sx={{height: '30px'}}>
                         {power !== null && (
-                            <> Voting power: {formatVotePower(power, space, 4)}</>
+                            <> Voting power: {formatVotePower({
+                                power,
+                                strategy,
+                                strategyOptions,
+                                fractionDigits: 4
+                            })}</>
                         )}
                     </Box>
                 </ThemedBox>

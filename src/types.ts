@@ -59,10 +59,7 @@ export interface Proposal extends ProposalBase {
     voteStats: VoteStats;
     network: NETWORK,
     strategy: string,
-    strategyOptions: {
-        symbol: string,
-        [key: string]: any
-    }
+    strategyOptions: StrategyOptionsRecord
 }
 
 export interface ProposalWithSpace extends Proposal {

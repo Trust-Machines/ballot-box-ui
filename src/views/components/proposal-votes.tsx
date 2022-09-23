@@ -23,7 +23,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
     const {data} = useAuth();
     const theme = useTheme();
     const {textTruncateStyles, linkColor, linkHoverColor} = useStyles();
-    const userAddress = (data && data.profile.stxAddress[proposal.space.network]) || null;
+    const userAddress = (data && data.profile.stxAddress[proposal.network]) || null;
 
     useEffect(() => {
         setVotes({...votes, loading: true, userVote: null});
@@ -77,7 +77,7 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
                             mr: '6px'
                         }}/> : null}
                         <Box component="a"
-                             href={explorerLink(proposal.space.network, `address/${vote.userAddress}`)}
+                             href={explorerLink(proposal.network, `address/${vote.userAddress}`)}
                              target="_blank"
                              rel="noreferrer"
                              sx={{
@@ -106,7 +106,12 @@ const ProposalVotes = (props: { proposal: ProposalWithSpace }) => {
                             textAlign: 'right',
                             mr: '6px',
                             ...textTruncateStyles
-                        }}>{formatVotePowerAbbr(vote.power, proposal.space, 2)}</Box>
+                        }}>{formatVotePowerAbbr({
+                            power: vote.power,
+                            strategy: proposal.strategy,
+                            strategyOptions: proposal.strategyOptions,
+                            fractionDigits: 2
+                        })}</Box>
                     </Box>
                 })}
             </ThemedBox>
