@@ -95,7 +95,7 @@ const CreateSpace = (_: RouteComponentProps) => {
                             setStrategyOptions({} as StrategyOptionsRecord);
                         }}/>
                     </FormControl>
-                    <StrategyOptionsForm strategy={strategy} readOnly={inProgress} values={{}} onChange={(values) => {
+                    <StrategyOptionsForm strategy={strategy} readOnly={inProgress} values={strategyOptions} onChange={(values) => {
                         setStrategyOptions(values);
                     }}/>
                     <Box sx={{
