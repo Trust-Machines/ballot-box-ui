@@ -32,7 +32,7 @@ const CreateSpace = (_: RouteComponentProps) => {
     const inputRef = useRef<HTMLInputElement>();
     const [name, setName] = useState<string>('');
     const [network, setNetwork] = useState<NETWORK>('mainnet');
-    const [strategy, setStrategy] = useState<string>('empty');
+    const [strategy, setStrategy] = useState<string>('sip-009-balance');
     const [strategyOptions, setStrategyOptions] = useState<StrategyOptionsRecord>({} as StrategyOptionsRecord);
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [userSpaces, setUserSpaces] = useAtom(userSpacesAtom);
