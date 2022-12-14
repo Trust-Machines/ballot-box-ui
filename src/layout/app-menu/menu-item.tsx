@@ -7,10 +7,10 @@ import {Theme} from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import {useNavigate} from '@reach/router';
 
-const AppMenuItem = (props: { children: React.ReactNode, title: string, href?: string, onClick?: () => void, sx?: SxProps<Theme>}) => {
+const AppMenuItem = (props: { children: React.ReactNode, title: string, href?: string, blank?: boolean, onClick?: () => void, sx?: SxProps<Theme> }) => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const {children, title, href, onClick, sx} = props;
+    const {children, title, href, blank, onClick, sx} = props;
 
     return <Tooltip placement="right" enterDelay={1000} title={title}><Box onClick={() => {
         if (onClick) {
@@ -19,6 +19,10 @@ const AppMenuItem = (props: { children: React.ReactNode, title: string, href?: s
         }
 
         if (href) {
+            if (blank) {
+                window.open(href, '_blank');
+                return;
+            }
             navigate(href).then();
         }
 

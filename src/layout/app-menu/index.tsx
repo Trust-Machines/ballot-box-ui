@@ -6,6 +6,7 @@ import {useTheme} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import AddIcon from '@mui/icons-material/Add';
+import DescriptionIcon from '@mui/icons-material/Description';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {useLocation} from '@reach/router';
@@ -97,6 +98,9 @@ const AppMenu = () => {
         </AppMenuItem>
         <AppMenuItem title={t('Toggle theme')} sx={{width: '40px', height: '40px'}} onClick={toggleAppTheme}>
             {appTheme === 'light' ? <DarkModeIcon fontSize="small"/> : <LightModeIcon fontSize="small"/>}
+        </AppMenuItem>
+        <AppMenuItem title={t('Docs')} sx={{width: '40px', height: '40px'}} href="https://docs.ballotbox.xyz" blank>
+            <DescriptionIcon fontSize="small"/>
         </AppMenuItem>
     </Box>;
 
