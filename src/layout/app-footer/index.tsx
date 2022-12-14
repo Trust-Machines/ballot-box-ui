@@ -45,6 +45,13 @@ const AppFooter = () => {
     const [t] = useTranslation();
     const [, showModal] = useModal();
 
+    const itemSx = {
+        color: linkHoverColor,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        ':hover': {color: linkColor},
+    };
+
     return <Box sx={{
         height: '50px',
         flexGrow: 0,
@@ -57,13 +64,14 @@ const AppFooter = () => {
         fontSize: '90%'
     }}>
         <Box sx={{
-            color: linkHoverColor,
-            textDecoration: 'none',
-            cursor: 'pointer',
-            ':hover': {color: linkColor}
+            ...itemSx,
+            mr: '12px'
         }} onClick={() => {
             showModal({body: <ContactDialog/>})
         }}>{t('Contact Us')}</Box>
+        <Box sx={itemSx} onClick={() => {
+            window.open('https://docs.ballotbox.xyz', '_blank');
+        }}>{t('Docs')}</Box>
     </Box>
 }
 
