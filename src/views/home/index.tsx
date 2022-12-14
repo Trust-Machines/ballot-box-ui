@@ -36,7 +36,7 @@ const HomePage = (_: RouteComponentProps) => {
         <AppWrapper>
             <AppHeader/>
             <AppContent>
-                <H2>{t('Spaces')}</H2>
+                <H2>{t('Communities')}</H2>
                 <Box sx={{
                     display: 'grid',
                     gridGap: '30px',

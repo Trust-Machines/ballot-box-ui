@@ -37,7 +37,7 @@ const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => voi
         const data = imgSrc.split(',')[1];
         updateSpacePicture(auth!, space!.id, data).then(r => {
             showModal(null);
-            showMessage(t('Space picture updated'), 'success');
+            showMessage(t('Community picture updated'), 'success');
             onSuccess(r);
         }).catch(e => {
             if (e.apiMessage) {
@@ -69,7 +69,7 @@ const SetSpacePicture = (props: { space: Space, onSuccess: (space: Space) => voi
 
     return (
         <>
-            <DialogTitle>{t('Set Space Picture')}<CloseModal onClick={handleClose}/></DialogTitle>
+            <DialogTitle>{t('Set Community Picture')}<CloseModal onClick={handleClose}/></DialogTitle>
             <DialogContent>
                 <Box sx={{p: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {imgSrc === '' && (

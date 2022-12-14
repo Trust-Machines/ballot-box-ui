@@ -49,7 +49,7 @@ const CreateSpace = (_: RouteComponentProps) => {
         setInProgress(true);
         createSpace(auth, name, network, strategy, strategyOptions).then(space => {
             setUserSpaces([...userSpaces, space]);
-            showMessage(t('Your new space created'), 'success');
+            showMessage(t('Your new community created'), 'success');
             navigate(`/spaces/${space.id}`).then();
         }).catch(e => {
             if (e.apiMessage) {
@@ -67,9 +67,9 @@ const CreateSpace = (_: RouteComponentProps) => {
             <AppHeader/>
             <AppContent>
                 <Box sx={{maxWidth: '600px'}}>
-                    <H2>{t('Create space')}</H2>
+                    <H2>{t('Create Community')}</H2>
                     <Box sx={{mb: '20px'}}>
-                        <TextField autoFocus inputRef={inputRef} label={t('Space name')} value={name} fullWidth
+                        <TextField autoFocus inputRef={inputRef} label={t('Community name')} value={name} fullWidth
                                    onChange={e => {
                                        setName(e.target.value);
                                    }}

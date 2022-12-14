@@ -107,7 +107,7 @@ const SpaceCard = (props: { space: Space }) => {
                         fontSize: '30px'
                     }}/>
                     {editable && (
-                        <Tooltip placement="right" enterDelay={1000} title={t('Set space picture')}>
+                        <Tooltip placement="right" enterDelay={1000} title={t('Set community picture')}>
                             <Box sx={{
                                 position: 'absolute',
                                 left: 0,

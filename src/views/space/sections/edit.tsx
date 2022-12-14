@@ -56,8 +56,8 @@ const SpaceEdit = (props: { space: Space }) => {
                 .required()
                 .trim()
                 .messages({
-                    'string.empty': t('Space name is not allowed to be empty'),
-                    'string.min': t('Space name length must be at least 3 characters long')
+                    'string.empty': t('Community name is not allowed to be empty'),
+                    'string.min': t('Community name length must be at least 3 characters long')
                 }),
             about: Joi.string()
                 .allow('')
@@ -124,7 +124,7 @@ const SpaceEdit = (props: { space: Space }) => {
         setInProgress(true);
         updateSpace(auth, space.id, props).then(r => {
             setSpace(r);
-            showMessage(t('Space updated'), 'success');
+            showMessage(t('Community updated'), 'success');
         }).catch(e => {
             if (e.apiMessage) {
                 showMessage(t(e.apiMessage), 'error');
@@ -143,7 +143,7 @@ const SpaceEdit = (props: { space: Space }) => {
     const spaceDeleted = () => {
         setUserSpaces(userSpaces.filter(x => x.id !== space.id));
         setSpace(null);
-        showMessage(t('Space deleted'), 'info');
+        showMessage(t('Community deleted'), 'info');
         navigate('/').then();
     }
 
@@ -151,7 +151,7 @@ const SpaceEdit = (props: { space: Space }) => {
         <ThemedBox sx={{mb: '20px'}}>
             <H3 sx={{mb: '20px'}}>{t('Basic Information')}</H3>
             <FormControl fullWidth>
-                <TextField label={t('Space name')} inputProps={{maxLength: 30}}
+                <TextField label={t('Community name')} inputProps={{maxLength: 30}}
                            fullWidth autoFocus autoComplete="off" value={name}
                            error={error === 'name'}
                            helperText={error === 'name' ? errorMessage : ' '}
@@ -260,13 +260,13 @@ const SpaceEdit = (props: { space: Space }) => {
         <ThemedBox>
             <Box sx={{display: 'flex', alignItems: 'center'}}>
                 <Box sx={{flexGrow: 1}}>
-                    <Box sx={{mb: '10px', fontWeight: '600'}}>{t('Delete this space')}</Box>
+                    <Box sx={{mb: '10px', fontWeight: '600'}}>{t('Delete this community')}</Box>
                     <Box sx={{
                         fontSize: '90%'
-                    }}>{t('Once you delete a space, there is no going back. Please be certain.')}</Box>
+                    }}>{t('Once you delete a community, there is no going back. Please be certain.')}</Box>
                 </Box>
                 <Box>
-                    <Button variant="contained" onClick={deleteClicked} color="error">{t('Delete space')}</Button>
+                    <Button variant="contained" onClick={deleteClicked} color="error">{t('Delete community')}</Button>
                 </Box>
             </Box>
         </ThemedBox>
