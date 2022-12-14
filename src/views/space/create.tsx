@@ -67,7 +67,7 @@ const CreateSpace = (_: RouteComponentProps) => {
             <AppHeader/>
             <AppContent>
                 <Box sx={{maxWidth: '600px'}}>
-                    <H2>{t('Create community')}</H2>
+                    <H2>{t('Create Community')}</H2>
                     <Box sx={{mb: '20px'}}>
                         <TextField autoFocus inputRef={inputRef} label={t('Community name')} value={name} fullWidth
                                    onChange={e => {
