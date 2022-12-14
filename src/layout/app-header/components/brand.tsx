@@ -32,9 +32,10 @@ const Brand = () => {
                     border: `1px solid ${theme.palette.divider}`,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    borderRadius: '4px'
                 }}>
-                    <Box component="img" src="/logo.png" sx={{width: '38px', height: '38px'}}/>
+                    <Box component="img" src="/logo.png" sx={{width: '32px', height: '32px'}}/>
                 </Box>
                 <Box sx={{
                     fontSize: '1.3rem',
