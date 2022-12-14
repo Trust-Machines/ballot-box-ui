@@ -46,9 +46,9 @@ const DeleteSpace = (props: { space: Space, onSuccess: () => void }) => {
 
     return (
         <>
-            <DialogTitle>{t('Delete Space')}<CloseModal onClick={handleClose}/></DialogTitle>
+            <DialogTitle>{t('Delete Community')}<CloseModal onClick={handleClose}/></DialogTitle>
             <DialogContent>
-                <DialogContentText>{t('Do you really want to delete this space?')}</DialogContentText>
+                <DialogContentText>{t('Do you really want to delete this community?')}</DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} disabled={inProgress}>{t('Cancel')}</Button>

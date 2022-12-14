@@ -77,7 +77,7 @@ const AppMenu = () => {
             <HomeIcon/>
         </AppMenuItem>
         {userData && !userId && (
-            <AppMenuItem href="/" title={t('Load Spaces')} onClick={requestSignature}>
+            <AppMenuItem href="/" title={t('Load Communities')} onClick={requestSignature}>
                 <RefreshIcon/>
             </AppMenuItem>
         )}
@@ -89,7 +89,7 @@ const AppMenu = () => {
                 <SpaceIcon space={s} sx={{width: '40px'}}/>
             </AppMenuItem>
         })}
-        <AppMenuItem title={t('Create a space')} href="/create-space" sx={{
+        <AppMenuItem title={t('Create a community')} href="/create-space" sx={{
             mb: '30px',
             borderColor: location.pathname === '/create-space' ? activeItemBorderColor : null
         }}>
